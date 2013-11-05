@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa1b9901_a081befd",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 2881
+      },
+      "writtenOn": "2013-11-05T07:28:58Z",
+      "side": 1,
+      "message": "TTtools geeft aan dat deze vertaalt moet worden.\nHeb deze array er nu ingezet, maar het is beter als TTools aangepast wordt.",
+      "revId": "dde9b83dc56075efceaa416e9584b12e334ea77a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
