@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fa1b9901_8e1dcb11",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2597
+      },
+      "writtenOn": "2013-11-06T08:52:55Z",
+      "side": 1,
+      "message": "In that case, this can go away too.",
+      "revId": "dde9b83dc56075efceaa416e9584b12e334ea77a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa1b9901_a081befd",
         "filename": "res/values-nl/cm_strings.xml",
         "patchSetId": 2
