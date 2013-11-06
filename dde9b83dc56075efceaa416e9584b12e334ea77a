@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa1b9901_0ebf7bd1",
+        "filename": "res/values-nl/cm_strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2013-11-06T09:03:30Z",
+      "side": 1,
+      "message": "Already gone, see my comment below :)",
+      "parentUuid": "fa1b9901_8e1dcb11",
+      "revId": "dde9b83dc56075efceaa416e9584b12e334ea77a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa1b9901_a081befd",
         "filename": "res/values-nl/cm_strings.xml",
         "patchSetId": 2
