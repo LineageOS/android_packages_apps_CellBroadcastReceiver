@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa80f949_8737d4e2",
+        "filename": "res/values-de/cm_strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-12-01T04:27:00Z",
+      "side": 1,
+      "message": "selektieren oder (besser?) auswählen",
+      "revId": "6e2aca140873437e9b18d05c78f19815583100c0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
