@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba0121b8_b1e78b11",
+        "filename": "src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2014-07-05T00:33:52Z",
+      "side": 1,
+      "message": "m prefix is for class members only, so this variable would better be named actionBar (which would also make the diff smaller).\n\nAlso I don\u0027t think it can become null.",
+      "revId": "d35be90e3193a23e17a24dccc18f322de2ddf382",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
