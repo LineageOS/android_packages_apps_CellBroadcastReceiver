@@ -52,6 +52,24 @@
       "revId": "d35be90e3193a23e17a24dccc18f322de2ddf382",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_11bbd7c5",
+        "filename": "src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2014-07-05T01:35:41Z",
+      "side": 1,
+      "message": "Besides that, the previous code didn\u0027t check for null - and didn\u0027t crash either.",
+      "parentUuid": "ba0121b8_d1aaff6f",
+      "revId": "d35be90e3193a23e17a24dccc18f322de2ddf382",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
