@@ -34,6 +34,24 @@
       "revId": "d35be90e3193a23e17a24dccc18f322de2ddf382",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_d1aaff6f",
+        "filename": "src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2014-07-05T01:34:12Z",
+      "side": 1,
+      "message": "Did you try it? AFAICT from reading the code, the action bar only can be null if\n- requestFeature(FEATURE_NO_TITLE) was called or\n- the activity theme mandates the no_title feature or\n- the activity theme explicitly hides the action bar (the .NoActionBar variants)",
+      "parentUuid": "ba0121b8_91cb6772",
+      "revId": "d35be90e3193a23e17a24dccc18f322de2ddf382",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
