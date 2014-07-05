@@ -16,6 +16,24 @@
       "revId": "d35be90e3193a23e17a24dccc18f322de2ddf382",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba0121b8_91cb6772",
+        "filename": "src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2014-07-05T00:52:35Z",
+      "side": 1,
+      "message": "Check the discussion here http://review.cyanogenmod.org/#/c/49258/",
+      "parentUuid": "ba0121b8_b1e78b11",
+      "revId": "d35be90e3193a23e17a24dccc18f322de2ddf382",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
