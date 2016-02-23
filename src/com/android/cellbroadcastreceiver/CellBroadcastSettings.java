@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.UserManager;
@@ -240,9 +241,13 @@ public class CellBroadcastSettings extends PreferenceActivity {
                         }
                     };
 
-            // Show extra settings when developer options is enabled in settings.
-            boolean enableDevSettings = Settings.Global.getInt(getContext().getContentResolver(),
-                    Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) != 0;
+            // Show extra settings when developer options is enabled in settings
+            // AND build type is not user
+            boolean enableDevSettings = false;
+            if (!Build.TYPE.equals("user")) {
+                enableDevSettings = Settings.Global.getInt(getContext().getContentResolver(),
+                        Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) != 0;
+            }
 
             Resources res = getResources();
             boolean showEtwsSettings = res.getBoolean(R.bool.show_etws_settings);
