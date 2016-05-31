@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5faad753_5b3d4bc2",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2016-05-31T19:25:13Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be moved actually, it\u0027s not translatable",
+      "revId": "c4ff3c71027fe89e8b50aab315d67d61afc19cca",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
