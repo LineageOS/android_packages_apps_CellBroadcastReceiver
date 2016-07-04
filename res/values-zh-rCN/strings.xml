@@ -67,7 +67,6 @@
     <string name="category_brazil_settings_title" msgid="6343130548572319922">"针对巴西的设置"</string>
     <string name="enable_channel_50_alerts_title" msgid="2818924064446974167">"显示 50 频道的广播"</string>
     <string name="enable_channel_50_alerts_summary" msgid="7507770011325273009">"巴西使用频道 50 来广播区域动态信息"</string>
-    <string name="category_india_settings_title">针对印度的设置</string>
     <string name="category_dev_settings_title" msgid="6194393458398329994">"开发者选项"</string>
     <string name="cmas_category_heading" msgid="3923503130776640717">"警报类别："</string>
     <string name="cmas_category_geo" msgid="4979494217069688527">"地球物理"</string>
@@ -108,18 +107,6 @@
     <string name="cmas_opt_out_dialog_text" msgid="7529010670998259128">"当前设置是接收紧急警报。是否要继续接收紧急警报？"</string>
     <string name="cmas_opt_out_button_yes" msgid="7248930667195432936">"是"</string>
     <string name="cmas_opt_out_button_no" msgid="3110484064328538553">"否"</string>
-    <string name="enable_alert_tone_title">警报音</string>
-    <string name="enable_alert_tone_summary">警报音打开</string>
-    <string name="enable_cmas_presidential_alerts_title">显示总统警报</string>
-    <string name="enable_cmas_presidential_alerts_summary">始终显示总统警报</string>
-
-  <string-array name="alert_sound_duration_entries">
-    <item msgid="5353482200312892037">"2秒"</item>
-    <item msgid="5656092384277009212">"4秒"</item>
-    <item msgid="253564899252909788">"6秒"</item>
-    <item msgid="7514102744524534421">"8秒"</item>
-    <item msgid="6062562309271376642">"10秒"</item>
-  </string-array>
   <string-array name="alert_reminder_interval_entries">
     <item msgid="6595211083588795160">"1次"</item>
     <item msgid="9097229303902157183">"每隔2分钟"</item>
