@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa7e38b_c11d0874",
+        "filename": "res/values-es/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 8084
+      },
+      "writtenOn": "2016-07-28T03:35:39Z",
+      "side": 1,
+      "message": "It should be, only \"utiliza\"\nIt does not make sense to use infinitive verb here",
+      "range": {
+        "startLine": 70,
+        "startChar": 103,
+        "endLine": 70,
+        "endChar": 104
+      },
+      "revId": "7aae0d91bbfb19cf08ddb83b4360841e7bd4bee8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
