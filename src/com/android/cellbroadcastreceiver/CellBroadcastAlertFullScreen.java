@@ -257,12 +257,19 @@ public class CellBroadcastAlertFullScreen extends Activity {
         // Initialize the view.
         LayoutInflater inflater = LayoutInflater.from(this);
         setContentView(inflater.inflate(getLayoutResId(), null));
-
+        setFinishOnTouchOutside(false);
         findViewById(R.id.dismissButton).setOnClickListener(
                 new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dismiss();
+                        if (!getResources().getBoolean(
+                                R.bool.config_regional_stop_alert_on_duration)) {
+                            NotificationManager notificationManager =
+                               (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                            notificationManager.cancel(CellBroadcastAlertService.NOTIFICATION_ID);
+                            CellBroadcastReceiverApp.clearNewMessageList();
+                        }
                     }
                 });
 
