@@ -35,4 +35,11 @@
     <bool name="config_regional_wea_rm_turn_on_notification">false</bool>
     <bool name="config_regional_wea_rm_alert_reminder">false</bool>
     <bool name="config_regional_wea_alert_tone_enable">false</bool>
+    <!--To stop alert after the specified duration -->
+    <bool name="config_regional_stop_alert_on_duration">true</bool>
+    <!-- To disable "Alert sound duration" and "Vibrate" option from setting -->
+    <bool name="config_regional_disable_tone_vibration">false</bool>
+    <!-- Don't receive any cellbroadcast messages -->
+    <bool name="config_regional_disable_cb_message">false</bool>
+    <bool name="config_regional_always_notify_with_tone_vibrate">false</bool>
 </resources>
