@@ -214,6 +214,14 @@ public class CellBroadcastSettings extends PreferenceActivity {
                     findPreference(KEY_CATEGORY_ETWS_SETTINGS);
             mDEVSettingCategory = (PreferenceCategory)
                     findPreference(KEY_CATEGORY_DEV_SETTINGS);
+            boolean disableToneVibrationPreference = getResources().getBoolean(
+                    R.bool.config_regional_disable_tone_vibration);
+            if (disableToneVibrationPreference) {
+                if (mAlertDuration != null)
+                    mAlertDuration.setEnabled(false);
+                if (findPreference(KEY_ENABLE_ALERT_VIBRATE) != null)
+                    findPreference(KEY_ENABLE_ALERT_VIBRATE).setEnabled(false);
+            }
 
             if (getResources().getBoolean(
                         R.bool.config_regional_wea_alert_tone_enable)) {
