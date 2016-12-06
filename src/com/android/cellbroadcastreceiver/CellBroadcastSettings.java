@@ -110,6 +110,10 @@ public class CellBroadcastSettings extends PreferenceActivity {
     // Alert reminder interval ("once" = single 2 minute reminder).
     public static final String KEY_ALERT_REMINDER_INTERVAL = "alert_reminder_interval";
 
+    // Whether to display CMAS preidential alerts (default is enabled).
+    public static final String KEY_ENABLE_PRESIDENTIAL_ALERTS =
+            "enable_cmas_presidential_alerts";
+
     // Brazil country code
     private static final String COUNTRY_BRAZIL = "br";
 
@@ -201,14 +205,6 @@ public class CellBroadcastSettings extends PreferenceActivity {
                     findPreference(KEY_CATEGORY_ETWS_SETTINGS);
             mDEVSettingCategory = (PreferenceCategory)
                     findPreference(KEY_CATEGORY_DEV_SETTINGS);
-            boolean disableToneVibrationPreference = getResources().getBoolean(
-                    R.bool.config_regional_disable_tone_vibration);
-            if (disableToneVibrationPreference) {
-                if (mAlertDuration != null)
-                    mAlertDuration.setEnabled(false);
-                if (findPreference(KEY_ENABLE_ALERT_VIBRATE) != null)
-                    findPreference(KEY_ENABLE_ALERT_VIBRATE).setEnabled(false);
-            }
 
             if (getResources().getBoolean(
                         R.bool.config_regional_wea_alert_tone_enable)) {

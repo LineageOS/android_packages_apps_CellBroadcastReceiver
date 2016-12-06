@@ -451,11 +451,16 @@ public class CellBroadcastAlertAudio extends Service implements TextToSpeech.OnI
 
         // Start the vibration first.
         if (mEnableVibrate) {
-            if (getResources().getBoolean(R.bool.config_regional_always_notify_with_tone_vibrate)) {
-                mVibrator.vibrate(sVibratePattern, 0);
-            } else {
-                mVibrator.vibrate(sVibratePattern, -1);
+
+            int[] patternArray = getApplicationContext().getResources().
+                    getIntArray(R.array.default_vibration_pattern);
+            long[] vibrationPattern = new long[patternArray.length];
+
+            for (int i = 0; i < patternArray.length; i++) {
+                vibrationPattern[i] = patternArray[i];
             }
+
+            mVibrator.vibrate(vibrationPattern, -1);
         }
 
 
@@ -532,15 +537,6 @@ public class CellBroadcastAlertAudio extends Service implements TextToSpeech.OnI
             }
         }
 
-        // stop alert after the specified duration, unless we are playing the full 10.5s file once
-        // in which case we'll use the end of playback callback rather than a delayed message.
-        // This is to avoid the CMAS alert potentially being truncated due to audio playback lag.
-        if (duration != CMAS_DURATION_MSEC) {
-            if (getResources().getBoolean(
-                    R.bool.config_regional_stop_alert_on_duration)) {
-           mHandler.sendMessageDelayed(mHandler.obtainMessage(ALERT_SOUND_FINISHED), duration);
-        }
-     }
         mState = STATE_ALERTING;
     }
 

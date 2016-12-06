@@ -508,7 +508,11 @@ public class CellBroadcastAlertService extends Service {
             openEmergencyAlertNotification(cbm);
             if (!getResources().getBoolean(
                     R.bool.config_regional_stop_alert_on_duration)) {
-                addToNotificationBar(cbm);
+                // add notification to the bar by passing the list of unread non-emergency
+                // CellBroadcastMessages
+                ArrayList<CellBroadcastMessage> messageList = CellBroadcastReceiverApp
+                        .addNewMessageToList(cbm);
+                addToNotificationBar(cbm, messageList, this, false);
             }
         } else {
             // add notification to the bar by passing the list of unread non-emergency
