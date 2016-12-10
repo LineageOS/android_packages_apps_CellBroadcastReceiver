@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f681702_a638543d",
+        "filename": "src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2016-12-10T23:53:34Z",
+      "side": 0,
+      "message": "I think the idea behind the current code format is to go through all the enableChannel50Support-dependent stuff first, before moving on to the enableChannel60Support-dependent stuff.\n\nI\u0027d keep the current code intact and only modify line 269-270.",
+      "revId": "ba2807ffea03a419f634e805006825f08371ccbb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}

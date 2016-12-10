@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f681702_c6359048",
+        "filename": "src/com/android/cellbroadcastreceiver/CellBroadcastConfigService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2016-12-10T23:53:34Z",
+      "side": 1,
+      "message": "This seems pretty redundant",
+      "revId": "f72283763df7026da931377c8f073fc7a3989529",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
