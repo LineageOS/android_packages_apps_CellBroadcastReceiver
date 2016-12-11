@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f681702_e600876a",
+        "filename": "src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 7880
+      },
+      "writtenOn": "2016-12-11T23:37:44Z",
+      "side": 1,
+      "message": "We should probably set enableChannel50Support based on res.getBoolean(R.bool.show_india_settings) above",
+      "revId": "c5e9b7aca83674a0d20d43ef06898738aa7e4247",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
