@@ -16,6 +16,24 @@
       "revId": "ba2807ffea03a419f634e805006825f08371ccbb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f681702_716398b2",
+        "filename": "src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 444
+      },
+      "writtenOn": "2016-12-11T05:27:21Z",
+      "side": 0,
+      "message": "Fair point.",
+      "parentUuid": "5f681702_a638543d",
+      "revId": "ba2807ffea03a419f634e805006825f08371ccbb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
