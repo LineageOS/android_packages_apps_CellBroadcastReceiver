@@ -16,6 +16,24 @@
       "revId": "c5e9b7aca83674a0d20d43ef06898738aa7e4247",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f681702_0990344e",
+        "filename": "src/com/android/cellbroadcastreceiver/CellBroadcastSettings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 444
+      },
+      "writtenOn": "2016-12-12T04:58:30Z",
+      "side": 1,
+      "message": "Like this?\n\nboolean enableChannel50Support \u003d res.getBoolean(R.bool.show_brazil_settings) ||\n        res.getBoolean(R.bool.show_india_settings);",
+      "parentUuid": "5f681702_e600876a",
+      "revId": "c5e9b7aca83674a0d20d43ef06898738aa7e4247",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
