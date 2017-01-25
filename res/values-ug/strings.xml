@@ -227,5 +227,6 @@
   </string-array>
   <!-- Do not translate. Default value that in the ListPreference.
          These must be a subset of the alert_reminder_interval_values list above. -->
+  <string name="alert_reminder_interval_default_value">0</string>
   <!-- Do not translate. Values that for the vibration pattern. -->
 </resources>
