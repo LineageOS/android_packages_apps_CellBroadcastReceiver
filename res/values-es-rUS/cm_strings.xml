@@ -17,6 +17,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
+  <string name="category_india_settings_title">Ajustes para la India</string>
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
+  <string name="enable_channel_60_alerts_title">Mostrar emisiones del canal 60</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
+  <string name="enable_channel_60_alerts_summary">El canal 60 se utiliza en la India para obtener información específica del operador</string>
 </resources>
