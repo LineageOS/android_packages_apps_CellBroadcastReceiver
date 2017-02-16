@@ -83,7 +83,6 @@
   <!-- Preference title for alert reminder interval list. [CHAR LIMIT=30] -->
   <string name="alert_reminder_interval_title">ئاگاھلاندۇرۇش ئەسكەرتىشى</string>
   <!-- Do not translate. Empty summary for alert reminder (set by CellBroadcastSettings). -->
-  <string name="alert_reminder_interval_summary"></string>
   <!-- Preference title for enable text-to-speech checkbox. [CHAR LIMIT=30] -->
   <string name="enable_alert_speech_title">ئاگاھلاندۇرۇش ئۇچۇرىنى ئوقۇ</string>
   <!-- Preference summary for enable text-to-speech checkbox. [CHAR LIMIT=100] -->
@@ -227,5 +226,6 @@
   </string-array>
   <!-- Do not translate. Default value that in the ListPreference.
          These must be a subset of the alert_reminder_interval_values list above. -->
+  <string name="alert_reminder_interval_default_value">0</string>
   <!-- Do not translate. Values that for the vibration pattern. -->
 </resources>

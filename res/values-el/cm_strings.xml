@@ -22,4 +22,9 @@
   <string name="enable_channel_60_alerts_title">Εμφάνιση εκπομπών καναλιού 60</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
   <string name="enable_channel_60_alerts_summary">Τo κανάλι 60 χρησιμοποιείται στη Ινδία για πληροφορίες σχετικές με τον πάροχο</string>
+  <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
+  <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <!-- set cellbroadcast enable or disable, default value is true-->
+  <!-- CellBroadcast channel 50 enabled or not,default value is true -->
+  <!-- Customize 50 into filter list -->
 </resources>

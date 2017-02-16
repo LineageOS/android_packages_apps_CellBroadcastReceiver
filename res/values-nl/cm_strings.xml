@@ -22,4 +22,40 @@
   <string name="enable_channel_60_alerts_title">Meldingen via kanaal 60 weergeven</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
   <string name="enable_channel_60_alerts_summary">Kanaal 60 wordt in India gebruikt voor provider-specifieke informatie</string>
+  <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
+  <string name="enable_cmas_presidential_alerts_title">Meldingen op nationaal niveau</string>
+  <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_cmas_presidential_alerts_summary">Meldingen op nationaal niveau altijd weergeven</string>
+  <string name="enable_alert_tone_title">Alarmtoon</string>
+  <string name="enable_alert_tone_summary">Alarmtoon inschakelen</string>
+  <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="add_channel">Kanaal toevoegen</string>
+  <string name="channel_list">Kanaallijst</string>
+  <string name="receive_broad_cast">Cell broadcast-berichten ontvangen</string>
+  <string name="cb_channel_dialog_channel_name">Kanaalnaam (0 tot 10 tekens)</string>
+  <string name="cb_channel_dialog_channel_number">Kanaalnummer (0-65534)</string>
+  <string name="cb_channel_dialog_channel_state">Kanaal inschakelen</string>
+  <string name="cb_error_channel_num">Kanaalnummer invoeren (0-65534).</string>
+  <string name="cb_error_channel_name">Lengte van kanaalnaam onjuist (0 tot 10 tekens).</string>
+  <string name="cb_menu_tile">Kanaalinstellingen</string>
+  <string name="cb_menu_add_channel">Kanaal toevoegen</string>
+  <string name="cb_menu_channel_list">Kanaallijst</string>
+  <string name="enable">Inschakelen</string>
+  <string name="disable">Uitschakelen</string>
+  <string name="cb_error_channel_id_exist">Kanaalnummer bestaat al.</string>
+  <string name="cb_channel_dialog_edit_channel">Kanaal bewerken</string>
+  <string name="cb_default_new_channel_name">Nieuw kanaal</string>
+  <string name="cb_menu_edit">Bewerken</string>
+  <string name="cb_menu_delete">Cell broadcast verwijderen</string>
+  <string name="cell_broadcast_setting">Instellingen voor cell broadcasts</string>
+  <string name="error_updating_title">Fout bij oproepinstellingen</string>
+  <string name="reading_settings">Leesinstellingen</string>
+  <string name="updating_settings">Instellingen bijwerken</string>
+  <string name="error_finish_dialog_title">Netwerk- of simkaartfout.</string>
+  <string name="close_dialog">OK</string>
+  <string name="updating_title">Oproepinstellingen</string>
+  <string name="done_text">OK</string>
+  <!-- CellBroadcast channel 50 enabled or not,default value is true -->
+  <!-- Customize 50 into filter list -->
+  <string name="cb_channel_50_name">Kanaal 50</string>
 </resources>
