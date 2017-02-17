@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa5d592f_87ff7901",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2017-02-17T11:03:50Z",
+      "side": 1,
+      "message": "Could/should be split into \u0027The channel name must not be empty\u0027 and \u0027The entered channel name must not be longer than 10 characters\u0027",
+      "revId": "197b7012e1af33694271b5ccc65c1002bef5e8ec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_67048515",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2017-02-17T11:03:50Z",
+      "side": 1,
+      "message": "This was actually more correct before.",
+      "revId": "197b7012e1af33694271b5ccc65c1002bef5e8ec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_4709812b",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2017-02-17T11:03:50Z",
+      "side": 1,
+      "message": "As above",
+      "revId": "197b7012e1af33694271b5ccc65c1002bef5e8ec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa5d592f_270e8d35",
+        "filename": "res/values/cm_strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2017-02-17T11:03:50Z",
+      "side": 1,
+      "message": "As above",
+      "revId": "197b7012e1af33694271b5ccc65c1002bef5e8ec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
