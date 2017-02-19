@@ -21,10 +21,29 @@
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
   <string name="enable_channel_60_alerts_title">Zobrazit vysílání kanálu 60</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">Kanál 60 je použit v Indii pro speciální informace operátora</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
+  <string name="enable_cmas_presidential_alerts_title">Zobrazit prezidentské výstrahy</string>
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_cmas_presidential_alerts_summary">Vždy zobrazovat prezidentské výstrahy</string>
+  <string name="enable_alert_tone_title">Zvuk výstrahy</string>
+  <string name="enable_alert_tone_summary">Zvuk výstrahy zapnut</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="cb_channel_dialog_channel_name">Název kanálu (1-10 znaků)</string>
+  <string name="cb_channel_dialog_channel_number">Číslo kanálu (0-65534)</string>
+  <string name="cb_channel_dialog_channel_state">Povolit kanál</string>
+  <string name="cb_menu_channel_list">Seznam kanálů</string>
+  <string name="enable">Povolit</string>
+  <string name="disable">Zakázat</string>
+  <string name="cb_menu_edit">Změnit</string>
+  <string name="cb_menu_delete">Smazat informační službu</string>
+  <string name="error_updating_title">Chyba nastavení hovorů</string>
+  <string name="reading_settings">Čtení nastavení</string>
+  <string name="updating_settings">Změna nastavení</string>
+  <string name="error_finish_dialog_title">Došlo k chybě sítě nebo SIM karty.</string>
+  <string name="close_dialog">OK</string>
+  <string name="updating_title">Nastavení hovorů</string>
+  <string name="done_text">Hotovo</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
+  <string name="cb_channel_50_name">Kanál 50</string>
 </resources>

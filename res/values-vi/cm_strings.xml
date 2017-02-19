@@ -21,10 +21,29 @@
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
   <string name="enable_channel_60_alerts_title">Hiển thị chương trình phát sóng kênh 60</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">Kênh 60 được sử dụng ở Ấn Độ cho thông tin nhà điều hành cụ thể</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
+  <string name="enable_cmas_presidential_alerts_title">Hiển thị cảnh báo chủ tịch</string>
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_cmas_presidential_alerts_summary">Luôn luôn hiển thị cảnh báo chủ tịch</string>
+  <string name="enable_alert_tone_title">Âm cảnh báo</string>
+  <string name="enable_alert_tone_summary">Âm cảnh báo bật</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="cb_channel_dialog_channel_name">Tên kênh (0-10 ký tự)</string>
+  <string name="cb_channel_dialog_channel_number">Số kênh (0-65534)</string>
+  <string name="cb_channel_dialog_channel_state">Bật kênh</string>
+  <string name="cb_menu_channel_list">Danh sách kênh</string>
+  <string name="enable">Bật</string>
+  <string name="disable">Tắt</string>
+  <string name="cb_menu_edit">Chỉnh sửa</string>
+  <string name="cb_menu_delete">Xóa chương trình phát sóng</string>
+  <string name="error_updating_title">Lỗi cài đặt cuộc gọi</string>
+  <string name="reading_settings">Cài đặt cách đọc</string>
+  <string name="updating_settings">Cài đặt cập nhật</string>
+  <string name="error_finish_dialog_title">Lỗi mạng hoặc thẻ SIM.</string>
+  <string name="close_dialog">OK</string>
+  <string name="updating_title">Cài đặt cuộc gọi</string>
+  <string name="done_text">Xong</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
+  <string name="cb_channel_50_name">Kênh 50</string>
 </resources>

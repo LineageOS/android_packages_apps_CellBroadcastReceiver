@@ -21,10 +21,29 @@
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
   <string name="enable_channel_60_alerts_title">Prikaži oddaje kanala 60</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">Kanal 60 se uporablja v Indiji za podatke operaterja</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
+  <string name="enable_cmas_presidential_alerts_title">Prikaži predsedniška opozorila</string>
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_cmas_presidential_alerts_summary">Vedno prikaži predsedniška opozorila</string>
+  <string name="enable_alert_tone_title">Zvok opozorila</string>
+  <string name="enable_alert_tone_summary">Zvok opozorila vključen</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="cb_channel_dialog_channel_name">Ime kanala (0-10 znakov)</string>
+  <string name="cb_channel_dialog_channel_number">Številka kanala (0-65534)</string>
+  <string name="cb_channel_dialog_channel_state">Omogoči kanal</string>
+  <string name="cb_menu_channel_list">Seznam kanalov</string>
+  <string name="enable">Omogoči</string>
+  <string name="disable">Onemogoči</string>
+  <string name="cb_menu_edit">Uredi</string>
+  <string name="cb_menu_delete">Izbriši oddajo</string>
+  <string name="error_updating_title">Napaka nastavitev klica</string>
+  <string name="reading_settings">Branje nastavitev</string>
+  <string name="updating_settings">Posodobi nastavitve</string>
+  <string name="error_finish_dialog_title">Napaka omrežja ali kartice SIM.</string>
+  <string name="close_dialog">V REDU</string>
+  <string name="updating_title">Nastavitve klica</string>
+  <string name="done_text">Končano</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
+  <string name="cb_channel_50_name">Kanal 50</string>
 </resources>

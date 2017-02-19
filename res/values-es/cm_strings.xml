@@ -21,10 +21,29 @@
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
   <string name="enable_channel_60_alerts_title">Mostrar emisiones del canal 60</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">El canal 60 es usado en India para información específica del operador</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
+  <string name="enable_cmas_presidential_alerts_title">Mostrar alertas presidenciales</string>
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_cmas_presidential_alerts_summary">Mostrar siempre alertas presidenciales</string>
+  <string name="enable_alert_tone_title">Tono de alerta</string>
+  <string name="enable_alert_tone_summary">Tono de alerta habilitado</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="cb_channel_dialog_channel_name">Nombre del canal (0-10 caracteres)</string>
+  <string name="cb_channel_dialog_channel_number">Número de canal (0-65534)</string>
+  <string name="cb_channel_dialog_channel_state">Habilitar canal</string>
+  <string name="cb_menu_channel_list">Lista de canales</string>
+  <string name="enable">Activar</string>
+  <string name="disable">Desactivar</string>
+  <string name="cb_menu_edit">Editar</string>
+  <string name="cb_menu_delete">Eliminar transmisión</string>
+  <string name="error_updating_title">Error en la configuración de llamada</string>
+  <string name="reading_settings">Leyendo configuración</string>
+  <string name="updating_settings">Actualizando configuración</string>
+  <string name="error_finish_dialog_title">Error en la red o en la tarjeta SIM.</string>
+  <string name="close_dialog">Aceptar</string>
+  <string name="updating_title">Ajustes de llamada</string>
+  <string name="done_text">Listo</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
+  <string name="cb_channel_50_name">Canal 50</string>
 </resources>
