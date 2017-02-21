@@ -103,7 +103,8 @@
     <PreferenceCategory android:title="@string/category_india_settings_title"
                         android:key="category_india_settings">
 
-        <CheckBoxPreference android:key="enable_channel_60_alerts"
+        <CheckBoxPreference android:defaultValue="@bool/def_channel_60_enabled"
+                            android:key="enable_channel_60_alerts"
                             android:summary="@string/enable_channel_60_alerts_summary"
                             android:title="@string/enable_channel_60_alerts_title" />
 
