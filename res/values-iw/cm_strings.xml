@@ -38,11 +38,16 @@
   <string name="cb_error_channel_num">נא הזן מספר ערוץ (0–65534).</string>
   <string name="cb_error_channel_name">אורך שם הערוץ אינו יכול להיות ארוך מ־24 תווים.</string>
   <string name="cb_menu_tile">פעולות ערוץ</string>
+  <string name="cb_menu_add_channel">הוספת ערוץ</string>
   <string name="cb_menu_channel_list">רשימת ערוצים</string>
   <string name="enable">אפשר</string>
   <string name="disable">השבת</string>
+  <string name="cb_error_channel_id_exist">מזהה הערוץ כבר קיים.</string>
+  <string name="cb_channel_dialog_edit_channel">עריכת ערוץ</string>
+  <string name="cb_default_new_channel_name">ערוץ חדש</string>
   <string name="cb_menu_edit">עריכה</string>
   <string name="cb_menu_delete">מחיקת שידור</string>
+  <string name="cell_broadcast_setting">הגדרות שידורים סלולריים</string>
   <string name="error_updating_title">שגיאה בהגדרות שיחה</string>
   <string name="reading_settings">קורא הגדרות</string>
   <string name="updating_settings">מעדכן הגדרות</string>

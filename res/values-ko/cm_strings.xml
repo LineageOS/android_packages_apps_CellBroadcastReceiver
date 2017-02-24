@@ -22,6 +22,13 @@
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="add_channel">채널 추가</string>
+  <string name="channel_list">채널 목록</string>
+  <string name="cb_menu_add_channel">채널 추가</string>
+  <string name="cb_default_new_channel_name">새 채널</string>
+  <string name="close_dialog">확인</string>
+  <string name="done_text">완료</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
+  <string name="cb_channel_50_name">채널 50</string>
 </resources>

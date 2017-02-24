@@ -24,6 +24,7 @@
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="cb_error_channel_num">Silakan masukkan nomor saluran (0-65534).</string>
   <string name="error_updating_title">Kesalahan pengaturan panggilan</string>
   <string name="error_finish_dialog_title">Kesalahan jaringan atau kartu SIM.</string>
   <string name="close_dialog">OKE</string>

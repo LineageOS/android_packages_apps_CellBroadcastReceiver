@@ -21,9 +21,16 @@
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
   <string name="enable_channel_60_alerts_title">Show channel 60 broadcasts</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
+  <string name="enable_channel_60_alerts_summary">Channel 60 is used in India for operator specific information</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
+  <string name="enable_cmas_presidential_alerts_title">Show presidential alerts</string>
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_cmas_presidential_alerts_summary">Always display presidential alerts</string>
+  <string name="enable_alert_tone_title">Alert tone</string>
+  <string name="enable_alert_tone_summary">Alert tone on</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="add_channel">Add channel</string>
+  <string name="cb_channel_dialog_channel_number">Channel number (0-65534)</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
 </resources>

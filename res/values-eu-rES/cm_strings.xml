@@ -19,7 +19,7 @@
   <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
   <string name="category_india_settings_title">Indiarako ezarpenak</string>
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <string name="enable_channel_60_alerts_title">Erakutsi 60. kanaleko emanaldiak</string>
+  <string name="enable_channel_60_alerts_title">Erakutsi 60. kanaleko difusioak</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
