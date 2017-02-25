@@ -21,10 +21,24 @@
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
   <string name="enable_channel_60_alerts_title">Tampilkan saluran siaran 60</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
+  <string name="enable_channel_60_alerts_summary">Saluran 60 digunakan di India untuk informasi spesifik operator</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="add_channel">Tambahkan saluran</string>
+  <string name="channel_list">Daftar saluran</string>
+  <string name="cb_channel_dialog_channel_name">Nama saluran (0-10 karakter)</string>
+  <string name="cb_channel_dialog_channel_number">Nomor saluran (0-65534)</string>
+  <string name="cb_channel_dialog_channel_state">Aktifkan saluran</string>
   <string name="cb_error_channel_num">Silakan masukkan nomor saluran (0-65534).</string>
+  <string name="cb_error_channel_name">Panjang nama saluran tidak boleh lebih dari 24 karakter.</string>
+  <string name="cb_menu_tile">Operasi saluran</string>
+  <string name="cb_menu_add_channel">Tambahkan saluran</string>
+  <string name="cb_menu_channel_list">Daftar saluran</string>
+  <string name="cb_error_channel_id_exist">ID saluran sudah ada.</string>
+  <string name="cb_channel_dialog_edit_channel">Ubah saluran</string>
+  <string name="cb_default_new_channel_name">Saluran baru</string>
+  <string name="cb_menu_delete">Hapus siaran</string>
   <string name="error_updating_title">Kesalahan pengaturan panggilan</string>
   <string name="error_finish_dialog_title">Kesalahan jaringan atau kartu SIM.</string>
   <string name="close_dialog">OKE</string>
@@ -32,4 +46,5 @@
   <string name="done_text">Selesai</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
+  <string name="cb_channel_50_name">Saluran 50</string>
 </resources>

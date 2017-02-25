@@ -27,9 +27,12 @@
   <string name="cb_channel_dialog_channel_name">Kanalnamn (0-10 tecken)</string>
   <string name="cb_channel_dialog_channel_number">Kanalnummer (0-65534)</string>
   <string name="cb_channel_dialog_channel_state">Aktivera kanalen</string>
+  <string name="cb_menu_add_channel">Lägg till kanal</string>
   <string name="cb_menu_channel_list">Kanallista</string>
   <string name="enable">Aktivera</string>
   <string name="disable">Avaktivera</string>
+  <string name="cb_menu_edit">Redigera</string>
+  <string name="close_dialog">OK</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
 </resources>
