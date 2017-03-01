@@ -31,6 +31,7 @@
   <string name="receive_broad_cast">Получать широковещательные SMS</string>
   <string name="cb_channel_dialog_channel_name">Имя канала (0-10 символов)</string>
   <string name="cb_channel_dialog_channel_number">Номер канала (0-65534)</string>
+  <string name="cb_error_channel_num">Пожалуйста, введите номер канала (0-65534).</string>
   <string name="cb_menu_add_channel">Добавить канал</string>
   <string name="cb_menu_channel_list">Список каналов</string>
   <string name="cb_default_new_channel_name">Новый канал</string>
