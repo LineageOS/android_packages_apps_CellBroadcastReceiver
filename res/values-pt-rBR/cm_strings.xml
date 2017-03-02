@@ -35,6 +35,7 @@
   <string name="cb_channel_dialog_channel_name">Nome do canal (0-10 caracteres)</string>
   <string name="cb_channel_dialog_channel_number">Número do canal (0-65534)</string>
   <string name="cb_channel_dialog_channel_state">Ativar o canal</string>
+  <string name="cb_error_channel_num">Insira o número do canal (0-65534).</string>
   <string name="cb_error_channel_name">O nome do canal não deve exceder a 24 caracteres.</string>
   <string name="cb_menu_tile">Operação de canal</string>
   <string name="cb_menu_add_channel">Adicionar canal</string>
