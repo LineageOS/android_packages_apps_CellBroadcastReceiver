@@ -23,7 +23,14 @@
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_alert_tone_title">Alerta-doinua</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="add_channel">Gehitu kanala</string>
+  <string name="enable">Gaitu</string>
+  <string name="cb_channel_dialog_edit_channel">Editatu kanala</string>
+  <string name="cb_default_new_channel_name">Kanal berria</string>
+  <string name="cb_menu_edit">Editatu</string>
+  <string name="error_updating_title">Deien ezarpenen errorea</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
 </resources>
