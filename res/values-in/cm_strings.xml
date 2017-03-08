@@ -23,7 +23,11 @@
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
   <string name="enable_channel_60_alerts_summary">Saluran 60 digunakan di India untuk informasi spesifik operator</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
+  <string name="enable_cmas_presidential_alerts_title">Tampilkan peringatan presidensial</string>
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_cmas_presidential_alerts_summary">Selalu tampilkan peringatan presidensial</string>
+  <string name="enable_alert_tone_title">Nada peringatan</string>
+  <string name="enable_alert_tone_summary">Nada peringatan aktif</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
   <string name="add_channel">Tambahkan saluran</string>
   <string name="channel_list">Daftar saluran</string>
@@ -39,6 +43,7 @@
   <string name="cb_channel_dialog_edit_channel">Ubah saluran</string>
   <string name="cb_default_new_channel_name">Saluran baru</string>
   <string name="cb_menu_delete">Hapus siaran</string>
+  <string name="cell_broadcast_setting">Pengaturan siaran seluler</string>
   <string name="error_updating_title">Kesalahan pengaturan panggilan</string>
   <string name="error_finish_dialog_title">Kesalahan jaringan atau kartu SIM.</string>
   <string name="close_dialog">OKE</string>

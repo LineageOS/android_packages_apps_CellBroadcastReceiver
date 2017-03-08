@@ -21,8 +21,13 @@
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
   <string name="enable_channel_60_alerts_title">Прикажи емитовање канала 60</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
+  <string name="enable_channel_60_alerts_summary">Канал 60 се користи у Индији за конкретне информације оператора</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
+  <string name="enable_cmas_presidential_alerts_title">Обавештење Председника</string>
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_cmas_presidential_alerts_summary">Увек прикажи обавештење Председника</string>
+  <string name="enable_alert_tone_title">Тон обавештења</string>
+  <string name="enable_alert_tone_summary">Тон обавештења укључен</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->

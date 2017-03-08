@@ -26,18 +26,28 @@
   <string name="enable_cmas_presidential_alerts_title">Национальное оповещение</string>
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
   <string name="enable_cmas_presidential_alerts_summary">Всегда отображать национальные оповещения</string>
+  <string name="enable_alert_tone_title">Звуковой сигнал</string>
+  <string name="enable_alert_tone_summary">Включить звук уведомления</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="add_channel">Добавить канал</string>
   <string name="channel_list">Список каналов</string>
   <string name="receive_broad_cast">Получать широковещательные SMS</string>
   <string name="cb_channel_dialog_channel_name">Имя канала (0-10 символов)</string>
   <string name="cb_channel_dialog_channel_number">Номер канала (0-65534)</string>
+  <string name="cb_channel_dialog_channel_state">Включить канал</string>
   <string name="cb_error_channel_num">Пожалуйста, введите номер канала (0-65534).</string>
+  <string name="cb_error_channel_name">Длина имени канала не должна превышать 24 символа.</string>
   <string name="cb_menu_add_channel">Добавить канал</string>
   <string name="cb_menu_channel_list">Список каналов</string>
   <string name="cb_default_new_channel_name">Новый канал</string>
   <string name="cb_menu_edit">Изменить</string>
+  <string name="cell_broadcast_setting">Настройки приёма сообщ. сети</string>
+  <string name="reading_settings">Чтение настроек</string>
+  <string name="updating_settings">Обновление настроек</string>
+  <string name="error_finish_dialog_title">Ошибка сети или SIM-карты.</string>
   <string name="close_dialog">ОК</string>
   <string name="done_text">Готово</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
+  <string name="cb_channel_50_name">Канал 50</string>
 </resources>

@@ -19,6 +19,7 @@
   <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
   <string name="category_india_settings_title">印度的设置</string>
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
+  <string name="enable_channel_60_alerts_title">显示频道 60 广播</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
   <string name="enable_channel_60_alerts_summary">频道 60 在印度用于运营商信息</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
