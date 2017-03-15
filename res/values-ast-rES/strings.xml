@@ -19,6 +19,7 @@
   <!-- Label for settings screen. [CHAR LIMIT=NONE] -->
   <!-- Error message for users that aren't allowed to modify Cell broadcast settings [CHAR LIMIT=none] -->
   <!-- Text for dismiss button in broadcast message view dialog. [CHAR LIMIT=25] -->
+  <string name="button_dismiss">ACEUTAR</string>
   <!-- Text for list view when empty (no broadcasts). [CHAR LIMIT=200] -->
   <!-- Menu item for accessing application settings. [CHAR LIMIT=30] -->
   <!-- Menu item for deleting all broadcasts. [CHAR LIMIT=30] -->
@@ -31,6 +32,7 @@
   <!-- Delete all broadcasts confirmation dialog message. [CHAR LIMIT=NONE] -->
   <!-- Delete button text for delete broadcast dialog. [CHAR LIMIT=25] -->
   <!-- Cancel button text for delete broadcast dialog. [CHAR LIMIT=25] -->
+  <string name="button_cancel">Encaboxar</string>
   <!-- ETWS dialog title for Earthquake Warning. [CHAR LIMIT=50] -->
   <!-- ETWS dialog title for Tsunami Warning. [CHAR LIMIT=50] -->
   <!-- ETWS dialog title for Earthquake and Tsunami Warning. [CHAR LIMIT=50] -->
@@ -73,7 +75,9 @@
   <!-- CMAS category for geophysical alerts. [CHAR LIMIT=50] -->
   <!-- CMAS category for meteorological alerts. [CHAR LIMIT=50] -->
   <!-- CMAS category for general emergency and public safety alerts. [CHAR LIMIT=50] -->
+  <string name="cmas_category_safety">Seguranza</string>
   <!-- CMAS category for security alerts (law enforcement, military, etc.). [CHAR LIMIT=50] -->
+  <string name="cmas_category_security">Seguranza</string>
   <!-- CMAS category for rescue and recovery alerts. [CHAR LIMIT=50] -->
   <!-- CMAS category for fire suppression and rescue alerts. [CHAR LIMIT=50] -->
   <!-- CMAS category for medical and public health alerts. [CHAR LIMIT=50] -->

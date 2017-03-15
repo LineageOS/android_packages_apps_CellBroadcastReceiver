@@ -51,7 +51,11 @@
   <string name="error_updating_title">Call settings error</string>
   <string name="reading_settings">Reading settings</string>
   <string name="updating_settings">Updating settings</string>
+  <string name="error_finish_dialog_title">Network or SIM card error.</string>
   <string name="close_dialog">OK</string>
+  <string name="updating_title">Call settings</string>
+  <string name="done_text">Done</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
+  <string name="cb_channel_50_name">Channel 50</string>
 </resources>

@@ -24,6 +24,15 @@
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="cb_channel_dialog_channel_name">Nazwa kanału (0-10 znaków)</string>
+  <string name="cb_channel_dialog_channel_number">Numer kanału (0–65534)</string>
+  <string name="cb_channel_dialog_channel_state">Aktywuj kanał</string>
+  <string name="cb_menu_channel_list">Lista kanałów</string>
+  <string name="cb_menu_edit">Edytuj</string>
+  <string name="error_finish_dialog_title">Błąd sieci lub karty SIM.</string>
+  <string name="close_dialog">OK</string>
+  <string name="updating_title">Ustawienia połączeń</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
+  <string name="cb_channel_50_name">Kanał 50</string>
 </resources>

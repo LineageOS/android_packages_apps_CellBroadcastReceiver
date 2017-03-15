@@ -27,7 +27,7 @@
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
   <string name="enable_cmas_presidential_alerts_summary">始终显示总统警报</string>
   <string name="enable_alert_tone_title">警报铃声</string>
-  <string name="enable_alert_tone_summary">提示音之</string>
+  <string name="enable_alert_tone_summary">开启警报提示音</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
   <string name="add_channel">添加频道</string>
   <string name="channel_list">频道列表</string>

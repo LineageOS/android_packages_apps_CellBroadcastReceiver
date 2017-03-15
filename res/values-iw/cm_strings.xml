@@ -21,7 +21,7 @@
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
   <string name="enable_channel_60_alerts_title">הצג את שידורי ערוץ 60</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">ערוץ 60 משמש בהודו לקבלת מידע מסוים מהמפעיל</string>
+  <string name="enable_channel_60_alerts_summary">ערוץ 60 משמש בהודו לקבלת מידע על המפעיל המסוים</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
   <string name="enable_cmas_presidential_alerts_title">הצג התראות חירום נשיאותית</string>
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
@@ -32,8 +32,8 @@
   <string name="add_channel">הוספת ערוץ</string>
   <string name="channel_list">רשימת ערוצים</string>
   <string name="receive_broad_cast">קבל הודעות מתפוצת אנטנה (בדרך כלל חירום)</string>
-  <string name="cb_channel_dialog_channel_name">שם הערוץ (0–10 תווים)</string>
-  <string name="cb_channel_dialog_channel_number">מספר הערוץ (0–65534)</string>
+  <string name="cb_channel_dialog_channel_name">שם ערוץ (0–10 תווים)</string>
+  <string name="cb_channel_dialog_channel_number">מספר ערוץ (0–65534)</string>
   <string name="cb_channel_dialog_channel_state">הפעל את הערוץ</string>
   <string name="cb_error_channel_num">נא הזן מספר ערוץ (0–65534).</string>
   <string name="cb_error_channel_name">אורך שם הערוץ אינו יכול להיות ארוך מ־24 תווים.</string>
