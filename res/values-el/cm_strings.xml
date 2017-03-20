@@ -21,9 +21,13 @@
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
   <string name="enable_channel_60_alerts_title">Εμφάνιση εκπομπών καναλιού 60</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
+  <string name="enable_channel_60_alerts_summary">Τo κανάλι 60 χρησιμοποιείται στη Ινδία για πληροφορίες παρόχου δικτύου</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="error_finish_dialog_title">Σφάλμα δικτύου ή κάρτας SIM.</string>
+  <string name="close_dialog">ΟΚ</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
+  <string name="cb_channel_50_name">Κανάλι 50</string>
 </resources>

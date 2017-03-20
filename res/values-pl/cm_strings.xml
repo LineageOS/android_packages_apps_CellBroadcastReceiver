@@ -32,6 +32,7 @@
   <string name="error_finish_dialog_title">Błąd sieci lub karty SIM.</string>
   <string name="close_dialog">OK</string>
   <string name="updating_title">Ustawienia połączeń</string>
+  <string name="done_text">Gotowe</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
   <string name="cb_channel_50_name">Kanał 50</string>

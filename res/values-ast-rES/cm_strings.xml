@@ -18,6 +18,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
+  <string name="enable_channel_60_alerts_title">Amosar tresmisiones de la canal 60</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
   <string name="enable_channel_60_alerts_summary">La canal 60 úsase n\'India pa información específica del operador</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->

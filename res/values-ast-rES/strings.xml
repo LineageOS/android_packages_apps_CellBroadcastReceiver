@@ -22,6 +22,7 @@
   <string name="button_dismiss">ACEUTAR</string>
   <!-- Text for list view when empty (no broadcasts). [CHAR LIMIT=200] -->
   <!-- Menu item for accessing application settings. [CHAR LIMIT=30] -->
+  <string name="menu_preferences">Axustes</string>
   <!-- Menu item for deleting all broadcasts. [CHAR LIMIT=30] -->
   <!-- Header for context menu on an individual broadcast. [CHAR LIMIT=30] -->
   <!-- Context menu item for viewing broadcast details such as time and date. [CHAR LIMIT=30] -->
@@ -55,10 +56,13 @@
   <!-- Preference title for enable text-to-speech checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for enable text-to-speech checkbox. [CHAR LIMIT=100] -->
   <!-- Preference category title for ETWS settings. [CHAR LIMIT=50] -->
+  <string name="category_etws_settings_title">Axustes d\'ETWS</string>
   <!-- Preference title for enable ETWS test alerts checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for enable ETWS test alerts checkbox. [CHAR LIMIT=100] -->
   <!-- Preference title for enable CMAS extreme threat alerts checkbox. [CHAR LIMIT=30] -->
+  <string name="enable_cmas_extreme_threat_alerts_title">Amosar amenaces estremes</string>
   <!-- Preference summary for enable CMAS extreme threat alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_cmas_extreme_threat_alerts_summary">Amuesa alertes d\'amenaces estremes pa la vida y propiedá</string>
   <!-- Preference title for enable CMAS severe threat alerts checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for enable CMAS severe threat alerts checkbox. [CHAR LIMIT=100] -->
   <!-- Preference title for enable CMAS amber alerts checkbox. [CHAR LIMIT=50] -->
@@ -70,6 +74,7 @@
   <!-- Preference category title for Brazil settings. [CHAR LIMIT=50] -->
   <!-- Preference title for enable channel 50 alerts (Brazil only). [CHAR LIMIT=30] -->
   <!-- Preference summary for enable channel 50 alerts (Brazil only). [CHAR LIMIT=100] -->
+  <string name="enable_channel_50_alerts_summary">La canal 50 úsase en Brasil pa información d\'anovamientu d\'árees</string>
   <!-- Preference category title for developer settings. [CHAR LIMIT=50] -->
   <!-- CMAS alert category heading (including colon). [CHAR LIMIT=30] -->
   <!-- CMAS category for geophysical alerts. [CHAR LIMIT=50] -->
@@ -113,8 +118,22 @@
   <!-- Text for positive button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
   <!-- Text for negative button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
   <!-- Entries in the ListPreference for alert reminder intervals. [CHAR LIMIT=30] -->
+  <string-array name="alert_reminder_interval_entries">
+    <item>Once</item>
+    <item>Every 2 minutes</item>
+    <item>Cada 5 minutos</item>
+    <item>Every 15 minutes</item>
+    <item>Off</item>
+  </string-array>
   <!-- Do not translate. Values that are retrieved from the ListPreference.
          These must match the alert_reminder_interval_entries list above. -->
+  <string-array name="alert_reminder_interval_values">
+    <item>1</item>
+    <item>2</item>
+    <item>5</item>
+    <item>15</item>
+    <item>0</item>
+  </string-array>
   <!-- Do not translate. Values that are active in the ListPreference.
          These must be a subset of the alert_reminder_interval_values list above. -->
   <!-- Do not translate. Default value that in the ListPreference.
