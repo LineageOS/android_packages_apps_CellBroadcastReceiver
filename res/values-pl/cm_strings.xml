@@ -23,10 +23,12 @@
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_alert_tone_summary">Sygnał dźwiękowy włączony</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
   <string name="cb_channel_dialog_channel_name">Nazwa kanału (0-10 znaków)</string>
   <string name="cb_channel_dialog_channel_number">Numer kanału (0–65534)</string>
   <string name="cb_channel_dialog_channel_state">Aktywuj kanał</string>
+  <string name="cb_error_channel_num">Proszę wprowadzić numer kanału (0-65534).</string>
   <string name="cb_menu_channel_list">Lista kanałów</string>
   <string name="cb_menu_edit">Edytuj</string>
   <string name="error_finish_dialog_title">Błąd sieci lub karty SIM.</string>
