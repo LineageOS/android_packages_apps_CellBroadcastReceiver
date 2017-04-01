@@ -353,13 +353,6 @@ public class CellBroadcastSettings extends PreferenceActivity {
             }
 
             if (mChannel50CheckBox != null) {
-                if(SubscriptionManager.getBooleanSubscriptionProperty(subId,
-                    SubscriptionManager.CB_CHANNEL_50_ALERT,
-                    getResources().getBoolean(R.bool.def_channel_50_enabled),getContext())) {
-                    mChannel50CheckBox.setChecked(true);
-                } else {
-                    mChannel50CheckBox.setChecked(false);
-                }
                 mChannel50CheckBox.setOnPreferenceChangeListener(startConfigServiceListener);
             }
 
