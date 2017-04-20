@@ -30,6 +30,7 @@
   <string name="cb_channel_dialog_channel_state">Aktywuj kanał</string>
   <string name="cb_error_channel_num">Proszę wprowadzić numer kanału (0-65534).</string>
   <string name="cb_menu_channel_list">Lista kanałów</string>
+  <string name="enable">Włącz</string>
   <string name="cb_menu_edit">Edytuj</string>
   <string name="error_finish_dialog_title">Błąd sieci lub karty SIM.</string>
   <string name="close_dialog">OK</string>

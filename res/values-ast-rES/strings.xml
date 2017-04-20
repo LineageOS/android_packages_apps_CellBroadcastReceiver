@@ -72,10 +72,12 @@
   <!-- Preference title for CMAS vibration on/off. [CHAR LIMIT=30] -->
   <!-- Preference summary for CMAS vibration on/off. [CHAR LIMIT=60] -->
   <!-- Preference category title for Brazil settings. [CHAR LIMIT=50] -->
+  <string name="category_brazil_settings_title">Axustes pa Brasil</string>
   <!-- Preference title for enable channel 50 alerts (Brazil only). [CHAR LIMIT=30] -->
   <!-- Preference summary for enable channel 50 alerts (Brazil only). [CHAR LIMIT=100] -->
   <string name="enable_channel_50_alerts_summary">La canal 50 úsase en Brasil pa información d\'anovamientu d\'árees</string>
   <!-- Preference category title for developer settings. [CHAR LIMIT=50] -->
+  <string name="category_dev_settings_title">Opciones de desendolcador</string>
   <!-- CMAS alert category heading (including colon). [CHAR LIMIT=30] -->
   <!-- CMAS category for geophysical alerts. [CHAR LIMIT=50] -->
   <!-- CMAS category for meteorological alerts. [CHAR LIMIT=50] -->

@@ -31,6 +31,7 @@
   <!-- set cellbroadcast enable or disable, default value is true-->
   <string name="add_channel">Tambahkan saluran</string>
   <string name="channel_list">Daftar saluran</string>
+  <string name="receive_broad_cast">Menerima SMS siaran seluler</string>
   <string name="cb_channel_dialog_channel_name">Nama saluran (0-10 karakter)</string>
   <string name="cb_channel_dialog_channel_number">Nomor saluran (0-65534)</string>
   <string name="cb_channel_dialog_channel_state">Aktifkan saluran</string>

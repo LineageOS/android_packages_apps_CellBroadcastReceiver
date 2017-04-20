@@ -33,8 +33,13 @@
   <string name="cb_menu_channel_list">Kanallista</string>
   <string name="enable">Aktivera</string>
   <string name="disable">Avaktivera</string>
+  <string name="cb_error_channel_id_exist">Kanalens ID finns redan.</string>
+  <string name="cb_channel_dialog_edit_channel">Redigera kanal</string>
+  <string name="cb_default_new_channel_name">Ny kanal</string>
   <string name="cb_menu_edit">Redigera</string>
+  <string name="updating_settings">Uppdaterar inställningar</string>
   <string name="close_dialog">OK</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
+  <string name="cb_channel_50_name">Kanal 50</string>
 </resources>

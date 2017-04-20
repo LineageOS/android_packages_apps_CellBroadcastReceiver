@@ -29,6 +29,20 @@
   <string name="enable_alert_tone_title">Тон обавештења</string>
   <string name="enable_alert_tone_summary">Тон обавештења укључен</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="add_channel">Додај канал</string>
+  <string name="channel_list">Lista kanala</string>
+  <string name="receive_broad_cast">Примај SMS ћелије емитовања</string>
+  <string name="cb_channel_dialog_channel_name">Име канала (0-10 карактера)</string>
+  <string name="cb_channel_dialog_channel_number">Број канала (0-65534)</string>
+  <string name="cb_channel_dialog_channel_state">Укључи канал</string>
+  <string name="cb_error_channel_num">Унеси број канала (0-65534).</string>
+  <string name="cb_error_channel_name">Дужина имена канала не сме бити већа од 24 карактера.</string>
+  <string name="cb_menu_tile">Операција канала</string>
+  <string name="cb_menu_add_channel">Додај канал</string>
+  <string name="cb_menu_channel_list">Lista kanala</string>
+  <string name="enable">Омогући</string>
+  <string name="disable">Онемогући</string>
+  <string name="cb_error_channel_id_exist">Име канала већ постоји.</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
 </resources>

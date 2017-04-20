@@ -21,7 +21,7 @@
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
   <string name="enable_channel_60_alerts_title">채널 60 방송 표시</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">인도에서 채널 60은 통신사의 특정 정보 방송에 사용됩니다</string>
+  <string name="enable_channel_60_alerts_summary">인도에서 채널 60은 통신사의 특정 정보 방송에 사용됩니다.</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
   <string name="enable_cmas_presidential_alerts_title">대통령령 경고 표시</string>
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
