@@ -23,7 +23,9 @@
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
   <string name="enable_channel_60_alerts_summary">Kanal 60 brukes i India for operatørspesifikk informasjon</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
+  <string name="enable_cmas_presidential_alerts_title">Vis president-varsler</string>
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_cmas_presidential_alerts_summary">Vis alltid president-varsler</string>
   <string name="enable_alert_tone_title">Varseltone</string>
   <string name="enable_alert_tone_summary">Varseltone på</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
