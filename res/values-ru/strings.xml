@@ -47,14 +47,14 @@
     <string name="cb_other_message_identifiers" msgid="7083176204482365281">"Оповещение населения"</string>
     <string name="emergency_alert_settings_title" msgid="5427868392642771940">"Типы экстренных сообщений"</string>
     <string name="notification_channel_broadcast_messages" msgid="880704362482824524">"Сообщения о трансляции"</string>
-    <string name="enable_emergency_alerts_title" msgid="1411195469162410084">"Включить оповещения"</string>
-    <string name="enable_emergency_alerts_summary" msgid="5932655529367149358">"Показывать трансляции аварийного оповещения"</string>
+    <string name="enable_emergency_alerts_title" msgid="1411195469162410084">"Включить уведомления"</string>
+    <string name="enable_emergency_alerts_summary" msgid="5932655529367149358">"Показывать оповещения о чрезвычайных ситуациях"</string>
     <string name="alert_reminder_interval_title" msgid="3283595202268218149">"Периодичность напоминаний"</string>
     <string name="enable_alert_speech_title" msgid="8052104771053526941">"Произносить оповещения"</string>
     <string name="enable_alert_speech_summary" msgid="356086178962268831">"Использовать функцию преобразования текста в речь для чтения экстренных оповещений"</string>
-    <string name="category_etws_settings_title" msgid="4072774251965938576">"Настройки системы предупреждения о землетрясении и цунами"</string>
+    <string name="category_etws_settings_title" msgid="4072774251965938576">"Предупреждения о землетрясениях и цунами"</string>
     <string name="enable_etws_test_alerts_title" msgid="2569886288897109169">"Тестовые рассылки ETWS"</string>
-    <string name="enable_etws_test_alerts_summary" msgid="7988690174166347072">"Показывать тестовые трансляции для системы предупреждения о землетрясении и цунами"</string>
+    <string name="enable_etws_test_alerts_summary" msgid="7988690174166347072">"Показывать тестовые рассылки для системы предупреждения о землетрясениях и цунами"</string>
     <string name="enable_cmas_extreme_threat_alerts_title" msgid="215650211797464620">"Критические угрозы"</string>
     <string name="enable_cmas_extreme_threat_alerts_summary" msgid="2493139961243300290">"Сообщать о критических угрозах жизни и имуществу"</string>
     <string name="enable_cmas_severe_threat_alerts_title" msgid="8008941231371565775">"Серьезные угрозы"</string>
@@ -64,7 +64,8 @@
     <string name="enable_cmas_test_alerts_title" msgid="8620213090932770270">"Тестовые рассылки CMAS"</string>
     <string name="enable_cmas_test_alerts_summary" msgid="2935171596891733844">"Показывать тестовые рассылки системы CMAS"</string>
     <string name="enable_alert_vibrate_title" msgid="982817538757982090">"Вибросигнал"</string>
-    <string name="enable_alert_vibrate_summary" msgid="4328060563316778589">"Сообщение + вибросигнал"</string>
+    <string name="use_full_volume_title" msgid="8581439612945182255">"Включить полную громкость"</string>
+    <string name="use_full_volume_summary" msgid="3560764277281704697">"Игнорировать другие настройки звука и режима \"Не беспокоить\""</string>
     <string name="category_brazil_settings_title" msgid="6343130548572319922">"Настройки для Бразилии"</string>
     <string name="enable_channel_50_alerts_title" msgid="2818924064446974167">"Показать трансляции канала 50"</string>
     <string name="enable_channel_50_alerts_summary" msgid="7507770011325273009">"Канал 50 используется в Бразилии для аварийного оповещения"</string>
@@ -108,6 +109,7 @@
     <string name="cmas_opt_out_dialog_text" msgid="7529010670998259128">"Оповещение населения включено. Сохранить текущие настройки?"</string>
     <string name="cmas_opt_out_button_yes" msgid="7248930667195432936">"Да"</string>
     <string name="cmas_opt_out_button_no" msgid="3110484064328538553">"Нет"</string>
+    <string name="cb_list_activity_title" msgid="1433502151877791724">"Архив экстренных сообщений"</string>
   <string-array name="alert_reminder_interval_entries">
     <item msgid="6595211083588795160">"Один раз"</item>
     <item msgid="9097229303902157183">"Каждые 2 минуты"</item>
