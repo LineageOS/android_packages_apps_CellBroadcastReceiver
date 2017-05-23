@@ -353,16 +353,28 @@ public class CellBroadcastAlertDialog extends Activity {
     private void updateAlertText(CellBroadcastMessage message) {
         int titleId = CellBroadcastResources.getDialogTitleResource(
                 getApplicationContext(), message);
-        setTitle(titleId);
-        ((TextView) findViewById(R.id.alertTitle)).setText(titleId);
+
+        String title = getText(titleId).toString();
+        TextView titleTextView = findViewById(R.id.alertTitle);
+
+        if (getApplicationContext().getResources().getBoolean(R.bool.show_date_time_title)) {
+            titleTextView.setSingleLine(false);
+            title += "\n" + message.getDateString(getApplicationContext());
+        }
+
+        setTitle(title);
+        titleTextView.setText(title);
+
         ((TextView) findViewById(R.id.message)).setText(message.getMessageBody());
+
+        String dismissButtonText = getApplicationContext().getResources()
+                .getString(R.string.button_dismiss);
+
         if (mMessageList.size() > 1) {
-            ((TextView) findViewById(R.id.dismissButton)).setText("OK  (1/" +
-                    mMessageList.size() + ")");
+            dismissButtonText += "  (1/" + mMessageList.size() + ")";
         }
-        else if (mMessageList.size() == 1) {
-            ((TextView) findViewById(R.id.dismissButton)).setText("OK");
-        }
+
+        ((TextView) findViewById(R.id.dismissButton)).setText(dismissButtonText);
         // Set alert reminder depending on user preference
         CellBroadcastAlertReminder.queueAlertReminder(this, true);
     }
