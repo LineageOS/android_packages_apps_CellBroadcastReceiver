@@ -19,7 +19,6 @@ package com.android.cellbroadcastreceiver;
 import static com.android.cellbroadcastreceiver.CellBroadcastReceiver.DBG;
 import static com.android.cellbroadcastreceiver.CellBroadcastReceiver.VDBG;
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -112,8 +111,6 @@ public class CellBroadcastAlertAudio extends Service implements TextToSpeech.OnI
     private TelephonyManager mTelephonyManager;
     private int mInitialCallState;
 
-    private PendingIntent mPlayReminderIntent;
-
     public enum ToneType {
         CMAS_DEFAULT,
         ETWS_DEFAULT,
@@ -144,6 +141,8 @@ public class CellBroadcastAlertAudio extends Service implements TextToSpeech.OnI
                         stopSelf();
                         mState = STATE_IDLE;
                     }
+                    // Set alert reminder depending on user preference
+                    CellBroadcastAlertReminder.queueAlertReminder(getApplicationContext(), true);
                     break;
 
                 case ALERT_PAUSE_FINISHED:
@@ -379,6 +378,8 @@ public class CellBroadcastAlertAudio extends Service implements TextToSpeech.OnI
         // Vibration duration in milliseconds
         long vibrateDuration = 0;
 
+        int customAlertDuration = getResources().getInteger(R.integer.alert_duration);
+
         // Start the vibration first.
         if (mEnableVibrate) {
 
@@ -390,8 +391,7 @@ public class CellBroadcastAlertAudio extends Service implements TextToSpeech.OnI
                 vibrationPattern[i] = patternArray[i];
                 vibrateDuration += patternArray[i];
             }
-
-            mVibrator.vibrate(vibrationPattern, -1);
+            mVibrator.vibrate(vibrationPattern, 0);
         }
 
 
@@ -406,13 +406,20 @@ public class CellBroadcastAlertAudio extends Service implements TextToSpeech.OnI
                 }
             });
 
-            mMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
-                public void onCompletion(MediaPlayer mp) {
-                    if (DBG) log("Audio playback complete.");
-                    mHandler.sendMessage(mHandler.obtainMessage(ALERT_SOUND_FINISHED));
-                    return;
-                }
-            });
+            // If the duration is specified by the config, use the specified duration. Otherwise,
+            // just play the alert tone with the tone's duration.
+            if (customAlertDuration >= 0) {
+                mHandler.sendMessageDelayed(mHandler.obtainMessage(ALERT_SOUND_FINISHED),
+                        customAlertDuration);
+            } else {
+                mMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+                    public void onCompletion(MediaPlayer mp) {
+                        if (DBG) log("Audio playback complete.");
+                        mHandler.sendMessage(mHandler.obtainMessage(ALERT_SOUND_FINISHED));
+                        return;
+                    }
+                });
+            }
 
             try {
                 log("Locale=" + getResources().getConfiguration().getLocales());
@@ -448,7 +455,10 @@ public class CellBroadcastAlertAudio extends Service implements TextToSpeech.OnI
                 setAlertAudioAttributes();
                 setAlertVolume();
 
-                mMediaPlayer.setLooping(false);
+                // If we are using the custom alert duration, set looping to true so we can repeat
+                // the alert. The tone playing will stop when ALERT_SOUND_FINISHED arrives.
+                // Otherwise we just play the alert tone once.
+                mMediaPlayer.setLooping(customAlertDuration >= 0);
                 mMediaPlayer.prepare();
                 mMediaPlayer.start();
 
@@ -464,7 +474,7 @@ public class CellBroadcastAlertAudio extends Service implements TextToSpeech.OnI
             // to stop the service. Unfortunately it's not like MediaPlayer has onCompletion()
             // callback that we can use, we'll have to use our own timer to stop the service.
             mHandler.sendMessageDelayed(mHandler.obtainMessage(ALERT_SOUND_FINISHED),
-                    vibrateDuration);
+                    customAlertDuration >= 0 ? customAlertDuration : vibrateDuration);
         }
 
         mState = STATE_ALERTING;
@@ -485,11 +495,6 @@ public class CellBroadcastAlertAudio extends Service implements TextToSpeech.OnI
      */
     public void stop() {
         if (DBG) log("stop()");
-
-        if (mPlayReminderIntent != null) {
-            mPlayReminderIntent.cancel();
-            mPlayReminderIntent = null;
-        }
 
         mHandler.removeMessages(ALERT_SOUND_FINISHED);
         mHandler.removeMessages(ALERT_PAUSE_FINISHED);
