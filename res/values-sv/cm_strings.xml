@@ -25,6 +25,7 @@
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
   <string name="enable_alert_tone_title">Varningston</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
+  <string name="add_channel">Lägg till kanal</string>
   <string name="cb_channel_dialog_channel_name">Kanalnamn (0-10 tecken)</string>
   <string name="cb_channel_dialog_channel_number">Kanalnummer (0-65534)</string>
   <string name="cb_channel_dialog_channel_state">Aktivera kanalen</string>
@@ -39,6 +40,7 @@
   <string name="cb_menu_edit">Redigera</string>
   <string name="updating_settings">Uppdaterar inställningar</string>
   <string name="close_dialog">OK</string>
+  <string name="done_text">Klart</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->
   <!-- Customize 50 into filter list -->
   <string name="cb_channel_50_name">Kanal 50</string>
