@@ -54,8 +54,10 @@
   <!-- Preference title for alert sound duration list. [CHAR LIMIT=30] -->
   <!-- Do not translate. Empty summary for alert duration (set by CellBroadcastSettings). -->
   <!-- Preference title for alert reminder interval list. [CHAR LIMIT=30] -->
+  <string name="alert_reminder_interval_title">Recordatoriu d\'alerta</string>
   <!-- Do not translate. Empty summary for alert reminder (set by CellBroadcastSettings). -->
   <!-- Preference title for enable text-to-speech checkbox. [CHAR LIMIT=30] -->
+  <string name="enable_alert_speech_title">Dicir mensaxe d\'alerta</string>
   <!-- Preference summary for enable text-to-speech checkbox. [CHAR LIMIT=100] -->
   <!-- Preference category title for ETWS settings. [CHAR LIMIT=50] -->
   <string name="category_etws_settings_title">Axustes d\'ETWS</string>
@@ -124,7 +126,20 @@
   <!-- Entries listed in the ListPreference for allowed alert durations. [CHAR LIMIT=30] -->
   <!-- Do not translate. Values that are retrieved from the ListPreference.
          These must match the alert_sound_duration_entries above. -->
+  <string-array name="alert_sound_duration_values">
+    <item>2</item>
+    <item>4</item>
+    <item>6</item>
+    <item>8</item>
+    <item>10</item>
+  </string-array>
   <!-- Entries in the ListPreference for alert reminder intervals. [CHAR LIMIT=30] -->
   <!-- Do not translate. Values that are retrieved from the ListPreference.
          These must match the alert_reminder_interval_entries list above. -->
+  <string-array name="alert_reminder_interval_values">
+    <item>1</item>
+    <item>2</item>
+    <item>15</item>
+    <item>0</item>
+  </string-array>
 </resources>
