@@ -67,6 +67,7 @@
   <string name="enable_cmas_extreme_threat_alerts_summary">Amuesa alertes d\'amenaces estremes pa la vida y propiedá</string>
   <!-- Preference title for enable CMAS severe threat alerts checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for enable CMAS severe threat alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_cmas_severe_threat_alerts_summary">Amuesa alertes d\'amenaces graves pa la vida y la propiedá</string>
   <!-- Preference title for enable CMAS amber alerts checkbox. [CHAR LIMIT=50] -->
   <!-- Preference summary for enable CMAS amber alerts checkbox. [CHAR LIMIT=100] -->
   <!-- Preference title for enable CMAS test alerts checkbox. [CHAR LIMIT=30] -->
