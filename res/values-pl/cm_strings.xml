@@ -23,7 +23,9 @@
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
   <string name="enable_channel_60_alerts_summary">Kanał 60 jest używany w Indiach dla komunikatów operatora</string>
   <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
+  <string name="enable_cmas_presidential_alerts_title">Pokazuj alarmy prezydenckie</string>
   <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
+  <string name="enable_cmas_presidential_alerts_summary">Zawsze wyświetlaj alarmy prezydenckie</string>
   <string name="enable_alert_tone_title">Sygnał dźwiękowy</string>
   <string name="enable_alert_tone_summary">Sygnał dźwiękowy włączony</string>
   <!-- set cellbroadcast enable or disable, default value is true-->
