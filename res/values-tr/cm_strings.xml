@@ -38,10 +38,10 @@
   <string name="cb_error_channel_num">Lütfen kanal numarasını girin (0-65534).</string>
   <string name="cb_error_channel_name">Kanal adı 24 karakterden uzun olmamalıdır.</string>
   <string name="cb_menu_tile">Kanal çalışması</string>
-  <string name="cb_menu_add_channel">Yeni kanal</string>
+  <string name="cb_menu_add_channel">Kanal ekle</string>
   <string name="cb_menu_channel_list">Kanal listesi</string>
   <string name="enable">Etkinleştir</string>
-  <string name="disable">Devre Dışı Bırak</string>
+  <string name="disable">Devre dışı bırak</string>
   <string name="cb_error_channel_id_exist">Kanal numarası kullanılıyor.</string>
   <string name="cb_channel_dialog_edit_channel">Kanalı düzenle</string>
   <string name="cb_default_new_channel_name">Yeni kanal</string>
@@ -52,7 +52,7 @@
   <string name="reading_settings">Okuma ayarları</string>
   <string name="updating_settings">Ayarları güncelle</string>
   <string name="error_finish_dialog_title">Ağ veya SIM kart hatası.</string>
-  <string name="close_dialog">TAMAM</string>
+  <string name="close_dialog">Tamam</string>
   <string name="updating_title">Arama ayarları</string>
   <string name="done_text">Bitti</string>
   <!-- CellBroadcast channel 50 enabled or not,default value is true -->

@@ -40,6 +40,8 @@
   <string name="cb_menu_tile">Operasi saluran</string>
   <string name="cb_menu_add_channel">Tambahkan saluran</string>
   <string name="cb_menu_channel_list">Daftar saluran</string>
+  <string name="enable">Hidup</string>
+  <string name="disable">Mati</string>
   <string name="cb_error_channel_id_exist">ID saluran sudah ada.</string>
   <string name="cb_channel_dialog_edit_channel">Ubah saluran</string>
   <string name="cb_default_new_channel_name">Saluran baru</string>
@@ -47,6 +49,8 @@
   <string name="cb_menu_delete">Hapus siaran</string>
   <string name="cell_broadcast_setting">Pengaturan siaran seluler</string>
   <string name="error_updating_title">Kesalahan pengaturan panggilan</string>
+  <string name="reading_settings">Membaca setelan</string>
+  <string name="updating_settings">Memperbarui setelan</string>
   <string name="error_finish_dialog_title">Kesalahan jaringan atau kartu SIM.</string>
   <string name="close_dialog">OKE</string>
   <string name="updating_title">Pengaturan panggilan</string>
