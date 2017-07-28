@@ -23,7 +23,7 @@
     <item>6 saniye</item>
     <item>8 saniye</item>
     <item>10 saniye</item>
-    <item>Until dismissed</item>
+    <item>Kapatılana kadar</item>
   </string-array>
   <!-- Do not translate. Values that are retrieved from the ListPreference.
          These must match the alert_sound_duration_entries above. -->

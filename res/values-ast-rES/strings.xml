@@ -135,6 +135,12 @@
     <item>10</item>
   </string-array>
   <!-- Entries in the ListPreference for alert reminder intervals. [CHAR LIMIT=30] -->
+  <string-array name="alert_reminder_interval_entries">
+    <item>Once</item>
+    <item>Cada 2 minutos</item>
+    <item>Cada 15 minutos</item>
+    <item>Off</item>
+  </string-array>
   <!-- Do not translate. Values that are retrieved from the ListPreference.
          These must match the alert_reminder_interval_entries list above. -->
   <string-array name="alert_reminder_interval_values">

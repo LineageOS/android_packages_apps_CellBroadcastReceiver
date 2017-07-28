@@ -30,7 +30,7 @@
   <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
   <string name="category_india_settings_title">Подешавања за Индију</string>
   <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <string name="enable_channel_60_alerts_title">Прикажи емитовање канала 60</string>
+  <string name="enable_channel_60_alerts_title">Прикажи емитовања канала 60</string>
   <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">Канал 60 се користи у Индији за конкретне информације оператора</string>
+  <string name="enable_channel_60_alerts_summary">Канал 60 се у Индији користи за ажурирање информација о подручју</string>
 </resources>
