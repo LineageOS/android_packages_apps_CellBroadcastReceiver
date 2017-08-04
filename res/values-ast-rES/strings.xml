@@ -35,15 +35,25 @@
   <!-- Cancel button text for delete broadcast dialog. [CHAR LIMIT=25] -->
   <string name="button_cancel">Encaboxar</string>
   <!-- ETWS dialog title for Earthquake Warning. [CHAR LIMIT=50] -->
+  <string name="etws_earthquake_warning">Alerta de terremotu</string>
   <!-- ETWS dialog title for Tsunami Warning. [CHAR LIMIT=50] -->
+  <string name="etws_tsunami_warning">Alerta de tsunami</string>
   <!-- ETWS dialog title for Earthquake and Tsunami Warning. [CHAR LIMIT=50] -->
+  <string name="etws_earthquake_and_tsunami_warning">Alerta de tsunami y de terremotu</string>
   <!-- ETWS dialog title for test message. [CHAR LIMIT=50] -->
+  <string name="etws_test_message">Mensaxe de prueba d\'ETWS</string>
   <!-- ETWS dialog title for other emergency type. [CHAR LIMIT=50] -->
+  <string name="etws_other_emergency_type">Alerta d\'emerxencia</string>
   <!-- CMAS dialog title for presidential level alert. [CHAR LIMIT=50] -->
+  <string name="cmas_presidential_level_alert">Alerta presidencial</string>
   <!-- CMAS dialog title for extreme alert. [CHAR LIMIT=50] -->
+  <string name="cmas_extreme_alert">Alerta d\'emerxencia: estrema</string>
   <!-- CMAS dialog title for severe alert. [CHAR LIMIT=50] -->
+  <string name="cmas_severe_alert">Alerta d\'emerxencia: grave</string>
   <!-- CMAS dialog title for child abduction emergency (Amber Alert). [CHAR LIMIT=50] -->
+  <string name="cmas_amber_alert">Secuestru de neños (alerta Amber)</string>
   <!-- CMAS dialog title for required monthly test. [CHAR LIMIT=50] -->
+  <string name="cmas_required_monthly_test">Prueba mensual d\'alerta d\'emerxencia</string>
   <!-- CMAS dialog title for CMAS Exercise. [CHAR LIMIT=50] -->
   <!-- CMAS dialog title for operator defined use. [CHAR LIMIT=50] -->
   <!-- Dialog title for all other message identifiers in the PWS range. [CHAR LIMIT=50] -->
@@ -73,7 +83,9 @@
   <!-- Preference title for enable CMAS test alerts checkbox. [CHAR LIMIT=30] -->
   <!-- Preference summary for enable CMAS test alerts checkbox. [CHAR LIMIT=100] -->
   <!-- Preference title for CMAS vibration on/off. [CHAR LIMIT=30] -->
+  <string name="enable_alert_vibrate_title">Vibrar</string>
   <!-- Preference summary for CMAS vibration on/off. [CHAR LIMIT=60] -->
+  <string name="enable_alert_vibrate_summary">Vibrar n\'alertes</string>
   <!-- Preference category title for Brazil settings. [CHAR LIMIT=50] -->
   <string name="category_brazil_settings_title">Axustes pa Brasil</string>
   <!-- Preference title for enable channel 50 alerts (Brazil only). [CHAR LIMIT=30] -->
@@ -121,10 +133,12 @@
   <!-- Show CMAS opt-out dialog on first non-Presidential alert. [CHAR LIMIT=40] -->
   <!-- CMAS opt-out dialog message. [CHAR LIMIT=160] -->
   <!-- Text for positive button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
+  <string name="cmas_opt_out_button_yes">Sí</string>
   <!-- Text for negative button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
+  <string name="cmas_opt_out_button_no">Non</string>
   <!-- Entries in the ListPreference for alert reminder intervals. [CHAR LIMIT=30] -->
   <string-array name="alert_reminder_interval_entries">
-    <item>Once</item>
+    <item>Una vegada</item>
     <item>Cada 2 minutos</item>
     <item>Cada 5 minutos</item>
     <item>Cada 15 minutos</item>
