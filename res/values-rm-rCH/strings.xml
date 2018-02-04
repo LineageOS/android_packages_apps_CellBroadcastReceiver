@@ -19,7 +19,6 @@
   <!-- Label for settings screen. [CHAR LIMIT=NONE] -->
   <!-- Error message for users that aren't allowed to modify Cell broadcast settings [CHAR LIMIT=none] -->
   <!-- Text for dismiss button in broadcast message view dialog. [CHAR LIMIT=25] -->
-  <string name="button_dismiss">Iawn</string>
   <!-- Text for list view when empty (no broadcasts). [CHAR LIMIT=200] -->
   <!-- Menu item for accessing application settings. [CHAR LIMIT=30] -->
   <!-- Menu item for deleting all broadcasts. [CHAR LIMIT=30] -->
@@ -32,7 +31,6 @@
   <!-- Delete all broadcasts confirmation dialog message. [CHAR LIMIT=NONE] -->
   <!-- Delete button text for delete broadcast dialog. [CHAR LIMIT=25] -->
   <!-- Cancel button text for delete broadcast dialog. [CHAR LIMIT=25] -->
-  <string name="button_cancel">Diddymu</string>
   <!-- ETWS dialog title for Earthquake Warning. [CHAR LIMIT=50] -->
   <!-- ETWS dialog title for Tsunami Warning. [CHAR LIMIT=50] -->
   <!-- ETWS dialog title for Earthquake and Tsunami Warning. [CHAR LIMIT=50] -->
@@ -49,7 +47,6 @@
   <!-- Dialog title for all non-emergency cell broadcasts. [CHAR LIMIT=50] -->
   <!-- Preference category title for emergency alert settings. [CHAR LIMIT=50] -->
   <!-- Preference title for enable emergency alerts checkbox. [CHAR LIMIT=30] -->
-  <string name="enable_emergency_alerts_title">Troi hysbysiadau ymlaen</string>
   <!-- Preference summary for enable notifications checkbox. [CHAR LIMIT=50] -->
   <!-- Preference title for alert reminder interval list. [CHAR LIMIT=30] -->
   <!-- Do not translate. Empty summary for alert reminder (set by CellBroadcastSettings). -->
@@ -111,15 +108,7 @@
   <!-- CMAS opt-out dialog message. [CHAR LIMIT=160] -->
   <!-- Text for positive button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
   <!-- Text for negative button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
-  <string name="cmas_opt_out_button_no">Na</string>
   <!-- Entries in the ListPreference for alert reminder intervals. [CHAR LIMIT=30] -->
-  <string-array name="alert_reminder_interval_entries">
-    <item>Once</item>
-    <item>Every 2 minutes</item>
-    <item>Pob 5 munud</item>
-    <item>Every 15 minutes</item>
-    <item>Off</item>
-  </string-array>
   <!-- Do not translate. Values that are retrieved from the ListPreference.
          These must match the alert_reminder_interval_entries list above. -->
   <!-- Do not translate. Values that are active in the ListPreference.
