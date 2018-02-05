@@ -85,18 +85,12 @@ public class CellBroadcastConfigService extends IntentService {
                         for (int id : subIds) {
                             SmsManager manager = SmsManager.getSmsManagerForSubscriptionId(id);
                             if (manager != null) {
+                                boolean isDefaultSub = false;
                                 if (id == subId) {
-                                    // Enable cell broadcast messages on this sub.
-                                    log("Enable CellBroadcast on sub " + id);
-                                    setCellBroadcastOnSub(manager, true);
+                                    isDefaultSub = true;
                                 }
-                                else {
-                                    // Disable all cell broadcast message on this sub.
-                                    // This is only for multi-sim scenario. For single SIM device
-                                    // we should not reach here.
-                                    log("Disable CellBroadcast on sub " + id);
-                                    setCellBroadcastOnSub(manager, false);
-                                }
+                                log("Enable CellBroadcast on sub " + id);
+                                setCellBroadcastOnSub(manager, true, isDefaultSub);
                             }
                         }
                     }
@@ -104,7 +98,7 @@ public class CellBroadcastConfigService extends IntentService {
                         // For no sim scenario.
                         SmsManager manager = SmsManager.getDefault();
                         if (manager != null) {
-                            setCellBroadcastOnSub(manager, true);
+                            setCellBroadcastOnSub(manager, true, true);
                         }
                     }
                 }
@@ -112,6 +106,11 @@ public class CellBroadcastConfigService extends IntentService {
                 Log.e(TAG, "exception enabling cell broadcast channels", ex);
             }
         }
+    }
+
+    @VisibleForTesting
+    public void setCellBroadcastOnSub(SmsManager manager, boolean enableForSub) {
+        setCellBroadcastOnSub(manager, enableForSub, true);
     }
 
     /**
@@ -122,7 +121,8 @@ public class CellBroadcastConfigService extends IntentService {
      *                     will disable all messages
      */
     @VisibleForTesting
-    public void setCellBroadcastOnSub(SmsManager manager, boolean enableForSub) {
+    public void setCellBroadcastOnSub(SmsManager manager, boolean enableForSub,
+            boolean isDefaultSub) {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -177,6 +177,7 @@ public class CellBroadcastConfigService extends IntentService {
             log("enableEtwsTestAlerts = " + enableEtwsTestAlerts);
             log("enableCmasTestAlerts = " + enableCmasTestAlerts);
             log("enableAreaUpdateInfoAlerts = " + enableAreaUpdateInfoAlerts);
+            log("isDefaultSub = " + isDefaultSub);
         }
 
         /** Enable CDMA CMAS series messages. */
@@ -306,7 +307,7 @@ public class CellBroadcastConfigService extends IntentService {
                     // Skip area update info channels if it's not enabled.
                     continue;
                 }
-                setCellBroadcastRange(manager, enableEmergencyAlerts,
+                setCellBroadcastRange(manager, enableEmergencyAlerts && isDefaultSub,
                         SmsManager.CELL_BROADCAST_RAN_TYPE_GSM,
                         range.mStartId, range.mEndId);
             }
