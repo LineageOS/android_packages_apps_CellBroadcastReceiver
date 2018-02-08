@@ -163,6 +163,11 @@ public class CellBroadcastDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        log("downgrading DB from version " + oldVersion + " to " + newVersion);
+    }
+
     /**
      * Upgrades a single broadcast message from version 1 to version 2.
      */
