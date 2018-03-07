@@ -270,8 +270,7 @@ public class CellBroadcastSettings extends Activity {
                 mAlertCategory.removePreference(mAmberCheckBox);
             }
 
-            if (!Resources.getSystem().getBoolean(
-                    com.android.internal.R.bool.config_showAreaUpdateInfoSettings)) {
+            if (!isAreaUpdateInfoSettingsEnabled(getContext())) {
                 mAlertCategory.removePreference(mAreaUpdateInfoCheckBox);
             }
 
@@ -373,6 +372,20 @@ public class CellBroadcastSettings extends Activity {
                 mDevSettingCategory.setEnabled(alertsEnabled);
             }
         }
+    }
+
+    public static boolean isAreaUpdateInfoSettingsEnabled(Context context) {
+        int subId = SubscriptionManager.getDefaultSmsSubscriptionId();
+        if (subId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+            subId = SubscriptionManager.getDefaultSubscriptionId();
+        }
+
+        //Context con = getContext().createPackageContext("android", 0);
+        Resources res = SubscriptionManager.getResourcesForSubId( context, subId);
+        Log.d(TAG, "subId: " + subId);
+        boolean value = res.getBoolean(R.bool.config_showAreaUpdateInfoSettings);
+        Log.d(TAG, "value: " + value);
+        return value;
     }
 
     public static boolean isFeatureEnabled(Context context, String feature, boolean defaultValue) {

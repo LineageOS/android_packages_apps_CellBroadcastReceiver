@@ -387,8 +387,8 @@ public class CellBroadcastAlertService extends Service {
                 CellBroadcastSettings.isFeatureEnabled(this,
                         CarrierConfigManager.KEY_CARRIER_FORCE_DISABLE_ETWS_CMAS_TEST_BOOL, false);
 
-        boolean enableAreaUpdateInfoAlerts = Resources.getSystem().getBoolean(
-                com.android.internal.R.bool.config_showAreaUpdateInfoSettings)
+        boolean enableAreaUpdateInfoAlerts =
+                CellBroadcastSettings.isAreaUpdateInfoSettingsEnabled(getApplicationContext())
                 && prefs.getBoolean(CellBroadcastSettings.KEY_ENABLE_AREA_UPDATE_INFO_ALERTS,
                 false);
 

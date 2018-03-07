@@ -29,4 +29,5 @@
     <integer name="alert_duration">-1</integer>
     <!-- Whether to compare message body when performing message duplicate dection -->
     <bool name="duplicate_compare_body">false</bool>
+    <bool name="config_showAreaUpdateInfoSettings">false</bool>
 </resources>

@@ -161,10 +161,9 @@ public class CellBroadcastConfigService extends IntentService {
                 enableEmergencyAlerts &&
                 prefs.getBoolean(CellBroadcastSettings.KEY_ENABLE_CMAS_TEST_ALERTS, false);
 
-        boolean enableAreaUpdateInfoAlerts = Resources.getSystem().getBoolean(
-                com.android.internal.R.bool.config_showAreaUpdateInfoSettings)
-                && prefs.getBoolean(CellBroadcastSettings.KEY_ENABLE_AREA_UPDATE_INFO_ALERTS,
-                false);
+        boolean enableAreaUpdateInfoAlerts =
+                CellBroadcastSettings.isAreaUpdateInfoSettingsEnabled(this) &&
+                prefs.getBoolean(CellBroadcastSettings.KEY_ENABLE_AREA_UPDATE_INFO_ALERTS, false);
 
         if (VDBG) {
             log("enableEmergencyAlerts = " + enableEmergencyAlerts);
