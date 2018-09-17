@@ -442,8 +442,8 @@ public class CellBroadcastAlertService extends Service {
         // CMAS warning types
         if (CellBroadcastChannelManager.checkCellBroadcastChannelRange(subId,
                 channel, R.array.cmas_presidential_alerts_channels_range_strings, this)) {
-            // always enabled
-            return true;
+            // only enabled if user is a monkey
+            return ActivityManager.isUserAMonkey();
         }
         if (CellBroadcastChannelManager.checkCellBroadcastChannelRange(subId,
                 channel, R.array.cmas_alert_extreme_channels_range_strings, this)) {
