@@ -22,6 +22,30 @@
       "revId": "8f4bb9b9c8e2d774afc8fd069d4b2fe9e2021207",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75f9019e_fce5418b",
+        "filename": "src/com/android/cellbroadcastreceiver/CellBroadcastConfigService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6753
+      },
+      "writtenOn": "2018-09-23T14:14:57Z",
+      "side": 1,
+      "message": "One could argue not changing it adds and extra unnecessary function step to go through.",
+      "parentUuid": "ae8b7b9a_dcf22ef8",
+      "range": {
+        "startLine": 101,
+        "startChar": 28,
+        "endLine": 101,
+        "endChar": 71
+      },
+      "revId": "8f4bb9b9c8e2d774afc8fd069d4b2fe9e2021207",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
