@@ -31,11 +31,11 @@
   <string name="cb_channel_dialog_channel_name">Kanalnamn (0-10 tecken)</string>
   <string name="cb_channel_dialog_channel_number">Kanalnummer (0-65534)</string>
   <string name="cb_channel_dialog_channel_state">Aktivera kanalen</string>
-  <string name="cb_error_channel_num">Ange kanal number (0-65534).</string>
+  <string name="cb_error_channel_num">Ange kanalnummer (0-65534).</string>
   <string name="cb_menu_add_channel">Lägg till kanal</string>
   <string name="cb_menu_channel_list">Kanallista</string>
   <string name="enable">Aktivera</string>
-  <string name="disable">Avaktivera</string>
+  <string name="disable">Inaktivera</string>
   <string name="cb_error_channel_id_exist">Kanalens ID finns redan.</string>
   <string name="cb_channel_dialog_edit_channel">Redigera kanal</string>
   <string name="cb_default_new_channel_name">Ny kanal</string>

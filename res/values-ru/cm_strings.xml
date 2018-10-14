@@ -47,7 +47,7 @@
   <string name="cb_default_new_channel_name">Новый канал</string>
   <string name="cb_menu_edit">Изменить</string>
   <string name="cb_menu_delete">Удалить сообщение</string>
-  <string name="cell_broadcast_setting">Настройки приёма сообщ. сети</string>
+  <string name="cell_broadcast_setting">Настройки приема сообщ. сети</string>
   <string name="error_updating_title">Ошибка настройки вызовов</string>
   <string name="reading_settings">Чтение настроек</string>
   <string name="updating_settings">Обновление настроек</string>
