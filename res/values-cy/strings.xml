@@ -17,6 +17,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- The name of the Cell Broadcast Receiver app. [CHAR LIMIT=NONE] -->
     <!-- Label for settings screen. [CHAR LIMIT=NONE] -->
+    <string name="sms_cb_settings">Rhybuddion argyfwng</string>
     <!-- Error message for users that aren't allowed to modify Cell broadcast settings [CHAR LIMIT=none] -->
     <!-- Text for dismiss button in broadcast message view dialog. [CHAR LIMIT=25] -->
     <string name="button_dismiss">Iawn</string>
@@ -24,14 +25,20 @@
     <!-- Menu item for accessing application settings. [CHAR LIMIT=30] -->
     <string name="menu_preferences">Gosodiadau</string>
     <!-- Menu item for deleting all broadcasts. [CHAR LIMIT=30] -->
+    <string name="menu_delete_all">Dileu darllediad</string>
     <!-- Header for context menu on an individual broadcast. [CHAR LIMIT=30] -->
+    <string name="message_options">Dewisiadau neges</string>
     <!-- Context menu item for viewing broadcast details such as time and date. [CHAR LIMIT=30] -->
+    <string name="menu_view_details">Gweld manylion</string>
     <!-- Context menu item to delete a previously received broadcast. [CHAR LIMIT=30] -->
+    <string name="menu_delete">Dileu\'r darllediad</string>
     <!-- Title of "View details" dialog -->
     <string name="view_details_title">Manylion rhybudd</string>
     <!-- Confirm Delete -->
     <!-- Delete broadcast confirmation dialog message. [CHAR LIMIT=NONE] -->
+    <string name="confirm_delete_broadcast">Dileu\'r darllediad hwn?</string>
     <!-- Delete all broadcasts confirmation dialog message. [CHAR LIMIT=NONE] -->
+    <string name="confirm_delete_all_broadcasts">Dileu pob neges ddarllediad wedi\'i derbyn?</string>
     <!-- Delete button text for delete broadcast dialog. [CHAR LIMIT=25] -->
     <string name="button_delete">Dileu</string>
     <!-- Cancel button text for delete broadcast dialog. [CHAR LIMIT=25] -->
@@ -39,16 +46,21 @@
     <!-- ETWS dialog title for Earthquake Warning. [CHAR LIMIT=50] -->
     <string name="etws_earthquake_warning">Rhybudd daeargryn</string>
     <!-- ETWS dialog title for Tsunami Warning. [CHAR LIMIT=50] -->
+    <string name="etws_tsunami_warning">Rhybudd tswnami</string>
     <!-- ETWS dialog title for Earthquake and Tsunami Warning. [CHAR LIMIT=50] -->
+    <string name="etws_earthquake_and_tsunami_warning">Rhybudd daeargryn a thswnami</string>
     <!-- ETWS dialog title for test message. [CHAR LIMIT=50] -->
+    <string name="etws_test_message">Neges arbrawf ETWS</string>
     <!-- ETWS dialog title for other emergency type. [CHAR LIMIT=50] -->
     <string name="etws_other_emergency_type">Rhybydd argyfwng</string>
     <!-- CMAS dialog title for presidential level alert. [CHAR LIMIT=50] -->
+    <string name="cmas_presidential_level_alert">Rhybudd o swyddfa\'r Arlywydd</string>
     <!-- CMAS dialog title for extreme alert. [CHAR LIMIT=50] -->
     <string name="cmas_extreme_alert">Rhybudd argyfwng: Eithafol</string>
     <!-- CMAS dialog title for severe alert. [CHAR LIMIT=50] -->
     <string name="cmas_severe_alert">Rhybudd argyfwng: Difrifol</string>
     <!-- CMAS dialog title for child abduction emergency (Amber Alert). [CHAR LIMIT=50] -->
+    <string name="cmas_amber_alert">Herwgipiad plentyn (Rhybudd oren)</string>
     <!-- CMAS dialog title for required monthly test. [CHAR LIMIT=50] -->
     <string name="cmas_required_monthly_test">Prawf misol y rhybudd argyfwng</string>
     <!-- CMAS dialog title for CMAS Exercise. [CHAR LIMIT=50] -->
@@ -58,33 +70,52 @@
     <!-- Dialog title for all other message identifiers in the PWS range. [CHAR LIMIT=50] -->
     <string name="pws_other_message_identifiers">Rhybudd argyfwng</string>
     <!-- Dialog title for all non-emergency cell broadcasts. [CHAR LIMIT=50] -->
+    <string name="cb_other_message_identifiers">Negeseuon darllediadau</string>
     <!-- Preference category title for emergency alert settings. [CHAR LIMIT=50] -->
     <string name="emergency_alerts_title">Rhybuddion</string>
     <!-- Notification channel name for a channel containing cell broadcast messages notifications. [CHAR LIMIT=50] -->
+    <string name="notification_channel_broadcast_messages">Negeseuon darllediadau</string>
     <!-- Preference title for enable emergency alerts checkbox. [CHAR LIMIT=50] -->
     <string name="enable_emergency_alerts_title">Caniatáu rhybuddion</string>
     <!-- Preference summaries for allow alerts checkbox. [CHAR LIMIT=50] -->
+    <string name="enable_emergency_alerts_summary">Derbyn hysbysiadau argyfwng</string>
     <!-- Preference title for alert reminder interval list. [CHAR LIMIT=50] -->
+    <string name="alert_reminder_interval_title">Sain atgoffa am rybudd</string>
     <!-- Do not translate. Empty summary for alert reminder (set by CellBroadcastSettings). -->
     <!-- Preference title for enable text-to-speech checkbox. [CHAR LIMIT=50] -->
     <!-- Preference summary for enable text-to-speech checkbox. [CHAR LIMIT=100] -->
     <!-- Preference title for emergency alert history. [CHAR LIMIT=50] -->
+    <string name="emergency_alert_history_title">Hanes rhybuddion argyfwng</string>
     <!-- Preference category title for alert preferences. [CHAR LIMIT=50] -->
+    <string name="alert_preferences_title">Dewisiadau rhybuddion</string>
     <!-- Preference title for enable ETWS test alerts checkbox. [CHAR LIMIT=50] -->
+    <string name="enable_etws_test_alerts_title">Darllediadau profi ETWS</string>
     <!-- Preference summary for enable ETWS test alerts checkbox. [CHAR LIMIT=100] -->
+    <string name="enable_etws_test_alerts_summary">Darllediadau profi\'r System Rhybudd Daeargryn a Thswnami (ETWS)</string>
     <!-- Preference title for enable CMAS extreme threat alerts checkbox. [CHAR LIMIT=50] -->
+    <string name="enable_cmas_extreme_threat_alerts_title">Bygythiadau eithafol</string>
     <!-- Preference summary for enable CMAS extreme threat alerts checkbox. [CHAR LIMIT=100] -->
+    <string name="enable_cmas_extreme_threat_alerts_summary">Bygythiadau eithafol i fywydau ac eiddo</string>
     <!-- Preference title for enable CMAS severe threat alerts checkbox. [CHAR LIMIT=50] -->
+    <string name="enable_cmas_severe_threat_alerts_title">Bygythiadau difrifol</string>
     <!-- Preference summary for enable CMAS severe threat alerts checkbox. [CHAR LIMIT=100] -->
+    <string name="enable_cmas_severe_threat_alerts_summary">Bygythiadau difrifol i fywydau ac eiddo</string>
     <!-- Preference title for enable CMAS amber alerts checkbox. [CHAR LIMIT=50] -->
+    <string name="enable_cmas_amber_alerts_title">Rhybuddion OREN</string>
     <!-- Preference summary for enable CMAS amber alerts checkbox. [CHAR LIMIT=100] -->
+    <string name="enable_cmas_amber_alerts_summary">Bwletinau argyfwng cipio plentyn</string>
     <!-- Preference title for enable CMAS test alerts checkbox. [CHAR LIMIT=50] -->
+    <string name="enable_cmas_test_alerts_title">Darllediadau profi CMAS</string>
     <!-- Preference summary for enable CMAS test alerts checkbox. [CHAR LIMIT=100] -->
+    <string name="enable_cmas_test_alerts_summary">Darllediadau profi\'r System Rhybudd Symudol Masnachol (CMAS)</string>
     <!-- Preference title for CMAS vibration on/off. [CHAR LIMIT=50] -->
     <string name="enable_alert_vibrate_title">Dirgrynu</string>
     <!-- Preference title for use full volume option. [CHAR LIMIT=50] -->
+    <string name="use_full_volume_title">Defnyddio sain uchaf</string>
     <!-- Preference summary for use full volume option. [CHAR LIMIT=100] -->
+    <string name="use_full_volume_summary">Anwybyddu Dim Tarfu a dewisiadau sain eraill</string>
     <!-- Preference title for enable area update information broadcasts. [CHAR LIMIT=50] -->
+    <string name="enable_area_update_info_alerts_title">Darllediadau diweddariadau ardal</string>
     <!-- Preference summary for enable area update information broadcasts. [CHAR LIMIT=100] -->
     <string name="enable_area_update_info_alerts_summary">Dangos gwybodaeth ddiweddariad yn statws SIM</string>
     <!-- Preference category title for developer settings. [CHAR LIMIT=50] -->
@@ -137,12 +168,13 @@
     <!-- Text for negative button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
     <string name="cmas_opt_out_button_no">Na</string>
     <!-- Title for CellBroadcastListActivity -->
+    <string name="cb_list_activity_title">"Hanes rhybuddion argyfwng"</string>
     <!-- Entries in the ListPreference for alert reminder intervals. [CHAR LIMIT=30] -->
     <string-array name="alert_reminder_interval_entries">
-        <item>Once</item>
-        <item>Every 2 minutes</item>
+        <item>Unwaith</item>
+        <item>Pob 2 funud</item>
         <item>Pob 5 munud</item>
-        <item>Every 15 minutes</item>
+        <item>Pob 15 munud</item>
         <item>I ffwrdd</item>
     </string-array>
     <!-- Do not translate. Values that are retrieved from the ListPreference.
