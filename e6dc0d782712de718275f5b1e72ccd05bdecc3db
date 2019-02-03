@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c3d7281_aba095a1",
+        "filename": "src/com/android/cellbroadcastreceiver/CellBroadcastAlertService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 12847
+      },
+      "writtenOn": "2019-02-03T07:51:09Z",
+      "side": 1,
+      "message": "You mean ActivityManager.isUserThreeMonkeys(); , don\u0027t you?\nLove this change!",
+      "revId": "e6dc0d782712de718275f5b1e72ccd05bdecc3db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
