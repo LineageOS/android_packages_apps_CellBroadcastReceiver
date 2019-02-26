@@ -73,6 +73,7 @@
     <!-- Dialog title for all other message identifiers in the PWS range. [CHAR LIMIT=50] -->
     <!-- Dialog title for all non-emergency cell broadcasts. [CHAR LIMIT=50] -->
     <!-- Dialog title for all public safety message broadcasts. [CHAR LIMIT=50] -->
+    <!-- Dialog title for all state/local test alerts. [CHAR LIMIT=50] -->
     <!-- Dialog title or menu title of emergency alert. [CHAR LIMIT=50] -->
     <string name="emergency_alert">جىددىي ئاگاھلاندۇرۇش</string>
     <!-- Preference category title for emergency alert settings. [CHAR LIMIT=50] -->
@@ -100,6 +101,8 @@
     <!-- Preference summary for enable alerts messages checkbox. [CHAR LIMIT=100] -->
     <!-- Preference title for enable public safety messages checkbox. [CHAR LIMIT=100] -->
     <!-- Preference summary for enable public safety messages checkbox. [CHAR LIMIT=100] -->
+    <!-- Preference title for enable state/local test alerts checkbox. [CHAR LIMIT=100] -->
+    <!-- Preference summary for enable state/local test alerts checkbox. [CHAR LIMIT=100] -->
     <!-- Preference title for enable emergency alerts messages checkbox. [CHAR LIMIT=100] -->
     <!-- Preference summary for enable emergency alerts messages checkbox. [CHAR LIMIT=100] -->
     <!-- Preference title for required monthly test alert checkbox. [CHAR LIMIT=50] -->

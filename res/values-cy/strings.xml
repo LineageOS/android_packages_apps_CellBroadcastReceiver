@@ -16,9 +16,11 @@
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- The name of the Cell Broadcast Receiver app. [CHAR LIMIT=NONE] -->
+    <string name="app_label">Darllediadau Symudol</string>
     <!-- Label for settings screen. [CHAR LIMIT=NONE] -->
     <string name="sms_cb_settings">Rhybuddion argyfwng</string>
     <!-- Error message for users that aren't allowed to modify Cell broadcast settings [CHAR LIMIT=none] -->
+    <string name="cell_broadcast_settings_not_available">Dyw gosodiadau darllediadau symudol ddim ar gael ar gyfer y defnyddiwr hwn.</string>
     <!-- Text for dismiss button in broadcast message view dialog. [CHAR LIMIT=25] -->
     <string name="button_dismiss">Iawn</string>
     <!-- Text for list view when empty (no broadcasts). [CHAR LIMIT=200] -->
@@ -73,6 +75,8 @@
     <!-- Dialog title for all non-emergency cell broadcasts. [CHAR LIMIT=50] -->
     <string name="cb_other_message_identifiers">Negeseuon darllediadau</string>
     <!-- Dialog title for all public safety message broadcasts. [CHAR LIMIT=50] -->
+    <string name="public_safety_message">Neges diogelwch cyhoeddus</string>
+    <!-- Dialog title for all state/local test alerts. [CHAR LIMIT=50] -->
     <!-- Dialog title or menu title of emergency alert. [CHAR LIMIT=50] -->
     <string name="emergency_alert">Rhybudd argyfwng</string>
     <!-- Preference category title for emergency alert settings. [CHAR LIMIT=50] -->
@@ -89,7 +93,9 @@
     <string name="alert_reminder_interval_title">Sain atgoffa am rybudd</string>
     <!-- Do not translate. Empty summary for alert reminder (set by CellBroadcastSettings). -->
     <!-- Preference title for enable text-to-speech checkbox. [CHAR LIMIT=50] -->
+    <string name="enable_alert_speech_title">Llefaru\'r neges rhybudd</string>
     <!-- Preference summary for enable text-to-speech checkbox. [CHAR LIMIT=100] -->
+    <string name="enable_alert_speech_summary">Defnyddio testun-i-lefarydd i adrodd negeseuon rhybuddion argyfwng</string>
     <!-- Preference title for emergency alert history. [CHAR LIMIT=50] -->
     <string name="emergency_alert_history_title">Hanes rhybuddion argyfwng</string>
     <!-- Preference category title for alert preferences. [CHAR LIMIT=50] -->
@@ -111,14 +117,22 @@
     <!-- Preference summary for enable CMAS amber alerts checkbox. [CHAR LIMIT=100] -->
     <string name="enable_cmas_amber_alerts_summary">Bwletinau argyfwng cipio plentyn</string>
     <!-- Preference title for enable alerts messages checkbox. [CHAR LIMIT=100] -->
+    <string name="enable_alert_message_title">Negeseuon rhybudd</string>
     <!-- Preference summary for enable alerts messages checkbox. [CHAR LIMIT=100] -->
+    <string name="enable_alert_message_summary">Rhybuddio am beryglon gerllaw</string>
     <!-- Preference title for enable public safety messages checkbox. [CHAR LIMIT=100] -->
+    <string name="enable_public_safety_messages_title">Negeseuon diogelwch cyhoeddus</string>
     <!-- Preference summary for enable public safety messages checkbox. [CHAR LIMIT=100] -->
+    <string name="enable_public_safety_messages_summary">Gweithredoedd a argymhellir er mwyn achub eiddo a bywydau</string>
+    <!-- Preference title for enable state/local test alerts checkbox. [CHAR LIMIT=100] -->
+    <!-- Preference summary for enable state/local test alerts checkbox. [CHAR LIMIT=100] -->
     <!-- Preference title for enable emergency alerts messages checkbox. [CHAR LIMIT=100] -->
     <string name="enable_emergency_alerts_message_title">Rhybuddion argyfwng</string>
     <!-- Preference summary for enable emergency alerts messages checkbox. [CHAR LIMIT=100] -->
+    <string name="enable_emergency_alerts_message_summary">Rhybuddio am ddigwyddiadau sy\'n peryglu bywydau</string>
     <!-- Preference title for required monthly test alert checkbox. [CHAR LIMIT=50] -->
     <!-- Preference summary for enable required monthly test alerts checkbox. [CHAR LIMIT=100] -->
+    <string name="enable_cmas_test_alerts_summary">Defnyddio negeseuon profi ar gyfer y system rhybudd diogelwch</string>
     <!-- Preference title for CMAS vibration on/off. [CHAR LIMIT=50] -->
     <string name="enable_alert_vibrate_title">Dirgrynu</string>
     <!-- Preference title for use full volume option. [CHAR LIMIT=50] -->
@@ -130,52 +144,83 @@
     <!-- Preference summary for enable area update information broadcasts. [CHAR LIMIT=100] -->
     <string name="enable_area_update_info_alerts_summary">Dangos gwybodaeth ddiweddariad yn statws SIM</string>
     <!-- Preference category title for developer settings. [CHAR LIMIT=50] -->
+    <string name="category_dev_settings_title">Dewisiadau datblygwr</string>
     <!-- CMAS alert category heading (including colon). [CHAR LIMIT=30] -->
     <string name="cmas_category_heading">Categori Rhybudd:</string>
     <!-- CMAS category for geophysical alerts. [CHAR LIMIT=50] -->
+    <string name="cmas_category_geo">Geoffisegol</string>
     <!-- CMAS category for meteorological alerts. [CHAR LIMIT=50] -->
+    <string name="cmas_category_met">Meteorolegol</string>
     <!-- CMAS category for general emergency and public safety alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_safety">Diogelwch</string>
     <!-- CMAS category for security alerts (law enforcement, military, etc.). [CHAR LIMIT=50] -->
     <string name="cmas_category_security">Diogelwch</string>
     <!-- CMAS category for rescue and recovery alerts. [CHAR LIMIT=50] -->
+    <string name="cmas_category_rescue">Achub</string>
     <!-- CMAS category for fire suppression and rescue alerts. [CHAR LIMIT=50] -->
+    <string name="cmas_category_fire">Tân</string>
     <!-- CMAS category for medical and public health alerts. [CHAR LIMIT=50] -->
+    <string name="cmas_category_health">Iechyd</string>
     <!-- CMAS category for pollution and other environmental alerts. [CHAR LIMIT=50] -->
+    <string name="cmas_category_env">Amgylcheddol</string>
     <!-- CMAS category for transportation alerts. [CHAR LIMIT=50] -->
+    <string name="cmas_category_transport">Cludiant</string>
     <!-- CMAS category for utility, telecommunication, and other infrastructure alerts. [CHAR LIMIT=50] -->
+    <string name="cmas_category_infra">Seilwaith</string>
     <!-- CMAS category for chemical, biological, radiological, nuclear alerts. [CHAR LIMIT=50] -->
+    <string name="cmas_category_cbrne">Cemegol/Biolegol/Niwclear/Ffrwydrol</string>
     <!-- CMAS category for other alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_other">Arall</string>
     <!-- CMAS response type heading (including colon). [CHAR LIMIT=30] -->
+    <string name="cmas_response_heading">Math o Ymateb:</string>
     <!-- CMAS response type: take shelter in place. [CHAR LIMIT=50] -->
+    <string name="cmas_response_shelter">Cysgodwch</string>
     <!-- CMAS response type: evacuate (relocate). [CHAR LIMIT=50] -->
+    <string name="cmas_response_evacuate">Gadewch yr ardal</string>
     <!-- CMAS response type: make preparations. [CHAR LIMIT=50] -->
+    <string name="cmas_response_prepare">Paratowch</string>
     <!-- CMAS response type: execute a pre-planned activity. [CHAR LIMIT=50] -->
+    <string name="cmas_response_execute">Gweithredwch</string>
     <!-- CMAS response type: monitor information sources. [CHAR LIMIT=50] -->
+    <string name="cmas_response_monitor">Monitrwch y sefyllfa</string>
     <!-- CMAS response type: avoid hazard. [CHAR LIMIT=50] -->
     <string name="cmas_response_avoid">Osgoi</string>
     <!-- CMAS response type: evaluate the information in this message. [CHAR LIMIT=50] -->
+    <string name="cmas_response_assess">Asesu</string>
     <!-- CMAS response type: no action recommended. [CHAR LIMIT=50] -->
     <string name="cmas_response_none">Dim</string>
     <!-- CMAS severity heading (including colon). [CHAR LIMIT=30] -->
+    <string name="cmas_severity_heading">Difrifoldeb:</string>
     <!-- CMAS severity type: extreme. [CHAR LIMIT=30] -->
+    <string name="cmas_severity_extreme">Eithafol</string>
     <!-- CMAS severity type: severe. [CHAR LIMIT=30] -->
+    <string name="cmas_severity_severe">Difrifol</string>
     <!-- CMAS urgency heading (including colon). [CHAR LIMIT=30] -->
+    <string name="cmas_urgency_heading">Brys:</string>
     <!-- CMAS urgency type: take responsive action immediately. [CHAR LIMIT=30] -->
+    <string name="cmas_urgency_immediate">Ar unwaith</string>
     <!-- CMAS severity type: severe. [CHAR LIMIT=30] -->
+    <string name="cmas_urgency_expected">Disgwyliedig</string>
     <!-- CMAS certainty heading (including colon). [CHAR LIMIT=30] -->
+    <string name="cmas_certainty_heading">Sicrwydd:</string>
     <!-- CMAS certainty type: observed. [CHAR LIMIT=30] -->
+    <string name="cmas_certainty_observed">Dan sylw</string>
     <!-- CMAS severity type: severe. [CHAR LIMIT=30] -->
+    <string name="cmas_certainty_likely">Tebygol</string>
     <!-- Message delivery time (including colon). [CHAR LIMIT=30] -->
+    <string name="delivery_time_heading">Derbyniwyd:</string>
     <!-- Non-emergency broadcast notification description for multiple unread alerts. -->
     <string name="notification_multiple"><xliff:g id="count">%s</xliff:g> rhybudd heb eu darllen</string>
     <!-- Non-emergency broadcast notification title for multiple unread alerts. -->
     <string name="notification_multiple_title">Rhybuddion newydd</string>
     <!-- Show CMAS opt-out dialog on first non-Presidential alert. [CHAR LIMIT=100] -->
+    <string name="show_cmas_opt_out_summary">Dangos deialog yn cynnig y dewis i optio allan ar ôl dangos y rhybudd cyntaf (ond am Rybudd gan yr Arlywydd).</string>
     <!-- Show CMAS opt-out dialog on first non-Presidential alert. [CHAR LIMIT=40] -->
+    <string name="show_cmas_opt_out_title">Dangos deialog optio allan</string>
     <!-- CMAS opt-out dialog message. [CHAR LIMIT=160] -->
+    <string name="cmas_opt_out_dialog_text">Rwyt yn derbyn Rhybuddion Argyfwng ar hyn o bryd. Hoffet barhau i dderbyn Rhybuddion Diogelwch?</string>
     <!-- Text for positive button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
+    <string name="cmas_opt_out_button_yes">Iawn</string>
     <!-- Text for negative button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
     <string name="cmas_opt_out_button_no">Na</string>
     <!-- Title for CellBroadcastListActivity -->
@@ -189,4 +234,5 @@
         <item>I ffwrdd</item>
     </string-array>
     <!-- Label to open emergencyNotifications dialog [CHAR LIMIT=40] -->
+    <string name="emergency_alert_settings_title_watches">Rhybuddion argyfwng diwifr</string>
 </resources>
