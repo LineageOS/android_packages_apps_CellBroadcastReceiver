@@ -16,36 +16,28 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
-  <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">Su canale 60 est impreadu in Ìndia pro informatziones ispetzìficas de s\'operadore</string>
-  <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
-  <string name="enable_cmas_presidential_alerts_title">Ammustra sas allertas presidentziales</string>
-  <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
-  <string name="enable_cmas_presidential_alerts_summary">Ammustra semper sas allertas presidentziales</string>
-  <string name="enable_alert_tone_title">Sonu de allerta</string>
-  <string name="enable_alert_tone_summary">Sonu de allerta allutu</string>
-  <!-- set cellbroadcast enable or disable, default value is true-->
-  <string name="add_channel">Annanghe unu canale</string>
-  <string name="channel_list">Lista de canales</string>
-  <string name="cb_channel_dialog_channel_name">Nùmene de su canale (0-10 caràteres)</string>
-  <string name="cb_channel_dialog_channel_number">Nùmeru de su canale (0-65534)</string>
-  <string name="cb_channel_dialog_channel_state">Abìlita su canale</string>
-  <string name="cb_error_channel_num">Pro praghere inserta su nùmeru de su canale (0-65534).</string>
-  <string name="cb_error_channel_name">Sa longària de su nùmene de su canale non depet èssere de prus de 24 caràteres.</string>
-  <string name="cb_menu_tile">Operatziones canale</string>
-  <string name="cb_menu_add_channel">Annanghe unu canale</string>
-  <string name="cb_menu_channel_list">Lista de canales</string>
-  <string name="enable">Abìlita</string>
-  <string name="disable">Disabìlita</string>
-  <string name="cb_error_channel_id_exist">Custu ID de su canale esistit giai.</string>
-  <string name="cb_default_new_channel_name">Canale nou</string>
-  <string name="cb_menu_edit">Modìfica</string>
-  <string name="close_dialog">AB</string>
-  <string name="updating_title">Impostatziones mutidas</string>
-  <string name="done_text">Fatu</string>
-  <!-- CellBroadcast channel 50 enabled or not,default value is true -->
-  <!-- Customize 50 into filter list -->
-  <string name="cb_channel_50_name">Canale 50</string>
+    <string name="enable_channel_60_alerts_summary">Su canale 60 est impreadu in Ìndia pro informatziones ispetzìficas de s\'operadore</string>
+    <string name="enable_cmas_presidential_alerts_title">Ammustra sas allertas presidentziales</string>
+    <string name="enable_cmas_presidential_alerts_summary">Ammustra semper sas allertas presidentziales</string>
+    <string name="enable_alert_tone_title">Sonu de allerta</string>
+    <string name="enable_alert_tone_summary">Sonu de allerta allutu</string>
+    <string name="add_channel">Annanghe unu canale</string>
+    <string name="channel_list">Lista de canales</string>
+    <string name="cb_channel_dialog_channel_name">Nùmene de su canale (0-10 caràteres)</string>
+    <string name="cb_channel_dialog_channel_number">Nùmeru de su canale (0-65534)</string>
+    <string name="cb_channel_dialog_channel_state">Abìlita su canale</string>
+    <string name="cb_error_channel_num">Pro praghere inserta su nùmeru de su canale (0-65534).</string>
+    <string name="cb_error_channel_name">Sa longària de su nùmene de su canale non depet èssere de prus de 24 caràteres.</string>
+    <string name="cb_menu_tile">Operatziones canale</string>
+    <string name="cb_menu_add_channel">Annanghe unu canale</string>
+    <string name="cb_menu_channel_list">Lista de canales</string>
+    <string name="enable">Abìlita</string>
+    <string name="disable">Disabìlita</string>
+    <string name="cb_error_channel_id_exist">Custu ID de su canale esistit giai.</string>
+    <string name="cb_default_new_channel_name">Canale nou</string>
+    <string name="cb_menu_edit">Modìfica</string>
+    <string name="close_dialog">AB</string>
+    <string name="updating_title">Impostatziones mutidas</string>
+    <string name="done_text">Fatu</string>
+    <string name="cb_channel_50_name">Canale 50</string>
 </resources>

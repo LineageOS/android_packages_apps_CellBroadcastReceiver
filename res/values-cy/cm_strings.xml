@@ -16,38 +16,38 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
-  <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">Mae Sianel 60 yn cael ei ddefnyddio yn India ar gyfer gwybodaeth yn benodol i\'r gweithredwr.</string>
-  <!-- Preference title for presidential Alerts checkbox. [CHAR LIMIT=30] -->
-  <string name="enable_cmas_presidential_alerts_title">Dangos rhybuddion arlywyddol</string>
-  <!-- Preference summary for presidential Alerts checkbox. [CHAR LIMIT=100] -->
-  <string name="enable_cmas_presidential_alerts_summary">Dangos rhybuddion arlywyddol o hyd</string>
-  <string name="enable_alert_tone_title">Tôn rhybudd</string>
-  <string name="enable_alert_tone_summary">Tôn rhybudd ymlaen</string>
-  <!-- set cellbroadcast enable or disable, default value is true-->
-  <string name="add_channel">Ychwanegu sianel</string>
-  <string name="channel_list">Rhestr sianeli</string>
-  <string name="cb_channel_dialog_channel_state">Galluogi\'r sianel</string>
-  <string name="cb_error_channel_num">Rho rif sianel (0-65534).</string>
-  <string name="cb_error_channel_name">Ni all hyd enw\'r sianel fod yn hirach na 24 nod.</string>
-  <string name="cb_menu_tile">Gweithrediad sianel</string>
-  <string name="cb_menu_add_channel">Ychwanegu sianel</string>
-  <string name="cb_menu_channel_list">Rhestr sianeli</string>
-  <string name="enable">Galluogi</string>
-  <string name="disable">Analluogi</string>
-  <string name="cb_error_channel_id_exist">Mae ID y sianel yn bodoli eisoes.</string>
-  <string name="cb_channel_dialog_edit_channel">Golygu sianel</string>
-  <string name="cb_default_new_channel_name">Sianel newydd</string>
-  <string name="cb_menu_edit">Golygu</string>
-  <string name="cb_menu_delete">Dileu darllediad</string>
-  <string name="cell_broadcast_setting">Gosodiadau darllediad symudol</string>
-  <string name="error_finish_dialog_title">Gwall rhwydwaith neu gerdyn SIM.</string>
-  <string name="close_dialog">Iawn</string>
-  <string name="updating_title">Gosodiadau galwadau</string>
-  <string name="done_text">Iawn</string>
-  <!-- CellBroadcast channel 50 enabled or not,default value is true -->
-  <!-- Customize 50 into filter list -->
-  <string name="cb_channel_50_name">Sianel 50</string>
+    <string name="category_india_settings_title">Gosodiadau ar gyfer India</string>
+    <string name="enable_channel_60_alerts_title">Dangos darllediadau sianel 60</string>
+    <string name="enable_channel_60_alerts_summary">Mae Sianel 60 yn cael ei ddefnyddio yn India ar gyfer gwybodaeth yn benodol i\'r gweithredwr.</string>
+    <string name="enable_cmas_presidential_alerts_title">Dangos rhybuddion arlywyddol</string>
+    <string name="enable_cmas_presidential_alerts_summary">Dangos rhybuddion arlywyddol o hyd</string>
+    <string name="enable_alert_tone_title">Tôn rhybudd</string>
+    <string name="enable_alert_tone_summary">Tôn rhybudd ymlaen</string>
+    <string name="add_channel">Ychwanegu sianel</string>
+    <string name="channel_list">Rhestr sianeli</string>
+    <string name="receive_broad_cast">Derfyn darllediad SMS</string>
+    <string name="cb_channel_dialog_channel_name">Enw sianel (0-10 o nodau)</string>
+    <string name="cb_channel_dialog_channel_number">Rhif sianel (0-65534)</string>
+    <string name="cb_channel_dialog_channel_state">Galluogi\'r sianel</string>
+    <string name="cb_error_channel_num">Rho rif sianel (0-65534).</string>
+    <string name="cb_error_channel_name">Ni all hyd enw\'r sianel fod yn hirach na 24 nod.</string>
+    <string name="cb_menu_tile">Gweithrediad sianel</string>
+    <string name="cb_menu_add_channel">Ychwanegu sianel</string>
+    <string name="cb_menu_channel_list">Rhestr sianeli</string>
+    <string name="enable">Galluogi</string>
+    <string name="disable">Analluogi</string>
+    <string name="cb_error_channel_id_exist">Mae ID y sianel yn bodoli eisoes.</string>
+    <string name="cb_channel_dialog_edit_channel">Golygu sianel</string>
+    <string name="cb_default_new_channel_name">Sianel newydd</string>
+    <string name="cb_menu_edit">Golygu</string>
+    <string name="cb_menu_delete">Dileu darllediad</string>
+    <string name="cell_broadcast_setting">Gosodiadau darllediad symudol</string>
+    <string name="error_updating_title">Gwall gosodiadau galwad</string>
+    <string name="reading_settings">Yn darllen gosodiadau</string>
+    <string name="updating_settings">Yn diweddaru gosodiadau</string>
+    <string name="error_finish_dialog_title">Gwall rhwydwaith neu gerdyn SIM.</string>
+    <string name="close_dialog">Iawn</string>
+    <string name="updating_title">Gosodiadau galwadau</string>
+    <string name="done_text">Iawn</string>
+    <string name="cb_channel_50_name">Sianel 50</string>
 </resources>
