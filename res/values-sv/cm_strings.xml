@@ -18,6 +18,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="category_india_settings_title">Inställningar för Indien</string>
     <string name="enable_channel_60_alerts_title">Visa sändningar för kanal 60</string>
+    <string name="enable_channel_60_alerts_summary">Kanal 60 används i Indien för specifik leverantörinformation</string>
+    <string name="enable_cmas_presidential_alerts_summary">Visa alltid allvarliga varningar</string>
     <string name="enable_alert_tone_title">Varningston</string>
     <string name="enable_alert_tone_summary">Varningston på</string>
     <string name="add_channel">Lägg till kanal</string>
