@@ -16,21 +16,15 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Entries listed in the ListPreference for allowed alert durations. [CHAR LIMIT=30] -->
-  <string-array name="cm_alert_sound_duration_entries">
-    <item>2 δευτερόλεπτα</item>
-    <item>4 δευτερόλεπτα</item>
-    <item>6 δευτερόλεπτα</item>
-    <item>8 δευτερόλεπτα</item>
-    <item>10 δευτερόλεπτα</item>
-    <item>Έως ότου απορριφθεί</item>
-  </string-array>
-  <!-- Do not translate. Values that are retrieved from the ListPreference.
-         These must match the alert_sound_duration_entries above. -->
-  <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
-  <string name="category_india_settings_title">Ρυθμίσεις για την Ινδία</string>
-  <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <string name="enable_channel_60_alerts_title">Εμφάνιση εκπομπών καναλιού 60</string>
-  <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">Τo κανάλι 60 χρησιμοποιείται στη Ινδία για πληροφορίες σχετικές με τον πάροχο</string>
+    <string-array name="cm_alert_sound_duration_entries">
+        <item>2 δευτερόλεπτα</item>
+        <item>4 δευτερόλεπτα</item>
+        <item>6 δευτερόλεπτα</item>
+        <item>8 δευτερόλεπτα</item>
+        <item>10 δευτερόλεπτα</item>
+        <item>Έως ότου απορριφθεί</item>
+    </string-array>
+    <string name="category_india_settings_title">Ρυθμίσεις για την Ινδία</string>
+    <string name="enable_channel_60_alerts_title">Εμφάνιση εκπομπών καναλιού 60</string>
+    <string name="enable_channel_60_alerts_summary">Τo κανάλι 60 χρησιμοποιείται στη Ινδία για πληροφορίες σχετικές με τον πάροχο</string>
 </resources>

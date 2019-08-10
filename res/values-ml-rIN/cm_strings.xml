@@ -16,18 +16,12 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Entries listed in the ListPreference for allowed alert durations. [CHAR LIMIT=30] -->
-  <string-array name="cm_alert_sound_duration_entries">
-    <item>2 സെക്കൻഡ്</item>
-    <item>4 സെക്കൻഡ്</item>
-    <item>6 സെക്കൻഡ്</item>
-    <item>8 സെക്കൻഡ്</item>
-    <item>10 സെക്കൻഡ്</item>
-    <item>Until dismissed</item>
-  </string-array>
-  <!-- Do not translate. Values that are retrieved from the ListPreference.
-         These must match the alert_sound_duration_entries above. -->
-  <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
-  <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
+    <string-array name="cm_alert_sound_duration_entries">
+        <item>2 സെക്കൻഡ്</item>
+        <item>4 സെക്കൻഡ്</item>
+        <item>6 സെക്കൻഡ്</item>
+        <item>8 സെക്കൻഡ്</item>
+        <item>10 സെക്കൻഡ്</item>
+        <item>Until dismissed</item>
+    </string-array>
 </resources>

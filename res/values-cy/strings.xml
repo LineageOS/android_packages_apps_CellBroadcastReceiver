@@ -15,105 +15,116 @@
      limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- The name of the Cell Broadcast Receiver app. [CHAR LIMIT=NONE] -->
-  <!-- Label for settings screen. [CHAR LIMIT=NONE] -->
-  <!-- Error message for users that aren't allowed to modify Cell broadcast settings [CHAR LIMIT=none] -->
-  <!-- Text for dismiss button in broadcast message view dialog. [CHAR LIMIT=25] -->
-  <!-- Text for list view when empty (no broadcasts). [CHAR LIMIT=200] -->
-  <!-- Menu item for accessing application settings. [CHAR LIMIT=30] -->
-  <!-- Menu item for deleting all broadcasts. [CHAR LIMIT=30] -->
-  <!-- Header for context menu on an individual broadcast. [CHAR LIMIT=30] -->
-  <!-- Context menu item for viewing broadcast details such as time and date. [CHAR LIMIT=30] -->
-  <!-- Context menu item to delete a previously received broadcast. [CHAR LIMIT=30] -->
-  <!-- Title of "View details" dialog -->
-  <!-- Confirm Delete -->
-  <!-- Delete broadcast confirmation dialog message. [CHAR LIMIT=NONE] -->
-  <!-- Delete all broadcasts confirmation dialog message. [CHAR LIMIT=NONE] -->
-  <!-- Delete button text for delete broadcast dialog. [CHAR LIMIT=25] -->
-  <!-- Cancel button text for delete broadcast dialog. [CHAR LIMIT=25] -->
-  <!-- ETWS dialog title for Earthquake Warning. [CHAR LIMIT=50] -->
-  <!-- ETWS dialog title for Tsunami Warning. [CHAR LIMIT=50] -->
-  <!-- ETWS dialog title for Earthquake and Tsunami Warning. [CHAR LIMIT=50] -->
-  <!-- ETWS dialog title for test message. [CHAR LIMIT=50] -->
-  <!-- ETWS dialog title for other emergency type. [CHAR LIMIT=50] -->
-  <!-- CMAS dialog title for presidential level alert. [CHAR LIMIT=50] -->
-  <!-- CMAS dialog title for extreme alert. [CHAR LIMIT=50] -->
-  <!-- CMAS dialog title for severe alert. [CHAR LIMIT=50] -->
-  <!-- CMAS dialog title for child abduction emergency (Amber Alert). [CHAR LIMIT=50] -->
-  <!-- CMAS dialog title for required monthly test. [CHAR LIMIT=50] -->
-  <!-- CMAS dialog title for CMAS Exercise. [CHAR LIMIT=50] -->
-  <!-- CMAS dialog title for operator defined use. [CHAR LIMIT=50] -->
-  <!-- Dialog title for all other message identifiers in the PWS range. [CHAR LIMIT=50] -->
-  <!-- Dialog title for all non-emergency cell broadcasts. [CHAR LIMIT=50] -->
-  <!-- Preference category title for emergency alert settings. [CHAR LIMIT=50] -->
-  <!-- Preference title for enable emergency alerts checkbox. [CHAR LIMIT=30] -->
-  <!-- Preference summary for enable notifications checkbox. [CHAR LIMIT=50] -->
-  <!-- Preference title for alert sound duration list. [CHAR LIMIT=30] -->
-  <!-- Do not translate. Empty summary for alert duration (set by CellBroadcastSettings). -->
-  <!-- Preference title for alert reminder interval list. [CHAR LIMIT=30] -->
-  <!-- Do not translate. Empty summary for alert reminder (set by CellBroadcastSettings). -->
-  <!-- Preference title for enable text-to-speech checkbox. [CHAR LIMIT=30] -->
-  <!-- Preference summary for enable text-to-speech checkbox. [CHAR LIMIT=100] -->
-  <!-- Preference category title for ETWS settings. [CHAR LIMIT=50] -->
-  <!-- Preference title for enable ETWS test alerts checkbox. [CHAR LIMIT=30] -->
-  <!-- Preference summary for enable ETWS test alerts checkbox. [CHAR LIMIT=100] -->
-  <!-- Preference title for enable CMAS extreme threat alerts checkbox. [CHAR LIMIT=30] -->
-  <!-- Preference summary for enable CMAS extreme threat alerts checkbox. [CHAR LIMIT=100] -->
-  <!-- Preference title for enable CMAS severe threat alerts checkbox. [CHAR LIMIT=30] -->
-  <!-- Preference summary for enable CMAS severe threat alerts checkbox. [CHAR LIMIT=100] -->
-  <!-- Preference title for enable CMAS amber alerts checkbox. [CHAR LIMIT=50] -->
-  <!-- Preference summary for enable CMAS amber alerts checkbox. [CHAR LIMIT=100] -->
-  <!-- Preference title for enable CMAS test alerts checkbox. [CHAR LIMIT=30] -->
-  <!-- Preference summary for enable CMAS test alerts checkbox. [CHAR LIMIT=100] -->
-  <!-- Preference title for CMAS vibration on/off. [CHAR LIMIT=30] -->
-  <!-- Preference summary for CMAS vibration on/off. [CHAR LIMIT=60] -->
-  <!-- Preference category title for Brazil settings. [CHAR LIMIT=50] -->
-  <!-- Preference title for enable channel 50 alerts (Brazil only). [CHAR LIMIT=30] -->
-  <!-- Preference summary for enable channel 50 alerts (Brazil only). [CHAR LIMIT=100] -->
-  <!-- Preference category title for developer settings. [CHAR LIMIT=50] -->
-  <!-- CMAS alert category heading (including colon). [CHAR LIMIT=30] -->
-  <!-- CMAS category for geophysical alerts. [CHAR LIMIT=50] -->
-  <!-- CMAS category for meteorological alerts. [CHAR LIMIT=50] -->
-  <!-- CMAS category for general emergency and public safety alerts. [CHAR LIMIT=50] -->
-  <!-- CMAS category for security alerts (law enforcement, military, etc.). [CHAR LIMIT=50] -->
-  <!-- CMAS category for rescue and recovery alerts. [CHAR LIMIT=50] -->
-  <!-- CMAS category for fire suppression and rescue alerts. [CHAR LIMIT=50] -->
-  <!-- CMAS category for medical and public health alerts. [CHAR LIMIT=50] -->
-  <!-- CMAS category for pollution and other environmental alerts. [CHAR LIMIT=50] -->
-  <!-- CMAS category for transportation alerts. [CHAR LIMIT=50] -->
-  <!-- CMAS category for utility, telecommunication, and other infrastructure alerts. [CHAR LIMIT=50] -->
-  <!-- CMAS category for chemical, biological, radiological, nuclear alerts. [CHAR LIMIT=50] -->
-  <!-- CMAS category for other alerts. [CHAR LIMIT=50] -->
-  <!-- CMAS response type heading (including colon). [CHAR LIMIT=30] -->
-  <!-- CMAS response type: take shelter in place. [CHAR LIMIT=50] -->
-  <!-- CMAS response type: evacuate (relocate). [CHAR LIMIT=50] -->
-  <!-- CMAS response type: make preparations. [CHAR LIMIT=50] -->
-  <!-- CMAS response type: execute a pre-planned activity. [CHAR LIMIT=50] -->
-  <!-- CMAS response type: monitor information sources. [CHAR LIMIT=50] -->
-  <!-- CMAS response type: avoid hazard. [CHAR LIMIT=50] -->
-  <!-- CMAS response type: evaluate the information in this message. [CHAR LIMIT=50] -->
-  <!-- CMAS response type: no action recommended. [CHAR LIMIT=50] -->
-  <!-- CMAS severity heading (including colon). [CHAR LIMIT=30] -->
-  <!-- CMAS severity type: extreme. [CHAR LIMIT=30] -->
-  <!-- CMAS severity type: severe. [CHAR LIMIT=30] -->
-  <!-- CMAS urgency heading (including colon). [CHAR LIMIT=30] -->
-  <!-- CMAS urgency type: take responsive action immediately. [CHAR LIMIT=30] -->
-  <!-- CMAS severity type: severe. [CHAR LIMIT=30] -->
-  <!-- CMAS certainty heading (including colon). [CHAR LIMIT=30] -->
-  <!-- CMAS certainty type: observed. [CHAR LIMIT=30] -->
-  <!-- CMAS severity type: severe. [CHAR LIMIT=30] -->
-  <!-- Message delivery time (including colon). [CHAR LIMIT=30] -->
-  <!-- Non-emergency broadcast notification description for multiple unread alerts. -->
-  <!-- Non-emergency broadcast notification title for multiple unread alerts. -->
-  <!-- Show CMAS opt-out dialog on first non-Presidential alert. [CHAR LIMIT=100] -->
-  <!-- Show CMAS opt-out dialog on first non-Presidential alert. [CHAR LIMIT=40] -->
-  <!-- CMAS opt-out dialog message. [CHAR LIMIT=160] -->
-  <!-- Text for positive button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
-  <!-- Text for negative button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
-  <!-- Entries listed in the ListPreference for allowed alert durations. [CHAR LIMIT=30] -->
-  <!-- Do not translate. Values that are retrieved from the ListPreference.
-         These must match the alert_sound_duration_entries above. -->
-  <!-- Entries in the ListPreference for alert reminder intervals. [CHAR LIMIT=30] -->
-  <!-- Do not translate. Values that are retrieved from the ListPreference.
-         These must match the alert_reminder_interval_entries list above. -->
+    <string name="app_label">Darllediadau Symudol</string>
+    <string name="sms_cb_settings">Gosodiadau darllediadau symudol</string>
+    <string name="cell_broadcast_settings_not_available">Dyw gosodiadau darllediadau symudol ddim ar gael ar gyfer y defnyddiwr hwn.</string>
+    <string name="button_dismiss">Iawn</string>
+    <string name="no_cell_broadcasts">Does dim rhybuddion cyfredol yn dy ardal. Gellir newid gosodiadau Rhybuddion yn y ddewislen Gosodiadau.</string>
+    <string name="menu_preferences">Gosodiadau</string>
+    <string name="menu_delete_all">Dileu darllediad</string>
+    <string name="message_options">Dewisiadau neges</string>
+    <string name="menu_view_details">Gweld manylion</string>
+    <string name="menu_delete">Dileu\'r darllediad</string>
+    <string name="view_details_title">Manylion rhybudd</string>
+    <string name="confirm_delete_broadcast">Dileu\'r darllediad hwn?</string>
+    <string name="confirm_delete_all_broadcasts">Dileu pob neges ddarllediad wedi\'i derbyn?</string>
+    <string name="button_delete">Dileu</string>
+    <string name="button_cancel">Diddymu</string>
+    <string name="etws_earthquake_warning">Rhybudd daeargryn</string>
+    <string name="etws_tsunami_warning">Rhybudd tswnami</string>
+    <string name="etws_earthquake_and_tsunami_warning">Rhybudd daeargryn a thswnami</string>
+    <string name="etws_test_message">Neges arbrawf ETWS</string>
+    <string name="etws_other_emergency_type">Rhybydd argyfwng</string>
+    <string name="cmas_presidential_level_alert">Rhybudd o swyddfa\'r Arlywydd</string>
+    <string name="cmas_extreme_alert">Rhybudd argyfwng: Eithafol</string>
+    <string name="cmas_severe_alert">Rhybudd argyfwng: Difrifol</string>
+    <string name="cmas_amber_alert">Herwgipiad plentyn (Rhybudd oren)</string>
+    <string name="cmas_required_monthly_test">Prawf misol y rhybudd argyfwng</string>
+    <string name="cmas_exercise_alert">Rhybudd argyfwng: Ymarfer</string>
+    <string name="cmas_operator_defined_alert">Rhybudd argyfwng: (defnyddiwr)</string>
+    <string name="pws_other_message_identifiers">Rhybudd argyfwng</string>
+    <string name="cb_other_message_identifiers">Darllediadau symudol</string>
+    <string name="emergency_alert_settings_title">Gosodiadau rhybuddion argyfwng</string>
+    <string name="enable_emergency_alerts_title">Troi hysbysiadau ymlaen</string>
+    <string name="enable_emergency_alerts_summary">Dangos darllediadau rhybuddion argyfyngau</string>
+    <string name="alert_sound_duration_title">Hyd chwarae sain rhybudd</string>
+    <string name="alert_reminder_interval_title">Atgoffa am rybudd</string>
+    <string name="enable_alert_speech_title">Llefaru\'r neges rhybudd</string>
+    <string name="enable_alert_speech_summary">Defnyddio testun-i-lefarydd i adrodd negeseuon rhybuddion argyfwng</string>
+    <string name="category_etws_settings_title">Gosodiadau ETWS</string>
+    <string name="enable_etws_test_alerts_title">Dangos darllediadau profi ETWS</string>
+    <string name="enable_etws_test_alerts_summary">Dangos darllediadau profi\'r System Rhybudd Daeargryn a Thswnami (ETWS)</string>
+    <string name="enable_cmas_extreme_threat_alerts_title">Dangos bygythiadau eithafol</string>
+    <string name="enable_cmas_extreme_threat_alerts_summary">Dangos rhybuddion bygythiad eithafol i fywydau ac eiddo</string>
+    <string name="enable_cmas_severe_threat_alerts_title">Dangos bygythiadau difrifol</string>
+    <string name="enable_cmas_severe_threat_alerts_summary">Dangos rhybuddion bygythiad difrifol i fywydau ac eiddo</string>
+    <string name="enable_cmas_amber_alerts_title">Dangos rhybuddion OREN</string>
+    <string name="enable_cmas_amber_alerts_summary">Dangos bwletinau argyfwng cipio plentyn (rhybudd OREN)</string>
+    <string name="enable_cmas_test_alerts_title">Dangos darllediadau profi CMAS</string>
+    <string name="enable_cmas_test_alerts_summary">Dangos darllediadau profi\'r System Rhybudd Symudol Masnachol (CMAS)</string>
+    <string name="enable_alert_vibrate_title">Dirgrynu</string>
+    <string name="enable_alert_vibrate_summary">Dirgrynu wrth dderbyn rhybudd</string>
+    <string name="category_brazil_settings_title">Gosodiadau ar gyfer Brasil</string>
+    <string name="enable_channel_50_alerts_title">Dangos darllediadau sianel 50</string>
+    <string name="enable_channel_50_alerts_summary">Defnyddir sianel 50 ym Mrasil ar gyfer gwybodaeth diweddaru ardaloedd.</string>
+    <string name="category_dev_settings_title">Dewisiadau datblygwr</string>
+    <string name="cmas_category_heading">Categori Rhybudd:</string>
+    <string name="cmas_category_geo">Geoffisegol</string>
+    <string name="cmas_category_met">Meteorolegol</string>
+    <string name="cmas_category_safety">Diogelwch</string>
+    <string name="cmas_category_security">Diogelwch</string>
+    <string name="cmas_category_rescue">Achub</string>
+    <string name="cmas_category_fire">Tân</string>
+    <string name="cmas_category_health">Iechyd</string>
+    <string name="cmas_category_env">Amgylcheddol</string>
+    <string name="cmas_category_transport">Cludiant</string>
+    <string name="cmas_category_infra">Seilwaith</string>
+    <string name="cmas_category_cbrne">Cemegol/Biolegol/Niwclear/Ffrwydrol</string>
+    <string name="cmas_category_other">Arall</string>
+    <string name="cmas_response_heading">Math o Ymateb:</string>
+    <string name="cmas_response_shelter">Cysgodwch</string>
+    <string name="cmas_response_evacuate">Gadewch yr ardal</string>
+    <string name="cmas_response_prepare">Paratowch</string>
+    <string name="cmas_response_execute">Gweithredwch</string>
+    <string name="cmas_response_monitor">Monitrwch y sefyllfa</string>
+    <string name="cmas_response_avoid">Osgoi</string>
+    <string name="cmas_response_assess">Asesu</string>
+    <string name="cmas_response_none">Dim</string>
+    <string name="cmas_severity_heading">Difrifoldeb:</string>
+    <string name="cmas_severity_extreme">Eithafol</string>
+    <string name="cmas_severity_severe">Difrifol</string>
+    <string name="cmas_urgency_heading">Brys:</string>
+    <string name="cmas_urgency_immediate">Ar unwaith</string>
+    <string name="cmas_urgency_expected">Disgwyliedig</string>
+    <string name="cmas_certainty_heading">Sicrwydd:</string>
+    <string name="cmas_certainty_observed">Dan sylw</string>
+    <string name="cmas_certainty_likely">Tebygol</string>
+    <string name="delivery_time_heading">Derbyniwyd:</string>
+    <string name="notification_multiple"><xliff:g id="count">%s</xliff:g> rhybudd heb eu darllen</string>
+    <string name="notification_multiple_title">Rhybuddion newydd</string>
+    <string name="show_cmas_opt_out_summary">Dangos deialog yn cynnig y dewis i optio allan ar ôl dangos y rhybudd CMAS cyntaf (ond am Rybudd gan yr Arlywydd).</string>
+    <string name="show_cmas_opt_out_title">Dangos deialog optio allan</string>
+    <string name="cmas_opt_out_dialog_text">Rwyt yn derbyn Rhybuddion Argyfwng ar hyn o bryd. Hoffet barhau i dderbyn Rhybuddion Diogelwch?</string>
+    <string name="cmas_opt_out_button_yes">Iawn</string>
+    <string name="cmas_opt_out_button_no">Na</string>
+    <string-array name="alert_sound_duration_entries">
+        <item>2 eiliad</item>
+        <item>4 eiliad</item>
+        <item>6 eiliad</item>
+        <item>8 eiliad</item>
+        <item>10 eiliad</item>
+    </string-array>
+    <string-array name="alert_sound_duration_values">
+        <item>2</item>
+        <item>4</item>
+        <item>6</item>
+        <item>8</item>
+        <item>10</item>
+    </string-array>
+    <string-array name="alert_reminder_interval_entries">
+        <item>Unwaith</item>
+        <item>Pob 2 funud</item>
+        <item>Pob 15 munud</item>
+        <item>I ffwrdd</item>
+    </string-array>
 </resources>

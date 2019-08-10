@@ -16,21 +16,15 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Entries listed in the ListPreference for allowed alert durations. [CHAR LIMIT=30] -->
-  <string-array name="cm_alert_sound_duration_entries">
-    <item>2 秒</item>
-    <item>4 秒</item>
-    <item>6 秒</item>
-    <item>8 秒</item>
-    <item>10 秒</item>
-    <item>直到關閉通知</item>
-  </string-array>
-  <!-- Do not translate. Values that are retrieved from the ListPreference.
-         These must match the alert_sound_duration_entries above. -->
-  <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
-  <string name="category_india_settings_title">印度專用設定</string>
-  <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <string name="enable_channel_60_alerts_title">顯示第 60 頻道的廣播</string>
-  <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">印度使用第 60 頻道的通訊業者特定資訊</string>
+    <string-array name="cm_alert_sound_duration_entries">
+        <item>2 秒</item>
+        <item>4 秒</item>
+        <item>6 秒</item>
+        <item>8 秒</item>
+        <item>10 秒</item>
+        <item>直到關閉通知</item>
+    </string-array>
+    <string name="category_india_settings_title">印度專用設定</string>
+    <string name="enable_channel_60_alerts_title">顯示第 60 頻道的廣播</string>
+    <string name="enable_channel_60_alerts_summary">印度使用第 60 頻道的通訊業者特定資訊</string>
 </resources>

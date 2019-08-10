@@ -16,21 +16,15 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Entries listed in the ListPreference for allowed alert durations. [CHAR LIMIT=30] -->
-  <string-array name="cm_alert_sound_duration_entries">
-    <item>2초</item>
-    <item>4초</item>
-    <item>6초</item>
-    <item>8초</item>
-    <item>10초</item>
-    <item>Until dismissed</item>
-  </string-array>
-  <!-- Do not translate. Values that are retrieved from the ListPreference.
-         These must match the alert_sound_duration_entries above. -->
-  <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
-  <string name="category_india_settings_title">인도 전용 설정</string>
-  <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <string name="enable_channel_60_alerts_title">채널 60 방송 표시</string>
-  <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">인도에서 채널 60은 통신사의 특정 정보 방송에 사용됩니다</string>
+    <string-array name="cm_alert_sound_duration_entries">
+        <item>2초</item>
+        <item>4초</item>
+        <item>6초</item>
+        <item>8초</item>
+        <item>10초</item>
+        <item>Until dismissed</item>
+    </string-array>
+    <string name="category_india_settings_title">인도 전용 설정</string>
+    <string name="enable_channel_60_alerts_title">채널 60 방송 표시</string>
+    <string name="enable_channel_60_alerts_summary">인도에서 채널 60은 통신사의 특정 정보 방송에 사용됩니다</string>
 </resources>

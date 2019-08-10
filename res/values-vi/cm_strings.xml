@@ -16,21 +16,15 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Entries listed in the ListPreference for allowed alert durations. [CHAR LIMIT=30] -->
-  <string-array name="cm_alert_sound_duration_entries">
-    <item>2 giây</item>
-    <item>4 giây</item>
-    <item>6 giây</item>
-    <item>8 giây</item>
-    <item>10 giây</item>
-    <item>Until dismissed</item>
-  </string-array>
-  <!-- Do not translate. Values that are retrieved from the ListPreference.
-         These must match the alert_sound_duration_entries above. -->
-  <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
-  <string name="category_india_settings_title">Cài đặt cho Ấn Độ</string>
-  <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <string name="enable_channel_60_alerts_title">Hiển thị chương trình phát sóng kênh 60</string>
-  <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">Kênh 60 được sử dụng ở Ấn Độ cho thông tin nhà điều hành cụ thể</string>
+    <string-array name="cm_alert_sound_duration_entries">
+        <item>2 giây</item>
+        <item>4 giây</item>
+        <item>6 giây</item>
+        <item>8 giây</item>
+        <item>10 giây</item>
+        <item>Until dismissed</item>
+    </string-array>
+    <string name="category_india_settings_title">Cài đặt cho Ấn Độ</string>
+    <string name="enable_channel_60_alerts_title">Hiển thị chương trình phát sóng kênh 60</string>
+    <string name="enable_channel_60_alerts_summary">Kênh 60 được sử dụng ở Ấn Độ cho thông tin nhà điều hành cụ thể</string>
 </resources>

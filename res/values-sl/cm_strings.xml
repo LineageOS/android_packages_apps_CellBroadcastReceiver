@@ -16,21 +16,15 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Entries listed in the ListPreference for allowed alert durations. [CHAR LIMIT=30] -->
-  <string-array name="cm_alert_sound_duration_entries">
-    <item>2 sekundi</item>
-    <item>4 sekunde</item>
-    <item>6 sekund</item>
-    <item>8 sekund</item>
-    <item>10 sekund</item>
-    <item>Do opustitve</item>
-  </string-array>
-  <!-- Do not translate. Values that are retrieved from the ListPreference.
-         These must match the alert_sound_duration_entries above. -->
-  <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
-  <string name="category_india_settings_title">Nastavitve za Indijo</string>
-  <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <string name="enable_channel_60_alerts_title">Prikaži oddaje kanala 60</string>
-  <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">Kanal 60 se uporablja v Indiji za podatke operaterja</string>
+    <string-array name="cm_alert_sound_duration_entries">
+        <item>2 sekundi</item>
+        <item>4 sekunde</item>
+        <item>6 sekund</item>
+        <item>8 sekund</item>
+        <item>10 sekund</item>
+        <item>Do opustitve</item>
+    </string-array>
+    <string name="category_india_settings_title">Nastavitve za Indijo</string>
+    <string name="enable_channel_60_alerts_title">Prikaži oddaje kanala 60</string>
+    <string name="enable_channel_60_alerts_summary">Kanal 60 se uporablja v Indiji za podatke operaterja</string>
 </resources>

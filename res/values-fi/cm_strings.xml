@@ -16,21 +16,15 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Entries listed in the ListPreference for allowed alert durations. [CHAR LIMIT=30] -->
-  <string-array name="cm_alert_sound_duration_entries">
-    <item>2 sekuntia</item>
-    <item>4 sekuntia</item>
-    <item>6 sekuntia</item>
-    <item>8 sekuntia</item>
-    <item>10 sekuntia</item>
-    <item>Kunnes hylätty</item>
-  </string-array>
-  <!-- Do not translate. Values that are retrieved from the ListPreference.
-         These must match the alert_sound_duration_entries above. -->
-  <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
-  <string name="category_india_settings_title">Intian asetukset</string>
-  <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <string name="enable_channel_60_alerts_title">Näytä kanavan 60 lähetykset</string>
-  <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">Kanavaa 60 käytetään Intiassa operaattorikohtaisiin tietoihin</string>
+    <string-array name="cm_alert_sound_duration_entries">
+        <item>2 sekuntia</item>
+        <item>4 sekuntia</item>
+        <item>6 sekuntia</item>
+        <item>8 sekuntia</item>
+        <item>10 sekuntia</item>
+        <item>Kunnes hylätty</item>
+    </string-array>
+    <string name="category_india_settings_title">Intian asetukset</string>
+    <string name="enable_channel_60_alerts_title">Näytä kanavan 60 lähetykset</string>
+    <string name="enable_channel_60_alerts_summary">Kanavaa 60 käytetään Intiassa operaattorikohtaisiin tietoihin</string>
 </resources>

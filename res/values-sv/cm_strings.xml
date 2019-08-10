@@ -16,21 +16,15 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Entries listed in the ListPreference for allowed alert durations. [CHAR LIMIT=30] -->
-  <string-array name="cm_alert_sound_duration_entries">
-    <item>2 sekunder</item>
-    <item>4 sekunder</item>
-    <item>6 sekunder</item>
-    <item>8 sekunder</item>
-    <item>10 sekunder</item>
-    <item>Until dismissed</item>
-  </string-array>
-  <!-- Do not translate. Values that are retrieved from the ListPreference.
-         These must match the alert_sound_duration_entries above. -->
-  <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
-  <string name="category_india_settings_title">Inställningar för Indien</string>
-  <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <string name="enable_channel_60_alerts_title">Visa sändningar för kanal 60</string>
-  <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">Kanal 60 används i Indien för specifik information från leverantören</string>
+    <string-array name="cm_alert_sound_duration_entries">
+        <item>2 sekunder</item>
+        <item>4 sekunder</item>
+        <item>6 sekunder</item>
+        <item>8 sekunder</item>
+        <item>10 sekunder</item>
+        <item>Until dismissed</item>
+    </string-array>
+    <string name="category_india_settings_title">Inställningar för Indien</string>
+    <string name="enable_channel_60_alerts_title">Visa sändningar för kanal 60</string>
+    <string name="enable_channel_60_alerts_summary">Kanal 60 används i Indien för specifik information från leverantören</string>
 </resources>

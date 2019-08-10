@@ -16,21 +16,15 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <!-- Entries listed in the ListPreference for allowed alert durations. [CHAR LIMIT=30] -->
-  <string-array name="cm_alert_sound_duration_entries">
-    <item>2 segundos</item>
-    <item>4 segundos</item>
-    <item>6 segundos</item>
-    <item>8 segundos</item>
-    <item>10 segundos</item>
-    <item>Até ser descartada</item>
-  </string-array>
-  <!-- Do not translate. Values that are retrieved from the ListPreference.
-         These must match the alert_sound_duration_entries above. -->
-  <!-- Preference category title for India settings. [CHAR LIMIT=50] -->
-  <string name="category_india_settings_title">Definições para a Índia</string>
-  <!-- Preference title for enable channel 60 alerts. [CHAR LIMIT=30] -->
-  <string name="enable_channel_60_alerts_title">Mostar a transmissão do canal 60</string>
-  <!-- Preference summary for enable channel 60 alerts. [CHAR LIMIT=100] -->
-  <string name="enable_channel_60_alerts_summary">O canal 60 é utilizado na Índia para informações específicas dos operadores</string>
+    <string-array name="cm_alert_sound_duration_entries">
+        <item>2 segundos</item>
+        <item>4 segundos</item>
+        <item>6 segundos</item>
+        <item>8 segundos</item>
+        <item>10 segundos</item>
+        <item>Até ser descartada</item>
+    </string-array>
+    <string name="category_india_settings_title">Definições para a Índia</string>
+    <string name="enable_channel_60_alerts_title">Mostar a transmissão do canal 60</string>
+    <string name="enable_channel_60_alerts_summary">O canal 60 é utilizado na Índia para informações específicas dos operadores</string>
 </resources>
