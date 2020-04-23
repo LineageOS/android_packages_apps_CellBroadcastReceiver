@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2011 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_label">Caismeachdan èiginn gun uèir</string>
+    <string name="sms_cb_settings">Caismeachdan èiginn gun uèir</string>
+    <string name="message_options">Roghainnean na teachdaireachd</string>
+    <string name="menu_view_details">Seall am mion-fhiosrachadh</string>
+    <string name="cmas_required_monthly_test">Deuchainn mhìosail riatanach</string>
+    <string name="public_safety_message">Teachdaireachd sàbhailteachd poblaich</string>
+    <string name="state_local_test_alert">Deuchainn stàite/ionadail</string>
+    <string name="enable_alert_message_title">Teachdaireachdan caismeachd</string>
+    <string name="enable_alert_message_summary">Thoir rabhadh dhomh mu bhagairtean sàbhailteachd gus teachd</string>
+    <string name="enable_public_safety_messages_title">Teachdaireachdan sàbhailteachd poblaich</string>
+    <string name="enable_public_safety_messages_summary">Gnìomhan a mholar a shàbhaileas beathannan no sealbhan</string>
+    <string name="enable_state_local_test_alerts_title">Deuchainnean stàite is ionadail</string>
+    <string name="enable_state_local_test_alerts_summary">Faigh teachdaireachdan deuchainne o ùghdarrasan ionadail ’s na stàite</string>
+    <string name="enable_emergency_alerts_message_summary">Thoir rabhadh dhomh mu thachartasan a chuireas beatha fo chunnart</string>
+    <string name="enable_cmas_test_alerts_title">Deuchainn mhìosail riatanach</string>
+    <string name="enable_cmas_test_alerts_summary">Faigh teachdaireachdan deuchainne o shiostam caismeachdan sàbhailteachd</string>
+    <string name="cmas_category_security">Tèarainteachd</string>
+    <string name="cmas_category_rescue">Teasairg</string>
+    <string name="cmas_category_health">Slàinte</string>
+    <string name="cmas_category_transport">Còmhdhail</string>
+    <string name="cmas_category_infra">Bun-structar</string>
+    <string name="cmas_response_prepare">Ullaich</string>
+    <string name="cmas_response_execute">Cuir an gnìomh</string>
+    <string name="delivery_time_heading">Air fhaighinn:</string>
+    <string name="show_cmas_opt_out_summary">Seall còmhradh gus an ro-aonta a thoirt air falbh às dèidh a’ chiad chaismeachd a shealltainn (seach caismeachdan a’ chinn-shuidhe).</string>
+    <string-array name="alert_reminder_interval_entries">
+        <item>Aon turas</item>
+        <item>Gach 2 mhionaid</item>
+        <item>Gach 5 mionaidean</item>
+        <item>Gach cairteal na h-uarach</item>
+        <item>Dheth</item>
+    </string-array>
+    <string name="emergency_alert_settings_title_watches">Caismeachdan èiginn gun uèir</string>
+</resources>
