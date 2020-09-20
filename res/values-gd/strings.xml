@@ -14,8 +14,8 @@
      limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_label">Caismeachdan èiginn gun uèir</string>
-    <string name="sms_cb_settings">Caismeachdan èiginn gun uèir</string>
+    <string name="app_label">Rabhaidhean èiginn gun uèir</string>
+    <string name="sms_cb_settings">Rabhaidhean èiginn gun uèir</string>
     <string name="message_options">Roghainnean na teachdaireachd</string>
     <string name="menu_view_details">Seall am mion-fhiosrachadh</string>
     <string name="cmas_required_monthly_test">Deuchainn mhìosail riatanach</string>
@@ -46,5 +46,5 @@
         <item>Gach cairteal na h-uarach</item>
         <item>Dheth</item>
     </string-array>
-    <string name="emergency_alert_settings_title_watches">Caismeachdan èiginn gun uèir</string>
+    <string name="emergency_alert_settings_title_watches">Rabhaidhean èiginn gun uèir</string>
 </resources>
