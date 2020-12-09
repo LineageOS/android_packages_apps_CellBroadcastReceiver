@@ -72,7 +72,7 @@
 
         <activity android:name="com.android.cellbroadcastreceiver.CellBroadcastListActivity"
                   android:label="@string/app_label"
-                  android:theme="@style/CellBroadcastSettingsTheme"
+                  android:theme="@style/CellBroadcastListActivityTheme"
                   android:configChanges="orientation|keyboardHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -138,6 +138,11 @@
                 <!-- CMAS: To toggle test mode for cell broadcast testing on userdebug build -->
                 <data android:scheme="android_secret_code" android:host="2627" />
             </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.android.cellbroadcastreceiver.CellBroadcastInternalReceiver"
+                  android:exported="false">
+            <!-- No intent filter on purpose: this should only receive explicit intents -->
         </receiver>
 
         <provider
