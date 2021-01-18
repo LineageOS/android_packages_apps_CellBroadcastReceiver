@@ -22,6 +22,7 @@
     <style name="CellBroadcastAlertTheme" parent="android:Theme.DeviceDefault.Light.Dialog" />
 
     <style name="CellBroadcastSettingsTheme" parent="@style/PreferenceThemeOverlay.v14.Material">
+        <item name="android:forceDarkAllowed">true</item>
         <item name="switchPreferenceStyle">@style/SettingsSwitchPreference</item>
         <item name="preferenceCategoryStyle">@style/Preference.Category.Material</item>
         <item name="preferenceStyle">@style/SettingsPreference</item>
