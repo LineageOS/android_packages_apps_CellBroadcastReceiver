@@ -35,6 +35,7 @@
         </intent>
     </queries>
 
+    <uses-permission android:name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_EMERGENCY_BROADCAST" />
     <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
@@ -137,7 +138,7 @@
         <!-- Container activity for CMAS opt-in/opt-out dialog. -->
         <activity android:name="com.android.cellbroadcastreceiver.CellBroadcastOptOutActivity"
                   android:launchMode="singleInstance"
-                  android:theme="@style/CellBroadcastAlertTheme"
+                  android:theme="@style/CellBroadcastOptOutTheme"
                   android:exported="false" />
 
         <receiver android:name="com.android.cellbroadcastreceiver.CellBroadcastReceiver"
