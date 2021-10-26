@@ -49,9 +49,11 @@
     <string name="emergency_alerts_title">Rhybuddion</string>
     <string name="notification_channel_broadcast_messages">Negeseuon darllediadau</string>
     <string name="notification_channel_emergency_alerts">Rhybuddion argyfwng</string>
+    <string name="notification_channel_broadcast_messages_in_voicecall">Rhybuddion brys yn ystod galwadau llais</string>
     <string name="enable_alerts_master_toggle_title">Caniatáu rhybuddion</string>
     <string name="enable_alerts_master_toggle_summary">Derbyn hysbysiadau rhybuddion argyfwng diwifr</string>
     <string name="alert_reminder_interval_title">Atgoffa am rybudd</string>
+    <string name="alert_reminder_dialog_title">Bydd sain atgoffa yn chwarae ar lefel sain arferol</string>
     <string name="emergency_alert_history_title">Hanes rhybuddion argyfwng</string>
     <string name="alert_preferences_title">Dewisiadau rhybuddion</string>
     <string name="enable_etws_test_alerts_title">Darllediadau profi ETWS</string>
@@ -121,4 +123,7 @@
         <item>Never</item>
     </string-array>
     <string name="emergency_alert_settings_title_watches">Rhybuddion argyfwng diwifr</string>
+    <string name="testing_mode_enabled">Galluogwyd modd profi darlledu symudol</string>
+    <string name="testing_mode_disabled">Analluogwyd modd profi darlledu symudol</string>
+    <string name="message_identifier">Adnabyddydd:</string>
 </resources>
