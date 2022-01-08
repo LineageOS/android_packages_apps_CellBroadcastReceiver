@@ -30,9 +30,7 @@
     <!-- Delete broadcast confirmation dialog message. [CHAR LIMIT=NONE] -->
     <!-- Delete all broadcasts confirmation dialog message. [CHAR LIMIT=NONE] -->
     <!-- Delete button text for delete broadcast dialog. [CHAR LIMIT=25] -->
-    <string name="button_delete">Forigi</string>
     <!-- Cancel button text for delete broadcast dialog. [CHAR LIMIT=25] -->
-    <string name="button_cancel">Nuligi</string>
     <!-- ETWS dialog title for Earthquake Warning. [CHAR LIMIT=50] -->
     <!-- ETWS dialog title for Tsunami Warning. [CHAR LIMIT=50] -->
     <!-- ETWS dialog title for Earthquake and Tsunami Warning. [CHAR LIMIT=50] -->
@@ -59,7 +57,6 @@
     <!-- Preference title for enable emergency alerts checkbox. [CHAR LIMIT=50] -->
     <!-- Preference summaries for allow alerts checkbox. [CHAR LIMIT=66] -->
     <!-- Preference title for alert reminder interval list. [CHAR LIMIT=50] -->
-    <string name="alert_reminder_interval_title">Alert reminder</string>
     <!-- Do not translate. Empty summary for alert reminder (set by CellBroadcastSettings). -->
     <!-- Dialog title for alert reminder interval list. [CHAR LIMIT=100] -->
     <!-- Preference title for emergency alert history. [CHAR LIMIT=50] -->
@@ -125,9 +122,7 @@
     <!-- Show CMAS opt-out dialog on first non-Presidential alert. [CHAR LIMIT=40] -->
     <!-- CMAS opt-out dialog message. [CHAR LIMIT=160] -->
     <!-- Text for positive button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
-    <string name="cmas_opt_out_button_yes">Jes</string>
     <!-- Text for negative button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
-    <string name="cmas_opt_out_button_no">Ne</string>
     <!-- Title for CellBroadcastListActivity -->
     <!-- Entries in the ListPreference for alert reminder intervals. [CHAR LIMIT=30] -->
     <!-- Label to open emergencyNotifications dialog [CHAR LIMIT=40] -->

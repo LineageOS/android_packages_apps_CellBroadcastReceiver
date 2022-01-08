@@ -14,112 +14,223 @@
      limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- The name of the Cell Broadcast Receiver app. [CHAR LIMIT=NONE] -->
     <string name="app_label">Rabhaidhean èiginn gun uèir</string>
+    <!-- Label for settings screen. [CHAR LIMIT=NONE] -->
     <string name="sms_cb_settings">Rabhaidhean èiginn gun uèir</string>
+    <!-- Value of sms sender display name to be shown in SMS inbox -->
+    <!-- Error message for users that aren't allowed to modify Cell broadcast settings [CHAR LIMIT=none] -->
     <string name="cell_broadcast_settings_not_available">Chan eil roghainnean rabhadh èiginn gun uèir ri fhaighinn airson a’ cleachdaiche seo</string>
+    <!-- Text for dismiss button in broadcast message view dialog. [CHAR LIMIT=25] -->
     <string name="button_dismiss">Ceart ma-thà</string>
+    <!-- Text for list view when empty (no broadcasts). [CHAR LIMIT=200] -->
     <string name="no_cell_broadcasts">Chan eil rabhadh roimhe ann</string>
+    <!-- Menu item for deleting all broadcasts. [CHAR LIMIT=30] -->
     <string name="menu_delete_all">Sguab às na craolaidhean</string>
+    <!-- Header for context menu on an individual broadcast. [CHAR LIMIT=30] -->
     <string name="message_options">Roghainnean na teachdaireachd</string>
+    <!-- Context menu item for viewing broadcast details such as time and date. [CHAR LIMIT=30] -->
     <string name="menu_view_details">Seall am mion-fhiosrachadh</string>
+    <!-- Context menu item to delete a previously received broadcast. [CHAR LIMIT=30] -->
     <string name="menu_delete">Sguab às an craoladh</string>
+    <!-- Title of "View details" dialog -->
     <string name="view_details_title">Fiosrachadh an rabhaidh</string>
+    <!-- Title of "View details for debugging" dialog. Note this is for debugging purposes only -->
     <string name="view_details_debugging_title">Fiosrachadh an rabhaidh a chùm dì-bhugachadh</string>
+    <!-- Confirm Delete -->
+    <!-- Delete broadcast confirmation dialog message. [CHAR LIMIT=NONE] -->
     <string name="confirm_delete_broadcast">An sguab thu às an craoladh seo?</string>
+    <!-- Delete all broadcasts confirmation dialog message. [CHAR LIMIT=NONE] -->
     <string name="confirm_delete_all_broadcasts">Sguab às gach teachdaireachd craolaidh a fhuair thu?</string>
+    <!-- Delete button text for delete broadcast dialog. [CHAR LIMIT=25] -->
     <string name="button_delete">Sguab às</string>
+    <!-- Cancel button text for delete broadcast dialog. [CHAR LIMIT=25] -->
     <string name="button_cancel">Sguir dheth</string>
+    <!-- ETWS dialog title for Earthquake Warning. [CHAR LIMIT=50] -->
     <string name="etws_earthquake_warning">Rabhadh ro chrith-thalmhainn</string>
+    <!-- ETWS dialog title for Tsunami Warning. [CHAR LIMIT=50] -->
     <string name="etws_tsunami_warning">Rabhadh ro tsunami</string>
+    <!-- ETWS dialog title for Earthquake and Tsunami Warning. [CHAR LIMIT=50] -->
     <string name="etws_earthquake_and_tsunami_warning">Rabhadh ro chrith-thalmhainn is tsunami</string>
+    <!-- ETWS dialog title for test message. [CHAR LIMIT=50] -->
     <string name="etws_test_message">Teachdaireachd deuchainn ETWS</string>
+    <!-- ETWS dialog title for other emergency type. [CHAR LIMIT=50] -->
     <string name="etws_other_emergency_type">Rabhadh èiginn</string>
+    <!-- CMAS dialog title for presidential level alert. [CHAR LIMIT=50] -->
     <string name="cmas_presidential_level_alert">Rabhadh a’ chinn-shuidhe</string>
+    <!-- CMAS dialog title for extreme alert. [CHAR LIMIT=50] -->
     <string name="cmas_extreme_alert">Dearg-rabhadh èiginn</string>
+    <!-- CMAS dialog title for extreme alert with extreme severity, immediate urgency, and observed certainty. [CHAR LIMIT=50] -->
     <string name="cmas_extreme_immediate_observed_alert">Dearg-rabhadh èiginn</string>
+    <!-- CMAS dialog title for extreme alert with extreme severity, immediate urgency,  and likely certainty. [CHAR LIMIT=50] -->
     <string name="cmas_extreme_immediate_likely_alert">Dearg-rabhadh èiginn</string>
+    <!-- CMAS dialog title for severe alert. [CHAR LIMIT=50] -->
     <string name="cmas_severe_alert">Mòr-rabhadh èiginn</string>
+    <!-- CMAS dialog title for child abduction emergency (Amber Alert). [CHAR LIMIT=50] -->
     <string name="cmas_amber_alert">Clann fo bhruid (Amber alert)</string>
+    <!-- CMAS dialog title for required monthly test. [CHAR LIMIT=50] -->
     <string name="cmas_required_monthly_test">Deuchainn mhìosail riatanach</string>
+    <!-- CMAS dialog title for CMAS Exercise. [CHAR LIMIT=50] -->
     <string name="cmas_exercise_alert">Rabhadh èiginn (deuchainn)</string>
+    <!-- CMAS dialog title for operator defined use. [CHAR LIMIT=50] -->
     <string name="cmas_operator_defined_alert">Rabhadh èiginn (giùlanair)</string>
+    <!-- Dialog title for all other message identifiers in the PWS range. [CHAR LIMIT=50] -->
+    <!-- Dialog title for all non-emergency cell broadcasts. [CHAR LIMIT=50] -->
     <string name="cb_other_message_identifiers">Teachdaireachdan craolaidh</string>
+    <!-- Dialog title for all public safety message broadcasts. [CHAR LIMIT=50] -->
     <string name="public_safety_message">Teachdaireachd sàbhailteachd poblaich</string>
+    <!-- Dialog title for all state/local test alerts. [CHAR LIMIT=50] -->
     <string name="state_local_test_alert">Deuchainn stàite/ionadail</string>
+    <!-- Dialog title or menu title of emergency alert. [CHAR LIMIT=50] -->
     <string name="emergency_alert">Rabhadh èiginn</string>
+    <!-- Preference category title for emergency alert settings. [CHAR LIMIT=50] -->
     <string name="emergency_alerts_title">Rabhaidhean</string>
+    <!-- Notification channel name for a channel containing non-emergency broadcast messages notifications. [CHAR LIMIT=50] -->
     <string name="notification_channel_broadcast_messages">Teachdaireachdan craolaidh</string>
+    <!-- Notification channel name for a channel containing emergency alert notifications. [CHAR LIMIT=50] -->
     <string name="notification_channel_emergency_alerts">Rabhaidhean èiginn</string>
+    <!-- Notification channel name for a channel containing emergency alert notifications during voice call. [CHAR LIMIT=100] -->
     <string name="notification_channel_broadcast_messages_in_voicecall">Rabhaidhean èiginn ann an gairm gutha</string>
+    <!-- Preference title for enable emergency alerts checkbox. [CHAR LIMIT=50] -->
     <string name="enable_alerts_master_toggle_title">Ceadaich rabhaidhean</string>
+    <!-- Preference summaries for allow alerts checkbox. [CHAR LIMIT=66] -->
     <string name="enable_alerts_master_toggle_summary">Faigh brathan air rabhaidhean èiginn gun uèir</string>
+    <!-- Preference title for alert reminder interval list. [CHAR LIMIT=50] -->
     <string name="alert_reminder_interval_title">Alert reminder</string>
+    <!-- Do not translate. Empty summary for alert reminder (set by CellBroadcastSettings). -->
+    <!-- Dialog title for alert reminder interval list. [CHAR LIMIT=100] -->
     <string name="alert_reminder_dialog_title">A reminder sound will play at regular volume</string>
+    <!-- Preference title for emergency alert history. [CHAR LIMIT=50] -->
     <string name="emergency_alert_history_title">Eachdraidh nan rabhaidhean èiginn</string>
+    <!-- Preference category title for alert preferences. [CHAR LIMIT=50] -->
     <string name="alert_preferences_title">Roghainnean nan rabhaidhean</string>
+    <!-- Preference title for enable ETWS test alerts checkbox. [CHAR LIMIT=50] -->
     <string name="enable_etws_test_alerts_title">Craolaidhean deuchainn ETWS</string>
+    <!-- Preference summary for enable ETWS test alerts checkbox. [CHAR LIMIT=100] -->
     <string name="enable_etws_test_alerts_summary">Craolaidhean deuchainn air siostam nan rabhaidhean mu chrith-thalmhainn is tsunami</string>
+    <!-- Preference title for enable CMAS extreme threat alerts checkbox. [CHAR LIMIT=50] -->
     <string name="enable_cmas_extreme_threat_alerts_title">Dearg-chunnartan</string>
+    <!-- Preference summary for enable CMAS extreme threat alerts checkbox. [CHAR LIMIT=100] -->
     <string name="enable_cmas_extreme_threat_alerts_summary">Dearg-chunnart beatha no shealbh</string>
+    <!-- Preference title for enable CMAS severe threat alerts checkbox. [CHAR LIMIT=50] -->
     <string name="enable_cmas_severe_threat_alerts_title">Mòr-chunnartan</string>
+    <!-- Preference summary for enable CMAS severe threat alerts checkbox. [CHAR LIMIT=100] -->
     <string name="enable_cmas_severe_threat_alerts_summary">Mòr-chunnart beatha no shealbh</string>
+    <!-- Preference title for enable CMAS amber alerts checkbox. [CHAR LIMIT=50] -->
     <string name="enable_cmas_amber_alerts_title">Rabhaidhean AMBER</string>
+    <!-- Preference summary for enable CMAS amber alerts checkbox. [CHAR LIMIT=100] -->
     <string name="enable_cmas_amber_alerts_summary">Sanasan mu chlann fo bhruid</string>
+    <!-- Preference title for enable alerts messages checkbox. [CHAR LIMIT=100] -->
     <string name="enable_alert_message_title">Teachdaireachdan rabhaidh</string>
+    <!-- Preference summary for enable alerts messages checkbox. [CHAR LIMIT=100] -->
     <string name="enable_alert_message_summary">Thoir rabhadh dhomh mu bhagairtean sàbhailteachd gus teachd</string>
+    <!-- Preference title for enable public safety messages checkbox. [CHAR LIMIT=100] -->
     <string name="enable_public_safety_messages_title">Teachdaireachdan sàbhailteachd poblaich</string>
+    <!-- Preference summary for enable public safety messages checkbox. [CHAR LIMIT=100] -->
     <string name="enable_public_safety_messages_summary">Gnìomhan a mholar a shàbhaileas beathannan no sealbhan</string>
+    <!-- Preference title for enable state/local test alerts checkbox. [CHAR LIMIT=100] -->
     <string name="enable_state_local_test_alerts_title">Deuchainnean stàite is ionadail</string>
+    <!-- Preference summary for enable state/local test alerts checkbox. [CHAR LIMIT=100] -->
     <string name="enable_state_local_test_alerts_summary">Faigh teachdaireachdan deuchainne o ùghdarrasan ionadail ’s na stàite</string>
+    <!-- Preference title for enable emergency alerts messages checkbox. [CHAR LIMIT=100] -->
     <string name="enable_emergency_alerts_message_title">Rabhaidhean èiginn</string>
+    <!-- Preference summary for enable emergency alerts messages checkbox. [CHAR LIMIT=100] -->
     <string name="enable_emergency_alerts_message_summary">Thoir rabhadh dhomh mu thachartasan a chuireas beatha fo chunnart</string>
+    <!-- Preference title for other test alerts checkbox. [CHAR LIMIT=50] -->
     <string name="enable_cmas_test_alerts_title">Rabhaidhean deuchainne</string>
+    <!-- Preference summary for other test alerts checkbox. [CHAR LIMIT=125] -->
     <string name="enable_cmas_test_alerts_summary">Faigh deuchainnean on ghiùlanair agus deuchainnean mìosail o shiostam nan rabhaidhean sàbhailteachd</string>
+    <!-- Preference title for CMAS vibration on/off. [CHAR LIMIT=50] -->
     <string name="enable_alert_vibrate_title">Crith</string>
+    <!-- Preference title for overriding Do Not Disturb. [CHAR LIMIT=50] -->
     <string name="override_dnd_title">Cuir làn-àirde na fuaime air rabhaidhean an-còmhnaidh</string>
+    <!-- Preference summary for overriding Do Not Disturb mode. [CHAR LIMIT=125] -->
     <string name="override_dnd_summary">Leig seachad “Na bris a-steach orm” ⁊ roghainnean àirde na fuaime eile</string>
+    <!-- Preference title for enable area update information broadcasts. [CHAR LIMIT=50] -->
     <string name="enable_area_update_info_alerts_title">Craolaidhean ùrachadh na sgìre</string>
+    <!-- Preference summary for enable area update information broadcasts. [CHAR LIMIT=100] -->
     <string name="enable_area_update_info_alerts_summary">Seall fiosrachadh an ùrachaidh ann an staid an t-SIM</string>
+    <!-- CMAS alert category heading (including colon). [CHAR LIMIT=30] -->
     <string name="cmas_category_heading">Roinn-seòrsa an rabhaidh:</string>
+    <!-- CMAS category for geophysical alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_geo">An talamh</string>
+    <!-- CMAS category for meteorological alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_met">Aimsir</string>
+    <!-- CMAS category for general emergency and public safety alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_safety">Sàbhailteachd</string>
+    <!-- CMAS category for security alerts (law enforcement, military, etc.). [CHAR LIMIT=50] -->
     <string name="cmas_category_security">Tèarainteachd</string>
+    <!-- CMAS category for rescue and recovery alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_rescue">Teasairg</string>
+    <!-- CMAS category for fire suppression and rescue alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_fire">Teine</string>
+    <!-- CMAS category for medical and public health alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_health">Slàinte</string>
+    <!-- CMAS category for pollution and other environmental alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_env">Àrainneachd</string>
+    <!-- CMAS category for transportation alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_transport">Còmhdhail</string>
+    <!-- CMAS category for utility, telecommunication, and other infrastructure alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_infra">Bun-structar</string>
+    <!-- CMAS category for chemical, biological, radiological, nuclear alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_cbrne">Ceimigeach/Bith-eòlach/Niùclasach/Spreadhadh</string>
+    <!-- CMAS category for other alerts. [CHAR LIMIT=50] -->
     <string name="cmas_category_other">Rabhadh eile</string>
+    <!-- CMAS response type heading (including colon). [CHAR LIMIT=30] -->
     <string name="cmas_response_heading">Seòrsa na freagairt:</string>
+    <!-- CMAS response type: take shelter in place. [CHAR LIMIT=50] -->
     <string name="cmas_response_shelter">Gabh fasgadh</string>
+    <!-- CMAS response type: evacuate (relocate). [CHAR LIMIT=50] -->
     <string name="cmas_response_evacuate">Falamhaich</string>
+    <!-- CMAS response type: make preparations. [CHAR LIMIT=50] -->
     <string name="cmas_response_prepare">Ullaich</string>
+    <!-- CMAS response type: execute a pre-planned activity. [CHAR LIMIT=50] -->
     <string name="cmas_response_execute">Cuir an gnìomh</string>
+    <!-- CMAS response type: monitor information sources. [CHAR LIMIT=50] -->
     <string name="cmas_response_monitor">Cum sùil air</string>
+    <!-- CMAS response type: avoid hazard. [CHAR LIMIT=50] -->
     <string name="cmas_response_avoid">Seachain</string>
+    <!-- CMAS response type: evaluate the information in this message. [CHAR LIMIT=50] -->
     <string name="cmas_response_assess">Meas</string>
+    <!-- CMAS response type: no action recommended. [CHAR LIMIT=50] -->
     <string name="cmas_response_none">Gun fhreagairt</string>
+    <!-- CMAS severity heading (including colon). [CHAR LIMIT=30] -->
     <string name="cmas_severity_heading">Donad:</string>
+    <!-- CMAS severity type: extreme. [CHAR LIMIT=30] -->
     <string name="cmas_severity_extreme">Dearg-chunnart</string>
+    <!-- CMAS severity type: severe. [CHAR LIMIT=30] -->
     <string name="cmas_severity_severe">Mòr-chunnart</string>
+    <!-- CMAS urgency heading (including colon). [CHAR LIMIT=30] -->
     <string name="cmas_urgency_heading">Èiginneachd:</string>
+    <!-- CMAS urgency type: take responsive action immediately. [CHAR LIMIT=30] -->
     <string name="cmas_urgency_immediate">Sa bhad</string>
+    <!-- CMAS severity type: severe. [CHAR LIMIT=30] -->
     <string name="cmas_urgency_expected">Dùil ris</string>
+    <!-- CMAS certainty heading (including colon). [CHAR LIMIT=30] -->
     <string name="cmas_certainty_heading">Cinnt:</string>
+    <!-- CMAS certainty type: observed. [CHAR LIMIT=30] -->
     <string name="cmas_certainty_observed">Beachdaichte</string>
+    <!-- CMAS severity type: severe. [CHAR LIMIT=30] -->
     <string name="cmas_certainty_likely">Coltach</string>
+    <!-- Message delivery time (including colon). [CHAR LIMIT=30] -->
     <string name="delivery_time_heading">Air fhaighinn:</string>
+    <!-- Non-emergency broadcast notification description for multiple unread alerts. -->
     <string name="notification_multiple">Rabhaidhean gun leughadh (<xliff:g id="count">%s</xliff:g>).</string>
+    <!-- Non-emergency broadcast notification title for multiple unread alerts. -->
     <string name="notification_multiple_title">Rabhaidhean ùra</string>
+    <!-- Show CMAS opt-out dialog on first non-Presidential alert. [CHAR LIMIT=100] -->
     <string name="show_cmas_opt_out_summary">Seall còmhradh gus an ro-aonta a thoirt air falbh às dèidh a’ chiad chaismeachd a shealltainn (seach rabhaidhean a’ chinn-shuidhe).</string>
+    <!-- Show CMAS opt-out dialog on first non-Presidential alert. [CHAR LIMIT=40] -->
     <string name="show_cmas_opt_out_title">Seall còmhradh an ro-aonta</string>
+    <!-- CMAS opt-out dialog message. [CHAR LIMIT=160] -->
     <string name="cmas_opt_out_dialog_text">Gheibh thu rabhaidhean èiginn gun uèir. A bheil thu airson am faighinn fhathast?</string>
+    <!-- Text for positive button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
     <string name="cmas_opt_out_button_yes">Tha</string>
+    <!-- Text for negative button in CMAS opt-out dialog. [CHAR LIMIT=25] -->
     <string name="cmas_opt_out_button_no">Chan eil</string>
+    <!-- Title for CellBroadcastListActivity -->
     <string name="cb_list_activity_title">"Eachdraidh nan rabhaidhean èiginn"</string>
+    <!-- Entries in the ListPreference for alert reminder intervals. [CHAR LIMIT=30] -->
     <string-array name="alert_reminder_interval_entries">
         <item>Aon turas</item>
         <item>Gach 2 mhionaid</item>
@@ -127,21 +238,47 @@
         <item>Gach cairteal na h-uarach</item>
         <item>Chan ann idir</item>
     </string-array>
+    <!-- Label to open emergencyNotifications dialog [CHAR LIMIT=40] -->
     <string name="emergency_alert_settings_title_watches">Rabhaidhean èiginn gun uèir</string>
+    <!-- Show checkbox for Presidential alerts in settings -->
+    <!-- Preference title for enable presidential threat alerts checkbox. [CHAR LIMIT=40] -->
     <string name="enable_cmas_presidential_alerts_title">Rabhaidhean a’ chinn-shuidhe</string>
+    <!-- Preference summary for enable presidential threat alerts checkbox. [CHAR LIMIT=100] -->
     <string name="enable_cmas_presidential_alerts_summary">Teachdaireachdan rabhaidh nàiseanta ’gam foillseachadh leis a’ chinn-suidhe. Cha ghabh an cur dheth.</string>
+    <!-- Show additional language on/off switch in settings -->
+    <!-- Preference title for enable CMAS second language checkbox. [CHAR LIMIT=50] -->
+    <!-- Preference summary for enable CMAS second language checkbox. [CHAR LIMIT=100] -->
+    <!-- Preference summary for emergency alert header -->
+    <!-- Toast message to indicate testing mode is enabled. [CHAR LIMIT=100] -->
     <string name="testing_mode_enabled">Tha modh deuchainn a’ chraolaidh mobile an comas.</string>
+    <!-- Toast message to indicate testing mode is disabled. [CHAR LIMIT=100] -->
     <string name="testing_mode_disabled">Tha modh deuchainn a’ chraolaidh mobile à comas.</string>
+    <!-- Show all emergency messages including the hidden messages. This is for debugging purposes
+         only -->
     <string name="show_all_messages">Seall a h-uile teachdaireachd</string>
+    <!-- Show regular emergency messages (not including hidden messages). This is for debugging
+         purposes only -->
     <string name="show_regular_messages">Seall na teachdaireachdan àbhaisteach</string>
+    <!-- Cell broadcast message identifier. This is the id of the alert message. For debugging
+         purposes only -->
     <string name="message_identifier">Aithnichear:</string>
+    <!-- Serial number of the message. This is for debugging purposes only -->
     <string name="message_serial_number">Àireamh shreathach:</string>
+    <!-- Data coding scheme of the emergency message. This is for debugging purposes only -->
     <string name="data_coding_scheme">Sgeama còdachadh dàta:</string>
+    <!-- Content of the emergency message. This is for debugging purposes only -->
     <string name="message_content">Susbaint na teachdaireachd:</string>
+    <!-- Location check time of the emergency message. This is for debugging purposes only -->
     <string name="location_check_time">Àm sgrùdadh an ionaid:</string>
+    <!-- Whether emergency message displayed to the user or not. This is for debugging purposes
+         only -->
     <string name="message_displayed">An teachdaireachd ’ga sealltainn:</string>
+    <!-- Coordinates of the emergency alert. This is for debugging purposes only -->
     <string name="message_coordinates">Co-chomharran:</string>
+    <!-- Maximum waiting time for location check. This is for debugging purposes only -->
     <string name="maximum_waiting_time">Ùine as motha a’ feitheamh:</string>
+    <!-- Sesconds (time unit). This is for debugging purposes only -->
     <string name="seconds">diog</string>
+    <!-- Emergency alert message copied to clipboard. -->
     <string name="message_copied">Chaidh lethbhreac dhen teachdaireachd a dhèanamh</string>
 </resources>
