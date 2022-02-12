@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2016 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="category_india_settings_title">Roghainnean airson nan Innseachan</string>
+    <string name="enable_channel_60_alerts_title">Seall craolaidhean air seanail 60</string>
+    <string name="enable_channel_60_alerts_summary">Tha seanail 60 ’ga chleachdadh sna h-Innseachan airson fiosrachadh sònraichte a chraolas an gnìomhairiche</string>
+    <string name="enable_cmas_presidential_alerts_title">Seall caismeachdan a’ chinn-shuidhe</string>
+    <string name="enable_cmas_presidential_alerts_summary">Seall caismeachdan a’ chinn-shuidhe an-còmhnaidh</string>
+    <string name="enable_alert_tone_title">Seirm an rabhaidh</string>
+    <string name="enable_alert_tone_summary">Tha seirm an rabhaidh air</string>
+    <string name="add_channel">Cuir seanail ris</string>
+    <string name="channel_list">Liosta sheanailean</string>
+    <string name="receive_broad_cast">Faigh SMS craolaidh mobile</string>
+    <string name="cb_channel_dialog_channel_name">Ainm na seanail (0-10 caractaran)</string>
+    <string name="cb_channel_dialog_channel_number">Àireamh na seanail (0-65534)</string>
+    <string name="cb_channel_dialog_channel_state">Cuir an seanail an comas</string>
+    <string name="cb_error_channel_num">Cuir a-steach àireamh na seanail (0-65534).</string>
+    <string name="cb_error_channel_name">Chan fhaod ainm seanail a bhith nas fhaide na 24 caractar.</string>
+    <string name="cb_menu_tile">Gnìomh na seanail</string>
+    <string name="cb_menu_add_channel">Cuir seanail ris</string>
+    <string name="cb_menu_channel_list">Liosta sheanailean</string>
+    <string name="enable">Cuir an comas</string>
+    <string name="disable">Cuir à comas</string>
+    <string name="cb_error_channel_id_exist">The ID na seanail seo ann mu thràth.</string>
+    <string name="cb_channel_dialog_edit_channel">Deasaich an t-seanail</string>
+    <string name="cb_default_new_channel_name">Seanail ùr</string>
+    <string name="cb_menu_edit">Deasaich</string>
+    <string name="cb_menu_delete">Sguab às an craoladh</string>
+    <string name="cell_broadcast_setting">Roghainnean craoladh mobile</string>
+    <string name="error_updating_title">Mearachd ann an roghainnean ghairmean</string>
+    <string name="reading_settings">A’ leughadh nan roghainnean</string>
+    <string name="updating_settings">Ag ùrachadh nan roghainnean</string>
+    <string name="error_finish_dialog_title">Thachair mearachd leis an lìonra no leis a’ chairt SIM.</string>
+    <string name="close_dialog">Ceart ma-thà</string>
+    <string name="updating_title">Roghainnean ghairmean</string>
+    <string name="done_text">Dèanta</string>
+    <string name="cb_channel_50_name">Seanail 50</string>
+</resources>
