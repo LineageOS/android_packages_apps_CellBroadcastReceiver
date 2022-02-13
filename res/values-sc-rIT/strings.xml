@@ -69,4 +69,19 @@
     <string name="cmas_urgency_immediate">Immediadu</string>
     <string name="cmas_urgency_expected">Isetada</string>
     <string name="cmas_certainty_heading">Tzertesa:</string>
+    <string name="cmas_certainty_observed">Analizadu</string>
+    <string name="cmas_certainty_likely">Probàbile</string>
+    <string name="delivery_time_heading">Retzidu:</string>
+    <string name="notification_multiple"><xliff:g id="count">%s</xliff:g> avisos non lèghidos.</string>
+    <string name="notification_multiple_title">Avisos noos</string>
+    <string name="show_cmas_opt_out_title">Mustra cuadru de diàlogu pro disativare</string>
+    <string name="cmas_opt_out_button_yes">Eja</string>
+    <string name="cmas_opt_out_button_no">Nono</string>
+    <string-array name="alert_reminder_interval_entries">
+        <item>Una borta</item>
+        <item>Ogni 2 minutos</item>
+        <item>Every 5 minutes</item>
+        <item>Ogni 15 minutos</item>
+        <item>Istudadu</item>
+    </string-array>
 </resources>
