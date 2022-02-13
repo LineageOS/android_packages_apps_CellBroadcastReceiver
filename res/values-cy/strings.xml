@@ -24,6 +24,7 @@
     <string name="menu_view_details">Gweld manylion</string>
     <string name="menu_delete">Dileu\'r darllediad</string>
     <string name="view_details_title">Manylion rhybudd</string>
+    <string name="view_details_debugging_title">Rhybudd o fanylion ar gyfer dadfygio</string>
     <string name="confirm_delete_broadcast">Dileu\'r darllediad hwn?</string>
     <string name="confirm_delete_all_broadcasts">Dileu pob neges ddarllediad wedi\'i derbyn?</string>
     <string name="button_delete">Dileu</string>
@@ -72,7 +73,11 @@
     <string name="enable_state_local_test_alerts_summary">Derbyn negeseuon profi oddi wrth awdurdodau lleol a thalaith</string>
     <string name="enable_emergency_alerts_message_title">Rhybuddion argyfwng</string>
     <string name="enable_emergency_alerts_message_summary">Rhybuddio am ddigwyddiadau sy\'n peryglu bywydau</string>
+    <string name="enable_cmas_test_alerts_title">Rhybuddion profi</string>
+    <string name="enable_cmas_test_alerts_summary">Derbyn profion y darparwr a phrofion misol gan y system rhybuddion diogelwch</string>
     <string name="enable_alert_vibrate_title">Dirgryniad</string>
+    <string name="override_dnd_title">Rhybuddio ar y lefel sain uchaf pob tro</string>
+    <string name="override_dnd_summary">Anwybyddu Dim Tarfu a gosodiadau sain eraill</string>
     <string name="enable_area_update_info_alerts_title">Darllediadau diweddariadau ardal</string>
     <string name="enable_area_update_info_alerts_summary">Dangos gwybodaeth ddiweddariad yn statws SIM</string>
     <string name="cmas_category_heading">Categori Rhybudd:</string>
@@ -120,10 +125,23 @@
         <item>Pob 2 funud</item>
         <item>Pob 5 munud</item>
         <item>Pob 15 munud</item>
-        <item>Never</item>
+        <item>Byth</item>
     </string-array>
     <string name="emergency_alert_settings_title_watches">Rhybuddion argyfwng diwifr</string>
+    <string name="enable_cmas_presidential_alerts_title">Rhybuddion arlywyddol</string>
+    <string name="enable_cmas_presidential_alerts_summary">Negeseuon rhybuddion cenedlaethol gan yr Arlywydd. Nid yw\'n bosib eu diffodd.</string>
     <string name="testing_mode_enabled">Galluogwyd modd profi darlledu symudol</string>
     <string name="testing_mode_disabled">Analluogwyd modd profi darlledu symudol</string>
+    <string name="show_all_messages">Dangos pob neges</string>
+    <string name="show_regular_messages">Dangos negeseuon arferol</string>
     <string name="message_identifier">Adnabyddydd:</string>
+    <string name="message_serial_number">Rhif cyfres:</string>
+    <string name="data_coding_scheme">Cynllun codio data:</string>
+    <string name="message_content">Cynnwys y neges:</string>
+    <string name="location_check_time">Gwiriad amser lleoliad:</string>
+    <string name="message_displayed">Neges i\'w dangos:</string>
+    <string name="message_coordinates">Cyfesurynnau:</string>
+    <string name="maximum_waiting_time">Terfyn amser aros:</string>
+    <string name="seconds">eiliadau</string>
+    <string name="message_copied">Neges wedi\'i chopio</string>
 </resources>
