@@ -14,9 +14,9 @@
      limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_label">Rhybuddion argyfwng diwifr</string>
-    <string name="sms_cb_settings">Rhybuddion argyfwng diwifr</string>
-    <string name="cell_broadcast_settings_not_available">Dyw gosodiadau rhybuddion argyfwng diwifr ddim ar gael i\'r defnyddiwr hwn.</string>
+    <string name="app_label">Rhybuddion argyfwng di-wifr</string>
+    <string name="sms_cb_settings">Rhybuddion argyfwng di-wifr</string>
+    <string name="cell_broadcast_settings_not_available">Dyw gosodiadau rhybuddion argyfwng di-wifr ddim ar gael i\'r defnyddiwr hwn.</string>
     <string name="button_dismiss">Iawn</string>
     <string name="no_cell_broadcasts">Dim rhybuddion cynt</string>
     <string name="menu_delete_all">Dileu darllediad</string>
@@ -52,7 +52,7 @@
     <string name="notification_channel_emergency_alerts">Rhybuddion argyfwng</string>
     <string name="notification_channel_broadcast_messages_in_voicecall">Rhybuddion brys yn ystod galwadau llais</string>
     <string name="enable_alerts_master_toggle_title">Caniatáu rhybuddion</string>
-    <string name="enable_alerts_master_toggle_summary">Derbyn hysbysiadau rhybuddion argyfwng diwifr</string>
+    <string name="enable_alerts_master_toggle_summary">Derbyn hysbysiadau rhybuddion argyfwng di-wifr</string>
     <string name="alert_reminder_interval_title">Atgoffa am rybudd</string>
     <string name="alert_reminder_dialog_title">Bydd sain atgoffa yn chwarae ar lefel sain arferol</string>
     <string name="emergency_alert_history_title">Hanes rhybuddion argyfwng</string>
@@ -116,7 +116,7 @@
     <string name="notification_multiple_title">Rhybuddion newydd</string>
     <string name="show_cmas_opt_out_summary">Dangos deialog yn cynnig y dewis i optio allan ar ôl dangos y rhybudd cyntaf (ond am Rybudd gan yr Arlywydd).</string>
     <string name="show_cmas_opt_out_title">Dangos deialog optio allan</string>
-    <string name="cmas_opt_out_dialog_text">Rwyt yn derbyn rhybuddion argyfwng diwifr ar hyn o bryd. Hoffet barhau i dderbyn rhybuddion argyfwng diwifr?</string>
+    <string name="cmas_opt_out_dialog_text">Rwyt yn derbyn rhybuddion argyfwng di-wifr ar hyn o bryd. Hoffet barhau i dderbyn rhybuddion argyfwng di-wifr?</string>
     <string name="cmas_opt_out_button_yes">Iawn</string>
     <string name="cmas_opt_out_button_no">Na</string>
     <string name="cb_list_activity_title">"Hanes rhybuddion argyfwng"</string>
@@ -127,7 +127,7 @@
         <item>Pob 15 munud</item>
         <item>Byth</item>
     </string-array>
-    <string name="emergency_alert_settings_title_watches">Rhybuddion argyfwng diwifr</string>
+    <string name="emergency_alert_settings_title_watches">Rhybuddion argyfwng di-wifr</string>
     <string name="enable_cmas_presidential_alerts_title">Rhybuddion arlywyddol</string>
     <string name="enable_cmas_presidential_alerts_summary">Negeseuon rhybuddion cenedlaethol gan yr Arlywydd. Nid yw\'n bosib eu diffodd.</string>
     <string name="testing_mode_enabled">Galluogwyd modd profi darlledu symudol</string>
