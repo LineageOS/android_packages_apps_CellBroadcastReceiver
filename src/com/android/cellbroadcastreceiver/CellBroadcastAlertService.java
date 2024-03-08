@@ -34,6 +34,7 @@ import static com.android.cellbroadcastservice.CellBroadcastMetrics.SRC_CBR;
 
 import android.annotation.NonNull;
 import android.app.ActivityManager;
+import android.app.ActivityOptions;
 import android.app.Notification;
 import android.app.Notification.Action;
 import android.app.NotificationChannel;
@@ -66,6 +67,7 @@ import android.telephony.SmsCbMessage;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 
 import com.android.cellbroadcastreceiver.CellBroadcastChannelManager.CellBroadcastChannelRange;
 import com.android.internal.annotations.VisibleForTesting;
@@ -149,6 +151,15 @@ public class CellBroadcastAlertService extends Service {
      */
     private static final String MESSAGE_FILTER_PROPERTY_KEY =
             "persist.cellbroadcast.message_filter";
+
+    /**
+     * Key for getting current display id from SystemProperties for foldable models.
+     * This is a temporary solution which will be deprecated when system api is available.
+     * OEMs should protect the property from invalid access.
+     */
+    @VisibleForTesting
+    public static final String PROP_DISPLAY =
+            "cellbroadcast.device.is.foldable.and.currently.use.display.id";
 
     private Context mContext;
 
@@ -240,8 +251,10 @@ public class CellBroadcastAlertService extends Service {
         TelephonyManager tm = ((TelephonyManager) mContext.getSystemService(
                 Context.TELEPHONY_SERVICE)).createForSubscriptionId(message.getSubscriptionId());
 
-        if (tm.getEmergencyCallbackMode() && CellBroadcastSettings.getResources(
-                mContext, message.getSubscriptionId()).getBoolean(R.bool.ignore_messages_in_ecbm)) {
+        if (tm.getEmergencyCallbackMode() && CellBroadcastSettings.getResourcesByOperator(
+                mContext, message.getSubscriptionId(),
+                        CellBroadcastReceiver.getRoamingOperatorSupported(mContext))
+                .getBoolean(R.bool.ignore_messages_in_ecbm)) {
             // Ignore the message in ECBM.
             // It is for LTE only mode. For 1xRTT, incoming pages should be ignored in the modem.
             Log.d(TAG, "ignoring alert of type " + message.getServiceCategory() + " in ECBM");
@@ -445,7 +458,8 @@ public class CellBroadcastAlertService extends Service {
         }
 
         if (mTelephonyManager.getCallState() != TelephonyManager.CALL_STATE_IDLE
-                && CellBroadcastSettings.getResources(mContext, cbm.getSubscriptionId())
+                && CellBroadcastSettings.getResourcesByOperator(mContext, cbm.getSubscriptionId(),
+                        CellBroadcastReceiver.getRoamingOperatorSupported(mContext))
                 .getBoolean(R.bool.enable_alert_handling_during_call)) {
             Log.d(TAG, "CMAS received in dialing/during voicecall.");
             sRemindAfterCallFinish = true;
@@ -677,7 +691,9 @@ public class CellBroadcastAlertService extends Service {
                 CellBroadcastAlertAudio.ALERT_AUDIO_VIBRATION_PATTERN_EXTRA,
                 (range != null)
                         ? range.mVibrationPattern
-                        : CellBroadcastSettings.getResources(mContext, message.getSubscriptionId())
+                        : CellBroadcastSettings.getResourcesByOperator(mContext,
+                                message.getSubscriptionId(),
+                                CellBroadcastReceiver.getRoamingOperatorSupported(mContext))
                         .getIntArray(R.array.default_vibration_pattern));
         // read key_override_dnd only when the toggle is visible.
         // range.mOverrideDnd is per channel configuration. override_dnd is the main config
@@ -734,9 +750,23 @@ public class CellBroadcastAlertService extends Service {
             Intent alertDialogIntent = createDisplayMessageIntent(this,
                     CellBroadcastAlertDialog.class, messageList);
             alertDialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(alertDialogIntent);
-        }
 
+            int displayId = SystemProperties.getInt(PROP_DISPLAY, Display.DEFAULT_DISPLAY);
+            Log.d(TAG, "openEmergencyAlertNotification: current displayId = " + displayId);
+
+            if (displayId != Display.DEFAULT_DISPLAY) {
+                try {
+                    ActivityOptions option = ActivityOptions.makeBasic();
+                    option.setLaunchDisplayId(displayId);
+                    startActivity(alertDialogIntent, option.toBundle());
+                } catch (Exception ex) {
+                    Log.d(TAG, "Failed to start alert for " + ex);
+                    startActivity(alertDialogIntent);
+                }
+            } else {
+                startActivity(alertDialogIntent);
+            }
+        }
     }
 
     /**
@@ -754,7 +784,9 @@ public class CellBroadcastAlertService extends Service {
     static void addToNotificationBar(SmsCbMessage message,
             ArrayList<SmsCbMessage> messageList, Context context,
             boolean fromSaveState, boolean shouldAlert, boolean fromDialog) {
-        Resources res = CellBroadcastSettings.getResources(context, message.getSubscriptionId());
+        Resources res = CellBroadcastSettings.getResourcesByOperator(context,
+                message.getSubscriptionId(),
+                CellBroadcastReceiver.getRoamingOperatorSupported(context));
         int channelTitleId = CellBroadcastResources.getDialogTitleResource(context, message);
         CharSequence channelName = context.getText(channelTitleId);
         String messageBody = message.getMessageBody();
@@ -937,8 +969,6 @@ public class CellBroadcastAlertService extends Service {
             nonEmergency.setVibrationPattern(new long[]{0});
 
             emergencyAlertInVoiceCall.setImportance(NotificationManager.IMPORTANCE_HIGH);
-            emergencyAlertInVoiceCall.enableVibration(true);
-            emergencyAlertInVoiceCall.setVibrationPattern(new long[]{0});
         }
 
         notificationManager.createNotificationChannel(highPriorityEmergency);

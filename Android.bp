@@ -34,7 +34,8 @@ java_defaults {
         "cellbroadcast-java-proto-lite",
     ],
     optimize: {
-       proguard_flags_files: ["proguard.flags"],
+        shrink_resources: true,
+        proguard_flags_files: ["proguard.flags"],
     },
     resource_dirs: ["res"],
     lint: {
@@ -49,7 +50,7 @@ android_app {
     aaptflags: ["--custom-package com.android.cellbroadcastreceiver"],
     manifest: "AndroidManifest.xml",
     apex_available: ["com.android.cellbroadcast"],
-    required: ["privapp_allowlist_com.android.cellbroadcastreceiver.module.xml"],
+    privapp_allowlist: ":privapp_allowlist_com.android.cellbroadcastreceiver.module.xml",
 }
 
 // filegroup used to include source into unit tests
@@ -72,7 +73,7 @@ android_app {
      manifest: "AndroidManifest_Platform.xml",
      system_ext_specific: true,
      privileged: true,
-     required: ["platform_privapp_allowlist_com.android.cellbroadcastreceiver.xml"],
+     privapp_allowlist: ":platform_privapp_allowlist_com.android.cellbroadcastreceiver.xml",
 }
 
 // source file shared with legacy cellbroadcast app

@@ -34,6 +34,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.IContentProvider;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.ProviderInfo;
 import android.content.res.Configuration;
@@ -369,16 +370,21 @@ public class CellBroadcastAlertDialogTest extends
         CellBroadcastAlertDialog activity = startActivity(intent, null, null);
         waitForMs(100);
 
+        ImageView image = activity.findViewById(R.id.pictogramImage);
+        image.setVisibility(View.VISIBLE);
+        assertEquals(View.VISIBLE, image.getVisibility());
+
         // add more messages to list
         mMessageList.add(CellBroadcastAlertServiceTest.createMessageForCmasMessageClass(12413,
-                SmsCbConstants.MESSAGE_ID_CMAS_ALERT_CHILD_ABDUCTION_EMERGENCY,
-                SmsCbConstants.MESSAGE_ID_CMAS_ALERT_CHILD_ABDUCTION_EMERGENCY));
+                SmsCbConstants.MESSAGE_ID_ETWS_EARTHQUAKE_WARNING,
+                SmsCbConstants.MESSAGE_ID_ETWS_EARTHQUAKE_WARNING));
         intent.putParcelableArrayListExtra(CellBroadcastAlertService.SMS_CB_MESSAGE_EXTRA,
                 new ArrayList<>(mMessageList));
         activity.onNewIntent(intent);
 
         verify(mMockedNotificationManager, atLeastOnce()).cancel(
                 eq(CellBroadcastAlertService.NOTIFICATION_ID));
+        assertNotNull(image.getLayoutParams());
     }
 
     public void testAnimationHandler() throws Throwable {
@@ -707,5 +713,34 @@ public class CellBroadcastAlertDialogTest extends
         assertEquals((flags & WindowManager.LayoutParams.FLAG_SECURE),
                 WindowManager.LayoutParams.FLAG_SECURE);
         stopActivity();
+    }
+
+    public void testTitleOnNonDefaultSubId() throws Throwable {
+        Intent intent = createActivityIntent();
+        Looper.prepare();
+        CellBroadcastAlertDialog activity = startActivity(intent, null, null);
+        waitForMs(100);
+
+        assertFalse(TextUtils.isEmpty(((TextView) getActivity().findViewById(
+                com.android.cellbroadcastreceiver.R.id.alertTitle)).getText()));
+
+        SharedPreferences mockSharedPreferences = mock(SharedPreferences.class);
+        doReturn("334090").when(mockSharedPreferences).getString(any(), any());
+        mContext.injectSharedPreferences(mockSharedPreferences);
+        Resources mockResources2 = mock(Resources.class);
+        doReturn(false).when(mockResources2).getBoolean(R.bool.show_alert_title);
+        doReturn("none").when(mockResources2).getString(R.string.link_method);
+
+        CellBroadcastSettings.sResourcesCacheByOperator.put("334090", mockResources2);
+
+        mMessageList.add(CellBroadcastAlertServiceTest.createMessageForCmasMessageClass(12413,
+                SmsCbConstants.MESSAGE_ID_CMAS_ALERT_CHILD_ABDUCTION_EMERGENCY,
+                SmsCbConstants.MESSAGE_ID_CMAS_ALERT_CHILD_ABDUCTION_EMERGENCY));
+        intent.putParcelableArrayListExtra(CellBroadcastAlertService.SMS_CB_MESSAGE_EXTRA,
+                new ArrayList<>(mMessageList));
+        activity.onNewIntent(intent);
+
+        assertTrue(TextUtils.isEmpty(((TextView) getActivity().findViewById(
+                com.android.cellbroadcastreceiver.R.id.alertTitle)).getText()));
     }
 }

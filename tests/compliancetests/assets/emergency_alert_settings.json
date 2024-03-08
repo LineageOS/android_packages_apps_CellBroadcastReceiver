@@ -14,21 +14,21 @@
     }
   },
   "brazil": {
-    "Extreme threats": {
+    "Extreme Threats": {
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Severe threats": {
+    "Severe Threats": {
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "AMBER alerts": {
-      "default_value": "true",
-      "toggle_avail": "true"
-    },
-    "Test alerts": {
+    "State and Local tests": {
       "default_value": "false",
       "toggle_avail": "true"
+    },
+    "Technical Test Alerts": {
+      "default_value": "false",
+      "toggle_avail": "false"
     },
     "Area update broadcasts": {
       "default_value": "true",
@@ -273,6 +273,28 @@
       "toggle_avail": "true"
     },
     "Test messages": {
+      "default_value": "false",
+      "toggle_avail": "true"
+    },
+    "Vibration": {
+      "default_value": "true",
+      "toggle_avail": "true"
+    }
+  },
+  "denmark": {
+    "Extreme": {
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "Severe": {
+      "default_value": "false",
+      "toggle_avail": "true"
+    },
+    "Test": {
+      "default_value": "false",
+      "toggle_avail": "true"
+    },
+    "Exercise": {
       "default_value": "false",
       "toggle_avail": "true"
     },
@@ -1137,6 +1159,34 @@
     }
   },
   "croatia_hrvatski": {
+    "Emergency Alarm": {
+      "default_value": "true",
+      "toggle_avail": "false"
+    },
+    "Extreme Danger": {
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "Significant Danger": {
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "Missing person": {
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "Hazard Information": {
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "Information": {
+      "default_value": "false",
+      "toggle_avail": "true"
+    },
+    "Test Warning": {
+      "default_value": "false",
+      "toggle_avail": "true"
+    },
     "Vibration": {
       "default_value": "true",
       "toggle_avail": "true"
@@ -1154,12 +1204,6 @@
       "toggle_avail": "true"
     }
   },
-  "austria_magenta": {
-    "Vibration": {
-      "default_value": "true",
-      "toggle_avail": "true"
-    }
-  },
   "poland_tmobile": {
     "Vibration": {
       "default_value": "true",
@@ -1167,6 +1211,26 @@
     }
   },
   "austria_tmobile": {
+    "Extreme threat": {
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "Severe threat": {
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "Missing persons": {
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "Threat information": {
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "Test alert": {
+      "default_value": "false",
+      "toggle_avail": "true"
+    },
     "Vibration": {
       "default_value": "true",
       "toggle_avail": "true"
@@ -1213,20 +1277,6 @@
     }
   },
   "uk": {
-    "Extreme alerts": {
-      "default_value": "true",
-      "toggle_avail": "true"
-    },
-    "Severe alerts": {
-      "default_value": "true",
-      "toggle_avail": "true"
-    },
-    "Vibration": {
-      "default_value": "true",
-      "toggle_avail": "true"
-    }
-  },
-  "uk_ee": {
     "Extreme alerts": {
       "default_value": "true",
       "toggle_avail": "true"

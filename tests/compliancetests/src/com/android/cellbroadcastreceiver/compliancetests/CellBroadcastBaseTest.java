@@ -41,6 +41,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.android.internal.telephony.CellBroadcastUtils;
 import com.android.modules.utils.build.SdkLevel;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -92,6 +93,7 @@ public class CellBroadcastBaseTest {
     protected static String sPackageName = null;
 
     protected static IRadioMessagingImpl.CallBackWithExecutor sCallBackWithExecutor = null;
+    protected static String sBackUpRoamingNetwork = "";
 
     protected static Context getContext() {
         return InstrumentationRegistry.getInstrumentation().getContext();
@@ -202,12 +204,27 @@ public class CellBroadcastBaseTest {
         sDevice = UiDevice.getInstance(sInstrumentation);
         sPackageName = CellBroadcastUtils
                 .getDefaultCellBroadcastReceiverPackageName(getContext());
+
+        setTestRoamingOperator(true);
+        enableAirplaneMode(true);
+        enableAirplaneMode(false);
     }
 
     private static void waitForNotify() {
         while (sSetChannelIsDone.getCount() > 0) {
             try {
                 sSetChannelIsDone.await(MAX_WAIT_TIME, TimeUnit.MILLISECONDS);
+                sSetChannelIsDone.countDown();
+            } catch (InterruptedException e) {
+                // do nothing
+            }
+        }
+    }
+
+    private static void waitForNotify(int milliSeconds) {
+        while (sSetChannelIsDone.getCount() > 0) {
+            try {
+                sSetChannelIsDone.await(milliSeconds, TimeUnit.MILLISECONDS);
                 sSetChannelIsDone.countDown();
             } catch (InterruptedException e) {
                 // do nothing
@@ -230,6 +247,8 @@ public class CellBroadcastBaseTest {
             assertTrue(sMockModemManager.disconnectMockModemService());
             sMockModemManager = null;
         }
+
+        setTestRoamingOperator(false);
     }
 
     @Rule
@@ -268,6 +287,25 @@ public class CellBroadcastBaseTest {
         return carrierLists.toArray(new String[]{});
     }
 
+    protected Object[] paramsCarrierAndMccMncForTest() throws Throwable {
+        logd("paramsCarrierAndMccMncForTest");
+        String jsonCarrier = loadJsonFile(CARRIER_LISTS_JSON);
+        JSONObject carriersObject = new JSONObject(jsonCarrier);
+        Iterator<String> carrierList = carriersObject.keys();
+
+        ArrayList<Object> result = new ArrayList<Object>();
+        for (Iterator<String> it = carrierList; it.hasNext();) {
+            String carrierName = it.next();
+            JSONObject carrierObject = carriersObject.getJSONObject(carrierName);
+            JSONArray mccMncList = carrierObject.getJSONArray(CARRIER_MCCMNC_FIELD);
+            for (int i = 0; i < mccMncList.length(); i++) {
+                String mccMnc = mccMncList.getString(i);
+                result.add(new String[]{carrierName, mccMnc});
+            }
+        }
+        return result.toArray(new Object[]{});
+    }
+
     protected Object[] paramsCarrierAndChannelForTest() throws Throwable {
         logd("paramsCarrierAndChannelForTest");
         String jsonCarrier = loadJsonFile(CARRIER_LISTS_JSON);
@@ -288,12 +326,51 @@ public class CellBroadcastBaseTest {
         return result.toArray(new Object[]{});
     }
 
-    protected void setSimInfo(String carrierName) throws Throwable {
-        JSONObject carrierObject = sCarriersObject.getJSONObject(carrierName);
-        String mccMncFromObject = carrierObject.getString(CARRIER_MCCMNC_FIELD);
-        String mcc = mccMncFromObject.substring(0, 3);
-        String mnc = mccMncFromObject.substring(3);
-        sInputMccMnc = mccMncFromObject;
+    protected static void enableDualSim(boolean enable) throws Exception {
+        if (enable) {
+            sDevice.executeShellCommand("root");
+            sDevice.executeShellCommand("setprop persist.radio.multisim.config ss");
+            sDevice.executeShellCommand("reboot");
+        } else {
+            sDevice.executeShellCommand("root");
+            sDevice.executeShellCommand("setprop persist.radio.multisim.config dsds");
+        }
+    }
+
+    protected static void enableAirplaneMode(boolean on) throws Exception {
+        if (on) {
+            logd("airplane mode on");
+            sDevice.executeShellCommand("settings put global airplane_mode_on 1");
+            sDevice.executeShellCommand("am broadcast -a android.intent.action.AIRPLANE_MODE");
+            waitForNotify(2000);
+        } else {
+            logd("airplane mode off");
+            sDevice.executeShellCommand("settings put global airplane_mode_on 0");
+            sDevice.executeShellCommand("am broadcast -a android.intent.action.AIRPLANE_MODE");
+            waitForNotify(2000);
+        }
+    }
+
+    protected static void setTestRoamingOperator(boolean save) throws Exception {
+        if (save) {
+            logd("setTestRoamingOperator: 00101");
+            sBackUpRoamingNetwork = sDevice.executeShellCommand(
+                    "getprop persist.cellbroadcast.roaming_plmn_supported");
+            logd("backup roaming network is " + sBackUpRoamingNetwork);
+            sDevice.executeShellCommand(
+                    "setprop persist.cellbroadcast.roaming_plmn_supported 00101");
+        } else {
+            logd("restore TestRoamingOperator: " + sBackUpRoamingNetwork);
+            sDevice.executeShellCommand(
+                    "setprop persist.cellbroadcast.roaming_plmn_supported "
+                            + sBackUpRoamingNetwork);
+        }
+    }
+
+    protected void setSimInfo(String carrierName, String inputMccMnc) throws Throwable {
+        String mcc = inputMccMnc.substring(0, 3);
+        String mnc = inputMccMnc.substring(3);
+        sInputMccMnc = inputMccMnc;
         sSetChannelIsDone = new CountDownLatch(1);
 
         String[] mccMnc = new String[] {mcc, mnc};

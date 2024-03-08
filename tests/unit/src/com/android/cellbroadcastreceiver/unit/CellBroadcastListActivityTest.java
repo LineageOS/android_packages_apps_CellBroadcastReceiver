@@ -27,8 +27,10 @@ import static android.provider.Telephony.CellBroadcasts.DATA_CODING_SCHEME;
 import static android.provider.Telephony.CellBroadcasts.DELIVERY_TIME;
 import static android.provider.Telephony.CellBroadcasts.ETWS_WARNING_TYPE;
 import static android.provider.Telephony.CellBroadcasts.LAC;
+import static android.provider.Telephony.CellBroadcasts.LOCATION_CHECK_TIME;
 import static android.provider.Telephony.CellBroadcasts.MAXIMUM_WAIT_TIME;
 import static android.provider.Telephony.CellBroadcasts.PLMN;
+import static android.view.WindowManager.LayoutParams.SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS;
 
 import static com.android.cellbroadcastreceiver.CellBroadcastListActivity.CursorLoaderListFragment.KEY_LOADER_ID;
 import static com.android.cellbroadcastreceiver.CellBroadcastListActivity.CursorLoaderListFragment.LOADER_HISTORY_FROM_CBS;
@@ -38,22 +40,28 @@ import static com.android.cellbroadcastreceiver.CellBroadcastListActivity.Cursor
 import static com.android.cellbroadcastreceiver.CellBroadcastListActivity.CursorLoaderListFragment.MENU_SHOW_REGULAR_MESSAGES;
 import static com.android.cellbroadcastreceiver.CellBroadcastListActivity.CursorLoaderListFragment.MENU_VIEW_DETAILS;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.LoaderManager;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -67,9 +75,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+
+import androidx.test.filters.SdkSuppress;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.android.cellbroadcastreceiver.CellBroadcastCursorAdapter;
 import com.android.cellbroadcastreceiver.CellBroadcastListActivity;
@@ -86,6 +98,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.lang.reflect.Field;
+import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -127,6 +140,11 @@ public class CellBroadcastListActivityTest extends
     @After
     public void tearDown() throws Exception {
         super.tearDown();
+        try {
+            stopActivity();
+        } catch (Throwable e) {
+            // Some tests don't need to call #stopActivity.
+        }
     }
 
     public CellBroadcastListActivityTest() {
@@ -139,9 +157,9 @@ public class CellBroadcastListActivityTest extends
         CellBroadcastListActivity activity = startActivity();
         int flags = activity.getWindow().getAttributes().flags;
         assertEquals((flags & WindowManager.LayoutParams.FLAG_SECURE), 0);
-        stopActivity();
     }
 
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.TIRAMISU)
     public void testOnCreateForWatch() throws Throwable {
         setWatchFeatureEnabled(true);
 
@@ -153,9 +171,9 @@ public class CellBroadcastListActivityTest extends
         assertTrue(customizeLayoutResIdField.getInt(activity) != 0);
 
         assertNotNull(activity.findViewById(R.id.content_frame));
-        stopActivity();
     }
 
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.TIRAMISU)
     public void testContextMenuForWatch() throws Throwable {
         setWatchFeatureEnabled(true);
         CellBroadcastListActivity activity = startActivity();
@@ -173,7 +191,6 @@ public class CellBroadcastListActivityTest extends
         int flags = activity.getWindow().getAttributes().flags;
         assertEquals((flags & WindowManager.LayoutParams.FLAG_SECURE),
                 WindowManager.LayoutParams.FLAG_SECURE);
-        stopActivity();
     }
 
     public void testOnListItemClick() throws Throwable {
@@ -189,7 +206,6 @@ public class CellBroadcastListActivityTest extends
             startActivityWasCalled = true;
         }
         assertTrue("onListItemClick should call startActivity", startActivityWasCalled);
-        stopActivity();
     }
 
     public void testOnActivityCreatedLoaderHistoryFromCbs() throws Throwable {
@@ -205,7 +221,6 @@ public class CellBroadcastListActivityTest extends
         Looper.prepare();
         activity.mListFragment.onActivityCreated(savedInstanceState);
         assertNotNull(activity.mListFragment.getLoaderManager());
-        stopActivity();
     }
 
     private static MatrixCursor makeTestCursor() {
@@ -250,7 +265,7 @@ public class CellBroadcastListActivityTest extends
         // create data with one entry so that the "no alert" text view is invisible
         activity.mListFragment.onLoadFinished(null, makeTestCursor());
         assertEquals(View.INVISIBLE, activity.findViewById(R.id.empty).getVisibility());
-        stopActivity();
+        assertTrue(activity.findViewById(android.R.id.list).isLongClickable());
     }
 
     public void testOnLoadFinishedEmptyData() throws Throwable {
@@ -262,7 +277,24 @@ public class CellBroadcastListActivityTest extends
                 new MatrixCursor(CellBroadcastListActivity.CursorLoaderListFragment.QUERY_COLUMNS);
         activity.mListFragment.onLoadFinished(null, data);
         assertEquals(View.VISIBLE, activity.findViewById(R.id.empty).getVisibility());
-        stopActivity();
+        assertFalse(activity.findViewById(android.R.id.list).isLongClickable());
+    }
+
+    public void testOnLoadFinishedEmptyToExistData() throws Throwable {
+        CellBroadcastListActivity activity = startActivity();
+        assertNotNull(activity.mListFragment);
+
+        // When the history changes from empty to exist,
+        // the ListView's LongClickable is from false to true.
+        Cursor data =
+                new MatrixCursor(CellBroadcastListActivity.CursorLoaderListFragment.QUERY_COLUMNS);
+        activity.mListFragment.onLoadFinished(null, data);
+        assertEquals(View.VISIBLE, activity.findViewById(R.id.empty).getVisibility());
+        assertFalse(activity.findViewById(android.R.id.list).isLongClickable());
+
+        activity.mListFragment.onLoadFinished(null, makeTestCursor());
+        assertEquals(View.INVISIBLE, activity.findViewById(R.id.empty).getVisibility());
+        assertTrue(activity.findViewById(android.R.id.list).isLongClickable());
     }
 
     public void testOnLoaderReset() throws Throwable {
@@ -272,7 +304,6 @@ public class CellBroadcastListActivityTest extends
         activity.mListFragment.onLoaderReset(null);
         assertNull("mAdapter.getCursor() should be null after reset",
                 activity.mListFragment.mAdapter.getCursor());
-        stopActivity();
     }
 
     public void testOnContextItemSelectedDelete() throws Throwable {
@@ -280,10 +311,7 @@ public class CellBroadcastListActivityTest extends
         assertNotNull(activity.mListFragment);
 
         // Mock out the adapter cursor
-        Cursor mockCursor = mock(Cursor.class);
-        doReturn(0).when(mockCursor).getPosition();
-        doReturn(0L).when(mockCursor).getLong(anyInt());
-        activity.mListFragment.mAdapter.swapCursor(mockCursor);
+        Cursor mockCursor = getMockCursor(activity, 0, 0L);
 
         // create mock delete menu item
         MenuItem mockMenuItem = mock(MenuItem.class);
@@ -300,9 +328,9 @@ public class CellBroadcastListActivityTest extends
                         CellBroadcastListActivity.CursorLoaderListFragment.KEY_DELETE_DIALOG));
 
         verify(mockCursor, atLeastOnce()).getColumnIndex(eq(Telephony.CellBroadcasts._ID));
-        stopActivity();
     }
 
+    @SdkSuppress(minSdkVersion = Build.VERSION_CODES.TIRAMISU)
     public void testOnContextItemSelectedDeleteForWatch() throws Throwable {
         setWatchFeatureEnabled(true);
         CellBroadcastListActivity activity = startActivity();
@@ -326,7 +354,6 @@ public class CellBroadcastListActivityTest extends
                 CellBroadcastListActivity.CursorLoaderListFragment.DeleteDialogFragment.ROW_ID);
         long[] expectedResult = {10L};
         assertTrue(Arrays.equals(expectedResult, rowId));
-        stopActivity();
     }
 
     public void testOnActionItemClickedDelete() throws Throwable {
@@ -334,10 +361,7 @@ public class CellBroadcastListActivityTest extends
         assertNotNull(activity.mListFragment);
 
         // Mock out the adapter cursor
-        Cursor mockCursor = mock(Cursor.class);
-        doReturn(0).when(mockCursor).getPosition();
-        doReturn(0L).when(mockCursor).getLong(anyInt());
-        activity.mListFragment.mAdapter.swapCursor(mockCursor);
+        Cursor mockCursor = getMockCursor(activity, 0, 0L);
 
         // create mock delete menu item
         MenuItem mockMenuItem = mock(MenuItem.class);
@@ -355,7 +379,6 @@ public class CellBroadcastListActivityTest extends
                         CellBroadcastListActivity.CursorLoaderListFragment.KEY_DELETE_DIALOG));
 
         verify(mockCursor, atLeastOnce()).getColumnIndex(eq(Telephony.CellBroadcasts._ID));
-        stopActivity();
     }
 
     public void testOnActionTitleOnMultiSelect() throws Throwable {
@@ -510,18 +533,14 @@ public class CellBroadcastListActivityTest extends
                 CellBroadcastListActivity.CursorLoaderListFragment.DeleteDialogFragment.ROW_ID);
         long[] expectedResult = {rowId1, rowId3};
         assertTrue(Arrays.equals(expectedResult, expectedResult));
-        stopActivity();
     }
 
     public void testOnActionItemClickedViewDetail() throws Throwable {
         CellBroadcastListActivity activity = startActivity();
         assertNotNull(activity.mListFragment);
 
-        // Mock out the adapter cursor
-        Cursor mockCursor = mock(Cursor.class);
-        doReturn(1).when(mockCursor).getPosition();
-        doReturn(0L).when(mockCursor).getLong(anyInt());
-        activity.mListFragment.mAdapter.swapCursor(mockCursor);
+        // mock out the AlertDialog.Builder
+        AlertDialog.Builder mockAlertDialogBuilder = getMockAlertDialogBuilder(activity);
 
         // create mock delete menu item
         MenuItem mockMenuItem = mock(MenuItem.class);
@@ -530,19 +549,23 @@ public class CellBroadcastListActivityTest extends
 
         // must call looper.prepare to create alertdialog
         Looper.prepare();
-        boolean alertDialogCreated = false;
-        try {
-            ActionMode mode = mock(ActionMode.class);
-            activity.mListFragment.getMultiChoiceModeListener()
-                    .onActionItemClicked(mode, mockMenuItem);
-        } catch (WindowManager.BadTokenException e) {
-            // We can't mock WindowManager because WindowManagerImpl is final, so instead we just
-            // verify that this exception is thrown when we try to create the AlertDialog
-            alertDialogCreated = true;
-        }
 
-        assertTrue("onContextItemSelected - MENU_VIEW_DETAILS should create alert dialog",
-                alertDialogCreated);
+        // when cursor is null, verify do nothing for showing an alert dialog
+        ActionMode mode = mock(ActionMode.class);
+        activity.mListFragment.mAdapter.swapCursor(null);
+        activity.mListFragment.getMultiChoiceModeListener().onActionItemClicked(mode, mockMenuItem);
+
+        verify(mode, times(1)).finish();
+        verify(mockAlertDialogBuilder, never()).show();
+
+        // mock out the adapter cursor
+        Cursor mockCursor = getMockCursor(activity, 1, 0L);
+
+        // verify the showing the alert dialog
+        activity.mListFragment.getMultiChoiceModeListener().onActionItemClicked(mode, mockMenuItem);
+
+        verify(mode, times(2)).finish();
+        verify(mockAlertDialogBuilder).show();
 
         // getColumnIndex is called 13 times within CellBroadcastCursorAdapter.createFromCursor
         verify(mockCursor, times(13)).getColumnIndex(mColumnCaptor.capture());
@@ -560,18 +583,15 @@ public class CellBroadcastListActivityTest extends
         assertTrue(contains(columns, DELIVERY_TIME));
         assertTrue(contains(columns, DATA_CODING_SCHEME));
         assertTrue(contains(columns, MAXIMUM_WAIT_TIME));
-        stopActivity();
     }
 
     public void testOnContextItemSelectedViewDetails() throws Throwable {
         CellBroadcastListActivity activity = startActivity();
         assertNotNull(activity.mListFragment);
 
-        // Mock out the adapter cursor
-        Cursor mockCursor = mock(Cursor.class);
-        doReturn(1).when(mockCursor).getPosition();
-        doReturn(0L).when(mockCursor).getLong(anyInt());
-        activity.mListFragment.mAdapter.swapCursor(mockCursor);
+        // mock out the adapter cursor and the AlertDialog.Builder
+        Cursor mockCursor = getMockCursor(activity, 1, 0L);
+        AlertDialog.Builder mockAlertDialogBuilder = getMockAlertDialogBuilder(activity);
 
         // create mock delete menu item
         MenuItem mockMenuItem = mock(MenuItem.class);
@@ -579,17 +599,11 @@ public class CellBroadcastListActivityTest extends
 
         // must call looper.prepare to create alertdialog
         Looper.prepare();
-        boolean alertDialogCreated = false;
-        try {
-            activity.mListFragment.onContextItemSelected(mockMenuItem);
-        } catch (WindowManager.BadTokenException e) {
-            // We can't mock WindowManager because WindowManagerImpl is final, so instead we just
-            // verify that this exception is thrown when we try to create the AlertDialog
-            alertDialogCreated = true;
-        }
 
-        assertTrue("onContextItemSelected - MENU_VIEW_DETAILS should create alert dialog",
-                alertDialogCreated);
+        // verify the showing the alert dialog
+        activity.mListFragment.onContextItemSelected(mockMenuItem);
+
+        verify(mockAlertDialogBuilder).show();
 
         // getColumnIndex is called 13 times within CellBroadcastCursorAdapter.createFromCursor
         verify(mockCursor, times(13)).getColumnIndex(mColumnCaptor.capture());
@@ -607,7 +621,6 @@ public class CellBroadcastListActivityTest extends
         assertTrue(contains(columns, DELIVERY_TIME));
         assertTrue(contains(columns, DATA_CODING_SCHEME));
         assertTrue(contains(columns, MAXIMUM_WAIT_TIME));
-        stopActivity();
     }
 
     private boolean contains(List<String> columns, String column) {
@@ -653,8 +666,6 @@ public class CellBroadcastListActivityTest extends
         assertFalse(activity.mListFragment.onOptionsItemSelected(mockMenuItem));
         doReturn(MENU_SHOW_REGULAR_MESSAGES).when(mockMenuItem).getItemId();
         assertFalse(activity.mListFragment.onOptionsItemSelected(mockMenuItem));
-
-        stopActivity();
     }
 
     public void testFragmentOnCreateOptionsMenu() throws Throwable {
@@ -747,5 +758,110 @@ public class CellBroadcastListActivityTest extends
         adapter.setIsActionMode(false);
         adapter.bindView(mockListItemView, mContext, data);
         verify(mockCheckbox).setVisibility(View.GONE);
+    }
+
+    public void testGetLocationCheckTime() throws Throwable {
+        CellBroadcastListActivity activity = startActivity();
+        assertNotNull(activity.mListFragment);
+
+        Cursor mockCursor = getMockCursor(activity, 0, 0L);
+        doReturn("test").when(mockCursor).getString(anyInt());
+        AlertDialog.Builder mockAlertDialogBuilder = getMockAlertDialogBuilder(activity);
+
+        // set the LocationCheckTime
+        Field fieldCurrentLoaderId =
+                CellBroadcastListActivity.CursorLoaderListFragment.class.getDeclaredField(
+                        "mCurrentLoaderId");
+        fieldCurrentLoaderId.setAccessible(true);
+        fieldCurrentLoaderId.setInt(activity.mListFragment, LOADER_HISTORY_FROM_CBS);
+        final Long locationCheckTime = 10L;
+        final int locationCheckTimeColumnIndex = 1111;
+        doReturn(locationCheckTimeColumnIndex).when(mockCursor).getColumnIndex(
+                eq(LOCATION_CHECK_TIME));
+        doReturn(locationCheckTime).when(mockCursor).getLong(eq(locationCheckTimeColumnIndex));
+
+        MenuItem mockMenuItem = mock(MenuItem.class);
+        doReturn(R.id.action_detail_info).when(mockMenuItem).getItemId();
+
+        activity.mListFragment.getListView().setItemChecked(0, true);
+        activity.mListFragment.getMultiChoiceModeListener()
+                .onActionItemClicked(mock(ActionMode.class), mockMenuItem);
+
+        // verify the locationCheckTime in dialog's message
+        ArgumentCaptor<CharSequence> detailCaptor = ArgumentCaptor.forClass(CharSequence.class);
+        verify(mockAlertDialogBuilder).setMessage(detailCaptor.capture());
+        assertTrue(detailCaptor.getValue().toString().contains(
+                DateFormat.getDateTimeInstance().format(locationCheckTime)));
+        verify(mockAlertDialogBuilder).show();
+    }
+
+    public void testOnResume() throws Throwable {
+        CellBroadcastListActivity activity = startActivity();
+        assertNotNull(activity.mListFragment);
+        Looper.prepare();
+
+        CellBroadcastListActivity.CursorLoaderListFragment mockFragment = spy(
+                activity.mListFragment);
+        LoaderManager mockLoaderManager = mock(LoaderManager.class);
+        doReturn(mockLoaderManager).when(mockFragment).getLoaderManager();
+
+        mockFragment.onResume();
+        verify(mockLoaderManager).restartLoader(anyInt(), any(), any());
+    }
+
+    public void testOnStart() throws Throwable {
+        CellBroadcastListActivity activity = startActivity();
+        CellBroadcastListActivity mockActivity = spy(activity);
+        final Window mockWindow = mock(Window.class);
+        doReturn(mockWindow).when(mockActivity).getWindow();
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
+            mockActivity.onStart();
+        });
+        verify(mockWindow).addSystemFlags(eq(SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS));
+    }
+
+    public void testOnDestroyActionMode() throws Throwable {
+        CellBroadcastListActivity activity = startActivity();
+        assertNotNull(activity.mListFragment);
+
+        CellBroadcastCursorAdapter mockAdapter = spy(activity.mListFragment.mAdapter);
+        activity.mListFragment.mAdapter = mockAdapter;
+        ActionMode mode = mock(ActionMode.class);
+
+        activity.mListFragment.getMultiChoiceModeListener().onDestroyActionMode(mode);
+        verify(mockAdapter).setIsActionMode(eq(false));
+        verify(mockAdapter).notifyDataSetChanged();
+    }
+
+    public void testOnActionItemClickedUnsupportedAction() throws Throwable {
+        CellBroadcastListActivity activity = startActivity();
+
+        // when click unsupported action, verify do nothing
+        MenuItem mockMenuItem = mock(MenuItem.class);
+        doReturn(-1).when(mockMenuItem).getItemId();
+        activity.mListFragment.getListView().setItemChecked(0, true);
+
+        ActionMode mode = mock(ActionMode.class);
+        assertFalse(activity.mListFragment.getMultiChoiceModeListener()
+                .onActionItemClicked(mode, mockMenuItem));
+        verify(mode, never()).finish();
+    }
+
+    private Cursor getMockCursor(CellBroadcastListActivity activity, int position, Long value) {
+        Cursor mockCursor = mock(Cursor.class);
+        doReturn(position).when(mockCursor).getPosition();
+        doReturn(value).when(mockCursor).getLong(anyInt());
+        activity.mListFragment.mAdapter.swapCursor(mockCursor);
+        return mockCursor;
+    }
+
+    private AlertDialog.Builder getMockAlertDialogBuilder(CellBroadcastListActivity activity) {
+        AlertDialog.Builder mockAlertDialogBuilder = mock(AlertDialog.Builder.class);
+        doReturn(mockAlertDialogBuilder).when(mockAlertDialogBuilder).setTitle(anyInt());
+        doReturn(mockAlertDialogBuilder).when(mockAlertDialogBuilder).setMessage(any());
+        doReturn(mockAlertDialogBuilder).when(mockAlertDialogBuilder).setCancelable(anyBoolean());
+        activity.mListFragment.mInjectAlertDialogBuilder = mockAlertDialogBuilder;
+        return mockAlertDialogBuilder;
     }
 }

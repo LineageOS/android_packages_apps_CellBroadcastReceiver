@@ -6,7 +6,8 @@
         {
           "exclude-annotation": "androidx.test.filters.FlakyTest"
         }
-      ]
+      ],
+      "keywords": ["internal"]
     },
     {
       "name": "GoogleCellBroadcastReceiverUnitTests",
@@ -14,10 +15,12 @@
         {
           "exclude-annotation": "androidx.test.filters.FlakyTest"
         }
-      ]
+      ],
+      "keywords": ["internal"]
     }
   ],
-  "presubmit-large": [
+
+  "postsubmit": [
     {
       "name": "CellBroadcastReceiverComplianceTests"
     }

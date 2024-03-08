@@ -90,11 +90,11 @@ public class CellBroadcastListActivity extends CollapsingToolbarBaseActivity {
         FragmentManager fm = getFragmentManager();
 
         // Create the list fragment and add it as our sole content.
-        if (fm.findFragmentById(com.android.settingslib.widget.R.id.content_frame)
+        if (fm.findFragmentById(com.android.settingslib.collapsingtoolbar.R.id.content_frame)
                 == null) {
             mListFragment = new CursorLoaderListFragment();
             mListFragment.setActivity(this);
-            fm.beginTransaction().add(com.android.settingslib.widget.R.id.content_frame,
+            fm.beginTransaction().add(com.android.settingslib.collapsingtoolbar.R.id.content_frame,
                     mListFragment).commit();
         }
 
@@ -203,6 +203,9 @@ public class CellBroadcastListActivity extends CollapsingToolbarBaseActivity {
         private CellBroadcastListActivity mActivity;
 
         private boolean mIsWatch;
+
+        @VisibleForTesting
+        public AlertDialog.Builder mInjectAlertDialogBuilder;
 
         void setActivity(CellBroadcastListActivity activity) {
             mActivity = activity;
@@ -366,7 +369,9 @@ public class CellBroadcastListActivity extends CollapsingToolbarBaseActivity {
                     messageDisplayed, geometry);
             int titleId = (mCurrentLoaderId == LOADER_NORMAL_HISTORY)
                     ? R.string.view_details_title : R.string.view_details_debugging_title;
-            new AlertDialog.Builder(getActivity())
+            AlertDialog.Builder dialogBuilder = mInjectAlertDialogBuilder != null
+                    ? mInjectAlertDialogBuilder : new AlertDialog.Builder(getActivity());
+            dialogBuilder
                     .setTitle(titleId)
                     .setMessage(details)
                     .setCancelable(true)
@@ -422,6 +427,7 @@ public class CellBroadcastListActivity extends CollapsingToolbarBaseActivity {
             if (noAlertsTextView != null) {
                 noAlertsTextView.setVisibility(!hasAlertsInHistory()
                         ? View.VISIBLE : View.INVISIBLE);
+                getListView().setLongClickable(hasAlertsInHistory());
                 if (!hasAlertsInHistory()) {
                     getListView().setContentDescription(getString(R.string.no_cell_broadcasts));
                 }

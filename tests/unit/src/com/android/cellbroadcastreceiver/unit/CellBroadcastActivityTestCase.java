@@ -23,6 +23,7 @@ import android.app.ResourcesManager;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -34,6 +35,7 @@ import android.view.Display;
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BooleanSupplier;
 
 public class CellBroadcastActivityTestCase<T extends Activity> extends ActivityUnitTestCase<T> {
 
@@ -124,6 +126,8 @@ public class CellBroadcastActivityTestCase<T extends Activity> extends ActivityU
 
         private PackageManager mPackageManager;
 
+        private SharedPreferences mSharedPreferences;
+
         public TestContext(Context base) {
             super(base);
             mResources = spy(super.getResources());
@@ -138,6 +142,9 @@ public class CellBroadcastActivityTestCase<T extends Activity> extends ActivityU
             mPackageManager = packageManager;
         }
 
+        public void injectSharedPreferences(SharedPreferences sp) {
+            mSharedPreferences = sp;
+        }
 
         @Override
         public Display getDisplay() {
@@ -173,6 +180,13 @@ public class CellBroadcastActivityTestCase<T extends Activity> extends ActivityU
             return super.getPackageManager();
         }
 
+        @Override
+        public SharedPreferences getSharedPreferences(String name, int mode) {
+            if (mSharedPreferences != null) {
+                return mSharedPreferences;
+            }
+            return super.getSharedPreferences(name, mode);
+        }
 
         @Override
         public Context createConfigurationContext(Configuration overrideConfiguration) {
@@ -190,5 +204,22 @@ public class CellBroadcastActivityTestCase<T extends Activity> extends ActivityU
             mIsOverrideConfigurationEnabled = enabled;
         }
 
+    }
+
+    protected void waitForChange(BooleanSupplier condition, long timeoutMs) {
+        CountDownLatch latch = new CountDownLatch(1);
+        new Thread(() -> {
+            while (latch.getCount() > 0 && !condition.getAsBoolean()) {
+                // do nothing
+            }
+            latch.countDown();
+        }).start();
+
+        try {
+            latch.await(timeoutMs, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            // do nothing
+        }
+        latch.countDown();
     }
 }
