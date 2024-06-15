@@ -41,7 +41,7 @@
     </string-array>
     <!-- 6400 EU-Info -->
     <string-array name="emergency_alerts_channels_range_strings" translatable="false">
-        <item>0x1900:rat=gsm, emergency=true, type=info</item>
+        <item>0x1900:rat=gsm, emergency=true</item>
     </string-array>
     <!-- 4379, 4392 EU-Amber -->
     <string-array name="cmas_amber_alerts_channels_range_strings" translatable="false">

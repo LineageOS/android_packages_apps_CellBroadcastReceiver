@@ -22,6 +22,7 @@ import static com.android.cellbroadcastservice.CellBroadcastMetrics.ERRTYPE_CHAN
 import static com.android.cellbroadcastservice.CellBroadcastMetrics.ERRTYPE_ENABLECHANNEL;
 
 import android.Manifest;
+import android.app.ActivityOptions;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -145,11 +146,16 @@ public class CellBroadcastConfigService extends IntentService {
 
                 CellBroadcastAlertService.createNotificationChannels(c);
                 Intent settingsIntent = new Intent(c, CellBroadcastSettings.class);
+                ActivityOptions options = ActivityOptions.makeBasic();
+                if (SdkLevel.isAtLeastU()) {
+                    options.setPendingIntentCreatorBackgroundActivityStartMode(
+                            ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED);
+                }
                 PendingIntent pi = PendingIntent.getActivity(c,
                         CellBroadcastAlertService.SETTINGS_CHANGED_NOTIFICATION_ID, settingsIntent,
                         PendingIntent.FLAG_ONE_SHOT
                                 | PendingIntent.FLAG_UPDATE_CURRENT
-                                | PendingIntent.FLAG_IMMUTABLE);
+                                | PendingIntent.FLAG_IMMUTABLE, options.toBundle());
 
                 Notification.Builder builder = new Notification.Builder(c,
                         CellBroadcastAlertService.NOTIFICATION_CHANNEL_SETTINGS_UPDATES)

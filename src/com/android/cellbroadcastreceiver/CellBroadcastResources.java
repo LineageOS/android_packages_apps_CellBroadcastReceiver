@@ -19,6 +19,7 @@ package com.android.cellbroadcastreceiver;
 import android.annotation.NonNull;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.telephony.SmsCbCmasInfo;
 import android.telephony.SmsCbEtwsInfo;
@@ -312,13 +313,13 @@ public class CellBroadcastResources {
                 context, message.getSubscriptionId());
         final int serviceCategory = message.getServiceCategory();
         // store to different SMS threads based on channel mappings.
-        switch (channelManager.getCellBroadcastChannelResourcesKey(serviceCategory)) {
-            case R.array.cmas_presidential_alerts_channels_range_strings:
-                return R.string.sms_cb_sender_name_presidential;
-            case R.array.emergency_alerts_channels_range_strings:
-                return R.string.sms_cb_sender_name_emergency;
-            case R.array.public_safety_messages_channels_range_strings:
-                return R.string.sms_cb_sender_name_public_safety;
+        int resourcesKey = channelManager.getCellBroadcastChannelResourcesKey(serviceCategory);
+        if (resourcesKey == R.array.cmas_presidential_alerts_channels_range_strings) {
+            return R.string.sms_cb_sender_name_presidential;
+        } else if (resourcesKey == R.array.emergency_alerts_channels_range_strings) {
+            return R.string.sms_cb_sender_name_emergency;
+        } else if (resourcesKey == R.array.public_safety_messages_channels_range_strings) {
+            return R.string.sms_cb_sender_name_public_safety;
         }
 
         return R.string.sms_cb_sender_name_default;
@@ -356,27 +357,26 @@ public class CellBroadcastResources {
         CellBroadcastChannelRange range = channelManager
                 .getCellBroadcastChannelRange(serviceCategory);
 
-        switch (resourcesKey) {
-            case R.array.emergency_alerts_channels_range_strings:
-                return R.string.pws_other_message_identifiers;
-            case R.array.cmas_presidential_alerts_channels_range_strings:
-                return R.string.cmas_presidential_level_alert;
-            case R.array.cmas_alert_extreme_channels_range_strings:
-                return R.string.cmas_extreme_alert;
-            case R.array.cmas_alerts_severe_range_strings:
-                return R.string.cmas_severe_alert;
-            case R.array.cmas_amber_alerts_channels_range_strings:
-                return R.string.cmas_amber_alert;
-            case R.array.required_monthly_test_range_strings:
-                return R.string.cmas_required_monthly_test;
-            case R.array.exercise_alert_range_strings:
-                return R.string.cmas_exercise_alert;
-            case R.array.operator_defined_alert_range_strings:
-                return R.string.cmas_operator_defined_alert;
-            case R.array.public_safety_messages_channels_range_strings:
-                return R.string.public_safety_message;
-            case R.array.state_local_test_alert_range_strings:
-                return R.string.state_local_test_alert;
+        if (resourcesKey == R.array.emergency_alerts_channels_range_strings) {
+            return R.string.pws_other_message_identifiers;
+        } else if (resourcesKey == R.array.cmas_presidential_alerts_channels_range_strings) {
+            return R.string.cmas_presidential_level_alert;
+        } else if (resourcesKey == R.array.cmas_alert_extreme_channels_range_strings) {
+            return R.string.cmas_extreme_alert;
+        } else if (resourcesKey == R.array.cmas_alerts_severe_range_strings) {
+            return R.string.cmas_severe_alert;
+        } else if (resourcesKey == R.array.cmas_amber_alerts_channels_range_strings) {
+            return R.string.cmas_amber_alert;
+        } else if (resourcesKey == R.array.required_monthly_test_range_strings) {
+            return R.string.cmas_required_monthly_test;
+        } else if (resourcesKey == R.array.exercise_alert_range_strings) {
+            return R.string.cmas_exercise_alert;
+        } else if (resourcesKey == R.array.operator_defined_alert_range_strings) {
+            return R.string.cmas_operator_defined_alert;
+        } else if (resourcesKey == R.array.public_safety_messages_channels_range_strings) {
+            return R.string.public_safety_message;
+        } else if (resourcesKey == R.array.state_local_test_alert_range_strings) {
+            return R.string.state_local_test_alert;
         }
 
         if (channelManager.isEmergencyMessage(message)) {
@@ -445,5 +445,30 @@ public class CellBroadcastResources {
             return -1;
         }
         return -1;
+    }
+
+    /**
+     * If the carrier or country is configured to show the alert dialog title text
+     * and the alert notification title in the language matching the message, this method returns
+     * the string in that language.
+     * Otherwise this method returns the string in the device's current language
+     *
+     * @param resId resource Id
+     * @param res Resources for the subId
+     * @param languageCode the ISO-639-1 language code for this message, or null if unspecified
+     */
+    public static String overrideTranslation(Context context, int resId, Resources res,
+                                             String languageCode) {
+        if (!TextUtils.isEmpty(languageCode)
+                && res.getBoolean(R.bool.override_alert_title_language_to_match_message_locale)) {
+            // TODO change resources to locale from message
+            Configuration conf = res.getConfiguration();
+            conf = new Configuration(conf);
+            conf.setLocale(new Locale(languageCode));
+            Context localizedContext = context.createConfigurationContext(conf);
+            return localizedContext.getResources().getText(resId).toString();
+        } else {
+            return res.getText(resId).toString();
+        }
     }
 }

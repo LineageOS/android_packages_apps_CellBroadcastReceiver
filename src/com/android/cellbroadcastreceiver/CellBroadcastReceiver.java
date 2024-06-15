@@ -233,6 +233,18 @@ public class CellBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
+
+    /**
+     * Get SystemProperties values
+     *
+     * @param key string to use get the value
+     * @return the matched value, but default "" for unmatched case.
+     */
+    @VisibleForTesting
+    public String getSystemProperties(String key) {
+        return SystemProperties.get(key, "").trim();
+    }
+
     private void onServiceStateChanged(Context context, Resources res, int ss) {
         logd("onServiceStateChanged, ss: " + ss);
         // check whether to support roaming network
@@ -259,8 +271,8 @@ public class CellBroadcastReceiver extends BroadcastReceiver {
                 roamingOperator = "";
                 if ((tm.isNetworkRoaming() || ss != ServiceState.STATE_IN_SERVICE)
                         && !networkOperator.equals(tm.getSimOperator())) {
-                    String propRoamingPlmn = SystemProperties.get(
-                            ROAMING_PLMN_SUPPORTED_PROPERTY_KEY, "").trim();
+                    String propRoamingPlmn =
+                            getSystemProperties(ROAMING_PLMN_SUPPORTED_PROPERTY_KEY);
                     String[] roamingNetworks = propRoamingPlmn.isEmpty() ? res.getStringArray(
                             R.array.cmas_roaming_network_strings) : propRoamingPlmn.split(",");
                     logd("roamingNetworks: " + Arrays.toString(roamingNetworks));

@@ -25,6 +25,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -275,6 +277,35 @@ public class CellBroadcastResourcesTest {
                     null, 0, SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
             assertEquals(expectedResources2[i], getDialogPictogramResource(mContext, message));
         }
+    }
+
+    @Test
+    public void testOverrideTranslation() throws Exception {
+        final String expectedStrings = "Presidential alert";
+
+        doReturn(expectedStrings).when(mResources)
+                .getText(R.string.cmas_presidential_level_alert);
+        doReturn(false).when(mResources)
+                .getBoolean(R.bool.override_alert_title_language_to_match_message_locale);
+
+        Context mockContext2 = mock(Context.class);
+        doReturn(mResources).when(mockContext2).getResources();
+        Configuration config = new Configuration();
+        doReturn(config).when(mResources).getConfiguration();
+        doReturn(mockContext2).when(mContext).createConfigurationContext(any());
+
+        String strResult = CellBroadcastResources.overrideTranslation(mContext,
+                R.string.cmas_presidential_level_alert, mResources, "en");
+        verify(mContext, times(0)).createConfigurationContext(any());
+        assertEquals(expectedStrings, strResult);
+
+        doReturn(true).when(mResources)
+                .getBoolean(R.bool.override_alert_title_language_to_match_message_locale);
+
+        CellBroadcastResources.overrideTranslation(mContext,
+                R.string.cmas_presidential_level_alert, mResources, "en");
+
+        verify(mContext, times(1)).createConfigurationContext(any());
     }
 
     @Test

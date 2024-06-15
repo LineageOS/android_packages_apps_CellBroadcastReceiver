@@ -62,7 +62,7 @@
     <string name="notification_channel_settings_updates" msgid="6779759372516475085">"ဆင်းမ်အပေါ် အခြေခံ၍ WEA ဆက်တင်များ အလိုအလျောက် ပြောင်းခြင်း"</string>
     <string name="enable_alerts_master_toggle_title" msgid="1457904343636699446">"သတိပေးချက်များကို ခွင့်ပြုရန်"</string>
     <string name="enable_alerts_master_toggle_summary" msgid="5583168548073938617">"ကြိုးမဲ့ အရေးပေါ် သတိပေးအကြောင်းကြားချက် လက်ခံရန်"</string>
-    <string name="alert_reminder_interval_title" msgid="3283595202268218149">"အရေးပေါ်သတိပေးချက်"</string>
+    <string name="alert_reminder_interval_title" msgid="3283595202268218149">"သတိပေးချက် အသံ"</string>
     <string name="enable_alert_speech_title" msgid="8052104771053526941">"စကားပြော သတိပေးမက်ဆေ့ဂျ်"</string>
     <string name="enable_alert_speech_summary" msgid="2855629032890937297">"ကြိုးမဲ့ အရေးပေါ်သတိပေးချက် မက်ဆေ့ဂျ်များ ပြောကြားရန် \'စာ-မှ-စကား\' ကိုအသုံးပြုပါ"</string>
     <string name="alert_reminder_dialog_title" msgid="2299010977651377315">"သတိပေးချက်အသံကို ပုံမှန်အကျယ်ဖြင့် ဖွင့်ပါမည်"</string>
@@ -170,7 +170,7 @@
     <string name="seconds" msgid="141450721520515025">"စက္ကန့်"</string>
     <string name="message_copied" msgid="6922953753733166675">"မက်ဆေ့ဂျ် မိတ္တူကူးပြီးပြီ"</string>
     <string name="top_intro_default_text" msgid="1922926733152511202"></string>
-    <string name="top_intro_roaming_text" msgid="186872150397081032">"ပြင်ပကွန်ရက်သုံးနေပါက ဤဆက်တင်များတွင် မပါဝင်သည့် သတိပေးချက်များ ရနိုင်ပါသည်"</string>
+    <string name="top_intro_roaming_text" msgid="5250650823028195358">"ပြင်ပကွန်ရက်သုံးနေလျှင် (သို့) သုံးနေသောဆင်းမ်ကတ်မရှိလျှင် ဤဆက်တင်များတွင် မပါဝင်သော သတိပေးချက်အချို့ ရရှိနိုင်သည်"</string>
     <string name="notification_cb_settings_changed_title" msgid="7664799881479966932">"ဆက်တင်များကို ဝန်ဆောင်မှုပေးသူက ပြောင်းထားသည်"</string>
     <string name="notification_cb_settings_changed_text" msgid="1397646219615654933">"ကြိုးမဲ့ အရေးပေါ်သတိပေးချက် ဆက်တင်များကို ကြည့်ရန် တို့ပါ"</string>
 </resources>

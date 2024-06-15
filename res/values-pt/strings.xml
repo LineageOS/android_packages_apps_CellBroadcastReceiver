@@ -87,13 +87,13 @@
     <string name="enable_emergency_alerts_message_title" msgid="661894007489847468">"Alertas de emergência"</string>
     <string name="enable_emergency_alerts_message_summary" msgid="7574617515441602546">"Aviso sobre eventos perigosos"</string>
     <string name="enable_cmas_test_alerts_title" msgid="7194966927004755266">"Alertas de teste"</string>
-    <string name="enable_cmas_test_alerts_summary" msgid="2083089933271720217">"Receber testes mensais e da operadora pelo sistema de alerta de segurança"</string>
+    <string name="enable_cmas_test_alerts_summary" msgid="2083089933271720217">"Receber testes mensais e da operadora pelo sistema de aviso de segurança"</string>
     <!-- no translation found for enable_exercise_test_alerts_title (6030780598569873865) -->
     <skip />
     <string name="enable_exercise_test_alerts_summary" msgid="4276766794979567304">"Receber alerta de emergência: mensagem de treinamento/prática"</string>
     <!-- no translation found for enable_operator_defined_test_alerts_title (7459219458579095832) -->
     <skip />
-    <string name="enable_operator_defined_test_alerts_summary" msgid="7856514354348843433">"Receber alerta de segurança: operador definido"</string>
+    <string name="enable_operator_defined_test_alerts_summary" msgid="7856514354348843433">"Receber aviso de segurança: operador definido"</string>
     <string name="enable_alert_vibrate_title" msgid="5421032189422312508">"Vibração"</string>
     <string name="enable_alert_vibrate_summary" msgid="4733669825477146614"></string>
     <string name="override_dnd_title" msgid="5120805993144214421">"Sempre tocar no volume máximo"</string>
@@ -170,7 +170,7 @@
     <string name="seconds" msgid="141450721520515025">"segundos"</string>
     <string name="message_copied" msgid="6922953753733166675">"Mensagem copiada"</string>
     <string name="top_intro_default_text" msgid="1922926733152511202"></string>
-    <string name="top_intro_roaming_text" msgid="186872150397081032">"Durante o roaming, você pode receber alertas que não estão incluídos nessas configurações"</string>
+    <string name="top_intro_roaming_text" msgid="5250650823028195358">"Se estiver em roaming ou não tiver um chip ativo, você poderá receber alguns alertas não incluídos nestas configurações"</string>
     <string name="notification_cb_settings_changed_title" msgid="7664799881479966932">"Configurações mudadas pela operadora"</string>
     <string name="notification_cb_settings_changed_text" msgid="1397646219615654933">"Toque para ver as configurações sem fio do alerta de emergência"</string>
 </resources>

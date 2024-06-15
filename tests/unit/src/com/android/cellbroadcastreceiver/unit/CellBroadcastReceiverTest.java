@@ -564,6 +564,8 @@ public class CellBroadcastReceiverTest extends CellBroadcastTest {
 
     @Test
     public void testOnNetworkRoamingChange() {
+        doReturn("").when(mCellBroadcastReceiver).getSystemProperties(any());
+
         mFakeSharedPreferences.putInt("service_state", ServiceState.STATE_IN_SERVICE);
         mFakeSharedPreferences.putString("roaming_operator_supported", "");
         mockTelephonyManager();
@@ -671,6 +673,8 @@ public class CellBroadcastReceiverTest extends CellBroadcastTest {
 
     @Test
     public void testOnSimlessChange() {
+        doReturn("").when(mCellBroadcastReceiver).getSystemProperties(any());
+
         mFakeSharedPreferences.putInt("service_state", ServiceState.STATE_IN_SERVICE);
         mFakeSharedPreferences.putString("roaming_operator_supported", "");
         doReturn("Us").when(mMockTelephonyManager).getNetworkCountryIso();

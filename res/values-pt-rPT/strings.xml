@@ -67,7 +67,7 @@
     <string name="enable_alert_speech_summary" msgid="2855629032890937297">"Utilize a conversão de texto em voz para dizer mensagens de alertas de emergência sem fios."</string>
     <string name="alert_reminder_dialog_title" msgid="2299010977651377315">"Será reproduzido um som de lembrete com o volume normal"</string>
     <string name="emergency_alert_history_title" msgid="8310173569237268431">"Histórico de alertas de emergência"</string>
-    <string name="alert_preferences_title" msgid="6001469026393248468">"Preferências de alerta"</string>
+    <string name="alert_preferences_title" msgid="6001469026393248468">"Preferências dos alertas"</string>
     <string name="enable_etws_test_alerts_title" msgid="3593533226735441539">"Difusões de teste do ETWS"</string>
     <string name="enable_etws_test_alerts_summary" msgid="8746155402612927306">"Difusões de teste para o Sistema de Aviso de Terramotos e Tsunamis"</string>
     <string name="enable_cmas_extreme_threat_alerts_title" msgid="5416260219062637770">"Ameaças extremas"</string>
@@ -170,7 +170,7 @@
     <string name="seconds" msgid="141450721520515025">"segundos"</string>
     <string name="message_copied" msgid="6922953753733166675">"Mensagem copiada."</string>
     <string name="top_intro_default_text" msgid="1922926733152511202"></string>
-    <string name="top_intro_roaming_text" msgid="186872150397081032">"Enquanto estiver a utilizar o roaming, pode obter alguns alertas que não estão incluídos nestas definições"</string>
+    <string name="top_intro_roaming_text" msgid="5250650823028195358">"Quando estiver a usar o roaming ou não tiver um SIM ativo, pode receber alguns alertas que não estão incluídos nestas definições"</string>
     <string name="notification_cb_settings_changed_title" msgid="7664799881479966932">"Definições alteradas pelo operador"</string>
     <string name="notification_cb_settings_changed_text" msgid="1397646219615654933">"Toque para ver definições de alertas de emergência sem fios"</string>
 </resources>

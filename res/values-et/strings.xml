@@ -62,7 +62,7 @@
     <string name="notification_channel_settings_updates" msgid="6779759372516475085">"WEA seadete automaatsed muudatused SIM-kaardi põhjal"</string>
     <string name="enable_alerts_master_toggle_title" msgid="1457904343636699446">"Teatiste lubamine"</string>
     <string name="enable_alerts_master_toggle_summary" msgid="5583168548073938617">"Saate juhtmevabalt hädaolukorra teatisi"</string>
-    <string name="alert_reminder_interval_title" msgid="3283595202268218149">"Märguannete meeldetuletus"</string>
+    <string name="alert_reminder_interval_title" msgid="3283595202268218149">"Teatiste meeldetuletus"</string>
     <string name="enable_alert_speech_title" msgid="8052104771053526941">"Märguandesõnumi esitamine kõnena"</string>
     <string name="enable_alert_speech_summary" msgid="2855629032890937297">"Kõnesünteesi funktsiooni kasutamine juhtmevabade hädaolukorra teatiste esitamiseks kõnena"</string>
     <string name="alert_reminder_dialog_title" msgid="2299010977651377315">"Meeldetuletuse heli esitatakse tavapärase helitugevusega"</string>
@@ -170,7 +170,7 @@
     <string name="seconds" msgid="141450721520515025">"sekundit"</string>
     <string name="message_copied" msgid="6922953753733166675">"Sõnum on kopeeritud"</string>
     <string name="top_intro_default_text" msgid="1922926733152511202"></string>
-    <string name="top_intro_roaming_text" msgid="186872150397081032">"Rändluse ajal võite näha hoiatusi, mida nendes seadetes pole"</string>
+    <string name="top_intro_roaming_text" msgid="5250650823028195358">"Kui kasutate rändlust või teil ei ole aktiivset SIM-kaarti, võite näha märguandeid, mida nendes seadetes pole"</string>
     <string name="notification_cb_settings_changed_title" msgid="7664799881479966932">"Operaator muutis seadeid"</string>
     <string name="notification_cb_settings_changed_text" msgid="1397646219615654933">"Puudutage juhtmevabade hädaolukorra teatiste seadete nägemiseks"</string>
 </resources>

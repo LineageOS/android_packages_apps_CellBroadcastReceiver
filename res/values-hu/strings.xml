@@ -74,7 +74,7 @@
     <string name="enable_cmas_extreme_threat_alerts_summary" msgid="5832146246627518123">"Életre és tulajdonra extrém veszélyt jelentő fenyegetések"</string>
     <string name="enable_cmas_severe_threat_alerts_title" msgid="1066172973703410042">"Komoly veszélyek"</string>
     <string name="enable_cmas_severe_threat_alerts_summary" msgid="5292443310309039223">"Életre és tulajdonra komoly veszélyt jelentő fenyegetések"</string>
-    <string name="enable_cmas_amber_alerts_title" msgid="1475030503498979651">"AMBER jelzés (gyermekrablás)"</string>
+    <string name="enable_cmas_amber_alerts_title" msgid="1475030503498979651">"AMBER riasztások (gyermekrablás)"</string>
     <string name="enable_cmas_amber_alerts_summary" msgid="4495233280416889667">"Gyermekrablási vészhelyzetekről szóló közlemények"</string>
     <string name="enable_alert_message_title" msgid="2939830587633599352">"Figyelmeztető üzenetek"</string>
     <string name="enable_alert_message_summary" msgid="6525664541696985610">"Közvetlen biztonsági fenyegetésekkel kapcsolatos figyelmeztetés"</string>
@@ -170,7 +170,7 @@
     <string name="seconds" msgid="141450721520515025">"másodperc"</string>
     <string name="message_copied" msgid="6922953753733166675">"Üzenet vágólapra másolva"</string>
     <string name="top_intro_default_text" msgid="1922926733152511202"></string>
-    <string name="top_intro_roaming_text" msgid="186872150397081032">"Roaming során megjelenhetnek olyan értesítések, amelyek nem találhatók meg ezeknél a beállításoknál"</string>
+    <string name="top_intro_roaming_text" msgid="5250650823028195358">"Amikor roamingol, vagy nincs aktív SIM-je, kaphat néhány olyan értesítést, amelyek nem találhatók meg ezekben a beállításokban"</string>
     <string name="notification_cb_settings_changed_title" msgid="7664799881479966932">"A szolgáltató megváltoztatta a beállításokat"</string>
     <string name="notification_cb_settings_changed_text" msgid="1397646219615654933">"Koppintson ide a vezeték nélküli vészjelzések beállításainak megtekintéséhez"</string>
 </resources>

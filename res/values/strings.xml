@@ -387,7 +387,7 @@
     <!-- The top introduction to show by default. -->
     <string name="top_intro_default_text"></string>
     <!-- The top introduction to show for roaming network support. -->
-    <string name="top_intro_roaming_text">While you\'re roaming, you may get some alerts that aren\'t included in these settings</string>
+    <string name="top_intro_roaming_text">When you\'re roaming or don\'t have an active SIM, you may get some alerts that aren\'t included in these settings</string>
 
     <!-- Notification title and text when alerting user that their CB settings have changed -->
     <string name="notification_cb_settings_changed_title">Settings changed by carrier</string>

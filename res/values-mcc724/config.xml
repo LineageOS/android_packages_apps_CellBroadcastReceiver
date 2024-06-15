@@ -22,8 +22,8 @@
     </string-array>
     <!-- 4373~4378, 4386~4391 -->
     <string-array name="cmas_alerts_severe_range_strings" translatable="false">
-        <item>0x1115-0x111A:rat=gsm, emergency=true</item>
-        <item>0x1122-0x1127:rat=gsm, emergency=true</item>
+        <item>0x1115-0x111A:rat=gsm, type=info, emergency=true</item>
+        <item>0x1122-0x1127:rat=gsm, type=info, emergency=true</item>
     </string-array>
     <!-- 4381, 4394 -->
     <string-array name="required_monthly_test_range_strings" translatable="false">

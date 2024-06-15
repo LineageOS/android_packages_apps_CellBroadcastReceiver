@@ -398,6 +398,75 @@ public class CellBroadcastAlertServiceTest extends
         compareCellBroadCastMessage(cbm, cbmTest);
     }
 
+    /*
+     * Regarding the sub-user, it's channel config is following the owner's one.
+     * But the sub-user doesn't have SharedPreferences, so it will refer the default value.
+     * The default value should be from resources per each mcc-mnc
+     */
+    public void testShouldDisplayMessageForSubUsers() {
+        Context mockContext = mock(Context.class);
+        doReturn(mResources).when(mockContext).getResources();
+        ((TestContextWrapper) mContext).injectCreateConfigurationContext(mockContext);
+
+        putResources(com.android.cellbroadcastreceiver.R.bool.show_separate_exercise_settings,
+                true);
+        putResources(com.android.cellbroadcastreceiver.R.array.exercise_alert_range_strings,
+                new String[]{
+                    "0x111D:rat=gsm, emergency=true",
+                    "0x112A:rat=gsm, emergency=true"});
+
+        SmsCbMessage message = new SmsCbMessage(1, 2, 3, new SmsCbLocation(),
+                SmsCbConstants.MESSAGE_ID_CMAS_ALERT_EXERCISE,
+                "language", "body",
+                SmsCbMessage.MESSAGE_PRIORITY_NORMAL, null,
+                null, 0, 1);
+
+        FakeSharedPreferences fakeSharedPreferences = new FakeSharedPreferences();
+        fakeSharedPreferences.putBoolean(
+                CellBroadcastSettings.KEY_ENABLE_ALERTS_MASTER_TOGGLE, true);
+
+        mMockedSharedPreferences = fakeSharedPreferences;
+        doReturn(mMockedSharedPreferences).when(mockContext)
+                .getSharedPreferences(anyString(), anyInt());
+
+        sendMessage(1);
+        waitForServiceIntent();
+        CellBroadcastAlertService cellBroadcastAlertService =
+                (CellBroadcastAlertService) getService();
+
+        // subuser doesn't have SharedPreferences so it will work according to resources
+        putResources(com.android.cellbroadcastreceiver
+                .R.bool.test_exercise_alerts_enabled_default, true);
+        assertTrue(cellBroadcastAlertService.shouldDisplayMessage(message));
+
+        putResources(com.android.cellbroadcastreceiver
+                .R.bool.test_exercise_alerts_enabled_default, false);
+        assertFalse(cellBroadcastAlertService.shouldDisplayMessage(message));
+
+        // Owner has SharedPreferences so it will work according to sharedpreferences
+        fakeSharedPreferences.putBoolean(CellBroadcastSettings.KEY_ENABLE_EXERCISE_ALERTS, false);
+        mMockedSharedPreferences = fakeSharedPreferences;
+
+        putResources(com.android.cellbroadcastreceiver
+                .R.bool.test_exercise_alerts_enabled_default, true);
+        assertFalse(cellBroadcastAlertService.shouldDisplayMessage(message));
+
+        putResources(com.android.cellbroadcastreceiver
+                .R.bool.test_exercise_alerts_enabled_default, false);
+        assertFalse(cellBroadcastAlertService.shouldDisplayMessage(message));
+
+        fakeSharedPreferences.putBoolean(CellBroadcastSettings.KEY_ENABLE_EXERCISE_ALERTS, true);
+        mMockedSharedPreferences = fakeSharedPreferences;
+
+        putResources(com.android.cellbroadcastreceiver
+                .R.bool.test_exercise_alerts_enabled_default, true);
+        assertTrue(cellBroadcastAlertService.shouldDisplayMessage(message));
+
+        putResources(com.android.cellbroadcastreceiver
+                .R.bool.test_exercise_alerts_enabled_default, false);
+        assertTrue(cellBroadcastAlertService.shouldDisplayMessage(message));
+    }
+
     public void testShouldDisplayMessage() {
         putResources(com.android.cellbroadcastreceiver.R.array
                 .state_local_test_alert_range_strings, new String[]{
@@ -591,6 +660,7 @@ public class CellBroadcastAlertServiceTest extends
         Handler handler = new Handler(Looper.getMainLooper());
         IPowerManager mockedPowerService = mock(IPowerManager.class);
         mMockedPowerManager = new PowerManager(mContext, mockedPowerService, null, handler);
+        doReturn("alert dialog title").when(mResources).getText(anyInt());
 
         Intent intent = new Intent(mContext, CellBroadcastAlertService.class);
         intent.setAction(SHOW_NEW_ALERT_ACTION);
@@ -678,6 +748,8 @@ public class CellBroadcastAlertServiceTest extends
         doReturn(true).when(mResources).getBoolean(
                 eq(com.android.cellbroadcastreceiver.R.bool.enable_alert_handling_during_call));
         doReturn(TelephonyManager.CALL_STATE_RINGING).when(mMockedTelephonyManager).getCallState();
+        doReturn("alert dialog title").when(mResources).getText(anyInt());
+
         Intent intent = new Intent(mContext, CellBroadcastAlertService.class);
         intent.setAction(SHOW_NEW_ALERT_ACTION);
         SmsCbMessage message = createMessage(12345);

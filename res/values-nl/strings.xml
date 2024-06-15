@@ -54,7 +54,7 @@
     <string name="public_safety_message" msgid="9119928798786998252">"Openbare calamiteitenberichten"</string>
     <string name="state_local_test_alert" msgid="8003145745857480200">"Nationale/lokale test"</string>
     <string name="emergency_alert" msgid="624783871477634263">"Noodmelding"</string>
-    <string name="emergency_alerts_title" msgid="6605036374197485429">"Waarschuwingen"</string>
+    <string name="emergency_alerts_title" msgid="6605036374197485429">"Meldingen"</string>
     <string name="notification_channel_broadcast_messages" msgid="880704362482824524">"Broadcast-berichten"</string>
     <string name="notification_channel_emergency_alerts" msgid="5008287980979183617">"Noodmeldingen"</string>
     <string name="notification_channel_emergency_alerts_high_priority" msgid="3937475297436439073">"Niet-bevestigde noodmeldingen"</string>
@@ -170,7 +170,7 @@
     <string name="seconds" msgid="141450721520515025">"seconden"</string>
     <string name="message_copied" msgid="6922953753733166675">"Bericht gekopieerd"</string>
     <string name="top_intro_default_text" msgid="1922926733152511202"></string>
-    <string name="top_intro_roaming_text" msgid="186872150397081032">"Tijdens roaming kun je meldingen krijgen die niet zijn opgenomen in deze instellingen"</string>
+    <string name="top_intro_roaming_text" msgid="5250650823028195358">"Als je roaming gebruikt of geen actieve sim hebt, kun je bepaalde meldingen krijgen die niet bij deze instellingen staan"</string>
     <string name="notification_cb_settings_changed_title" msgid="7664799881479966932">"Instellingen gewijzigd door provider"</string>
     <string name="notification_cb_settings_changed_text" msgid="1397646219615654933">"Tik om de instellingen voor meldingen voor noodwaarschuwingen te bekijken"</string>
 </resources>

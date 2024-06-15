@@ -128,7 +128,7 @@
     <string name="cmas_urgency_heading" msgid="8218282767913431492">"Hitnost:"</string>
     <string name="cmas_urgency_immediate" msgid="1577485208196449288">"Odmah"</string>
     <string name="cmas_urgency_expected" msgid="6830831119872375936">"Očekivano"</string>
-    <string name="cmas_certainty_heading" msgid="8374669249736439193">"Izvesnost:"</string>
+    <string name="cmas_certainty_heading" msgid="8374669249736439193">"Pouzdanost:"</string>
     <string name="cmas_certainty_observed" msgid="3668549749352106472">"Uočeno"</string>
     <string name="cmas_certainty_likely" msgid="4254497828943291749">"Verovatno"</string>
     <string name="delivery_time_heading" msgid="5980836543433619329">"Primljena:"</string>
@@ -170,7 +170,7 @@
     <string name="seconds" msgid="141450721520515025">"sek"</string>
     <string name="message_copied" msgid="6922953753733166675">"Poruka je kopirana"</string>
     <string name="top_intro_default_text" msgid="1922926733152511202"></string>
-    <string name="top_intro_roaming_text" msgid="186872150397081032">"Dok ste u romingu možete da dobijate neka obaveštenja koja nisu obuhvaćena ovim podešavanjima"</string>
+    <string name="top_intro_roaming_text" msgid="5250650823028195358">"Dok ste u romingu ili kada nemate aktivan SIM, možete da dobijate neka upozorenja koja nisu obuhvaćena ovim podešavanjima"</string>
     <string name="notification_cb_settings_changed_title" msgid="7664799881479966932">"Mobilni operater je promenio podešavanja"</string>
     <string name="notification_cb_settings_changed_text" msgid="1397646219615654933">"Dodirnite da biste videli podešavanja bežičnih upozorenja o hitnim slučajevima"</string>
 </resources>
