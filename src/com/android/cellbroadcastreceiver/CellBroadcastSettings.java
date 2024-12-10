@@ -661,9 +661,7 @@ public class CellBroadcastSettings extends CollapsingToolbarBaseActivity {
             // public safety toggle is displayed.
             if (mPublicSafetyMessagesChannelFullScreenCheckBox != null) {
                 mPublicSafetyMessagesChannelFullScreenCheckBox.setVisible(
-                        res.getBoolean(R.bool.show_public_safety_full_screen_settings)
-                                && (mPublicSafetyMessagesChannelCheckBox != null
-                                && mPublicSafetyMessagesChannelCheckBox.isVisible()));
+                        isShowFullScreenMessageVisible(getContext(), res));
             }
 
             if (mTestCheckBox != null) {
@@ -823,50 +821,75 @@ public class CellBroadcastSettings extends CollapsingToolbarBaseActivity {
             }
         }
 
-        private void setAlertsEnabled(boolean alertsEnabled) {
+        /**
+         * Enable the toggles to set it on/off or carrier default.
+         */
+        @VisibleForTesting
+        public void setAlertsEnabled(boolean alertsEnabled) {
             Resources res = CellBroadcastSettings.getResourcesForDefaultSubId(getContext());
+
+            boolean resetCarrierDefault = res.getBoolean(
+                    R.bool.restore_sub_toggle_to_carrier_default);
 
             if (mSevereCheckBox != null) {
                 mSevereCheckBox.setEnabled(alertsEnabled);
-                mSevereCheckBox.setChecked(alertsEnabled);
+                mSevereCheckBox.setChecked(resetCarrierDefault ? alertsEnabled && res.getBoolean(
+                        R.bool.severe_threat_alerts_enabled_default) : alertsEnabled);
             }
             if (!res.getBoolean(R.bool.disable_extreme_alert_settings)
                     && mExtremeCheckBox != null) {
                 mExtremeCheckBox.setEnabled(alertsEnabled);
-                mExtremeCheckBox.setChecked(alertsEnabled);
+                mExtremeCheckBox.setChecked(resetCarrierDefault ? alertsEnabled && res.getBoolean(
+                        R.bool.extreme_threat_alerts_enabled_default) : alertsEnabled);
             }
             if (mAmberCheckBox != null) {
                 mAmberCheckBox.setEnabled(alertsEnabled);
-                mAmberCheckBox.setChecked(alertsEnabled);
+                mAmberCheckBox.setChecked(resetCarrierDefault ? alertsEnabled && res.getBoolean(
+                        R.bool.amber_alerts_enabled_default) : alertsEnabled);
             }
             if (mAreaUpdateInfoCheckBox != null) {
                 mAreaUpdateInfoCheckBox.setEnabled(alertsEnabled);
-                mAreaUpdateInfoCheckBox.setChecked(alertsEnabled);
-                notifyAreaInfoUpdate(alertsEnabled);
+                mAreaUpdateInfoCheckBox.setChecked(
+                        resetCarrierDefault ? alertsEnabled && res.getBoolean(
+                                R.bool.area_update_info_alerts_enabled_default) : alertsEnabled);
+                notifyAreaInfoUpdate(resetCarrierDefault ? alertsEnabled && res.getBoolean(
+                        R.bool.area_update_info_alerts_enabled_default) : alertsEnabled);
             }
             if (mEmergencyAlertsCheckBox != null) {
                 mEmergencyAlertsCheckBox.setEnabled(alertsEnabled);
-                mEmergencyAlertsCheckBox.setChecked(alertsEnabled);
+                mEmergencyAlertsCheckBox.setChecked(
+                        resetCarrierDefault ? alertsEnabled && res.getBoolean(
+                                R.bool.emergency_alerts_enabled_default) : alertsEnabled);
             }
             if (mPublicSafetyMessagesChannelCheckBox != null) {
                 mPublicSafetyMessagesChannelCheckBox.setEnabled(alertsEnabled);
-                mPublicSafetyMessagesChannelCheckBox.setChecked(alertsEnabled);
+                mPublicSafetyMessagesChannelCheckBox.setChecked(
+                        resetCarrierDefault ? alertsEnabled && res.getBoolean(
+                                R.bool.public_safety_messages_enabled_default) : alertsEnabled);
             }
             if (mStateLocalTestCheckBox != null) {
                 mStateLocalTestCheckBox.setEnabled(alertsEnabled);
-                mStateLocalTestCheckBox.setChecked(alertsEnabled);
+                mStateLocalTestCheckBox.setChecked(
+                        resetCarrierDefault ? alertsEnabled && res.getBoolean(
+                                R.bool.state_local_test_alerts_enabled_default) : alertsEnabled);
             }
             if (mTestCheckBox != null) {
                 mTestCheckBox.setEnabled(alertsEnabled);
-                mTestCheckBox.setChecked(alertsEnabled);
+                mTestCheckBox.setChecked(resetCarrierDefault ? alertsEnabled && res.getBoolean(
+                        R.bool.test_alerts_enabled_default) : alertsEnabled);
             }
             if (mExerciseTestCheckBox != null) {
                 mExerciseTestCheckBox.setEnabled(alertsEnabled);
-                mExerciseTestCheckBox.setChecked(alertsEnabled);
+                mExerciseTestCheckBox.setChecked(
+                        resetCarrierDefault ? alertsEnabled && res.getBoolean(
+                                R.bool.test_exercise_alerts_enabled_default) : alertsEnabled);
             }
             if (mOperatorDefinedCheckBox != null) {
                 mOperatorDefinedCheckBox.setEnabled(alertsEnabled);
-                mOperatorDefinedCheckBox.setChecked(alertsEnabled);
+                mOperatorDefinedCheckBox.setChecked(
+                        resetCarrierDefault ? alertsEnabled && res.getBoolean(
+                                R.bool.test_operator_defined_alerts_enabled_default)
+                                : alertsEnabled);
             }
         }
 
@@ -919,6 +942,29 @@ public class CellBroadcastSettings extends CollapsingToolbarBaseActivity {
                 && (res.getBoolean(R.bool.show_override_dnd_settings)
                 || !res.getBoolean(R.bool.override_dnd));
         return isVibrationToggleVisible;
+    }
+
+    /**
+     * Check whether show full screen message toggle is visible
+     *
+     * @param context Context
+     * @param res     resources
+     * @return {@code true} if it needs to show, {@code false} otherwise
+     */
+    public static boolean isShowFullScreenMessageVisible(Context context, Resources res) {
+        // The settings should be based on the config by the subscription
+        CellBroadcastChannelManager channelManager = new CellBroadcastChannelManager(
+                context, SubscriptionManager.getDefaultSubscriptionId(), null);
+
+        if (res.getBoolean(R.bool.show_public_safety_settings)
+                && !channelManager.getCellBroadcastChannelRanges(
+                R.array.public_safety_messages_channels_range_strings).isEmpty()
+                && res.getBoolean(R.bool.show_public_safety_full_screen_settings)) {
+            Log.d(TAG, "isShowFullScreenMessageVisible : true");
+            return true;
+        }
+        Log.d(TAG, "isShowFullScreenMessageVisible : false");
+        return false;
     }
 
     public static boolean isTestAlertsToggleVisible(Context context) {

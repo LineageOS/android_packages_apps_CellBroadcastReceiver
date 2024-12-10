@@ -27,6 +27,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import android.app.ActivityManager;
+import android.app.ActivityOptions;
 import android.app.ContentProviderHolder;
 import android.app.IActivityManager;
 import android.app.Notification;
@@ -67,6 +68,7 @@ import com.android.cellbroadcastreceiver.CellBroadcastReceiverApp;
 import com.android.cellbroadcastreceiver.CellBroadcastSettings;
 import com.android.cellbroadcastreceiver.R;
 import com.android.internal.telephony.gsm.SmsCbConstants;
+import com.android.modules.utils.build.SdkLevel;
 
 import org.junit.After;
 import org.junit.Before;
@@ -154,36 +156,18 @@ public class CellBroadcastAlertDialogTest extends
         SubscriptionInfo mockSubInfo = mock(SubscriptionInfo.class);
         doReturn(mockSubInfo).when(mockSubManager).getActiveSubscriptionInfo(anyInt());
 
-        ProviderInfo providerInfo = new ProviderInfo();
-        providerInfo.authority = "test";
-        providerInfo.applicationInfo = new ApplicationInfo();
-        providerInfo.applicationInfo.uid = 999;
-        ContentProviderHolder holder = new ContentProviderHolder(providerInfo);
-        doReturn(holder).when(mMockedActivityManager)
-                .getContentProvider(any(), any(), any(), anyInt(), anyBoolean());
-        holder.provider = mock(IContentProvider.class);
-
-        Singleton<IActivityManager> activityManagerSingleton = new Singleton<IActivityManager>() {
-            @Override
-            protected IActivityManager create() {
-                return mMockedActivityManager;
-            }
-        };
-
-        mMockedActivityManagerHelper = new MockedServiceManager();
-        mMockedActivityManagerHelper.replaceService("window", mWindowManagerService);
-        mMockedActivityManagerHelper.replaceInstance(ActivityManager.class,
-                "IActivityManagerSingleton", null, activityManagerSingleton);
-
         CellBroadcastSettings.resetResourcesCache();
         CellBroadcastChannelManager.clearAllCellBroadcastChannelRanges();
+        String[] values = new String[]{"0x1112-0x1112:rat=gsm, always_on=true"};
+        doReturn(values).when(mContext.getResources()).getStringArray(
+                eq(com.android.cellbroadcastreceiver.R.array
+                .cmas_presidential_alerts_channels_range_strings));
     }
 
     @After
     public void tearDown() throws Exception {
         CellBroadcastSettings.resetResourcesCache();
         CellBroadcastChannelManager.clearAllCellBroadcastChannelRanges();
-        mMockedActivityManagerHelper.restoreAllServices();
         super.tearDown();
     }
 
@@ -235,6 +219,8 @@ public class CellBroadcastAlertDialogTest extends
     }
 
     public void testAddToNotification() throws Throwable {
+        setUpMockActivityManager();
+
         doReturn(true).when(mContext.getResources()).getBoolean(R.bool.show_alert_title);
         doReturn(false).when(mContext.getResources()).getBoolean(
                 R.bool.disable_capture_alert_dialog);
@@ -256,18 +242,52 @@ public class CellBroadcastAlertDialogTest extends
         assertEquals(CellBroadcastAlertServiceTest.createMessage(98235).getMessageBody(),
                 b.getCharSequence(Notification.EXTRA_TEXT));
 
+        ArgumentCaptor<Bundle> bundleArgs = ArgumentCaptor.forClass(Bundle.class);
         verify(mMockedActivityManager, times(2))
                 .getIntentSenderWithFeature(anyInt(), any(), any(), any(), any(), anyInt(),
-                        any(), any(), mFlags.capture(), any(), anyInt());
+                        any(), any(), mFlags.capture(), bundleArgs.capture(), anyInt());
 
         assertTrue((PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE)
                 ==  mFlags.getAllValues().get(0));
         assertTrue((PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE)
                 ==  mFlags.getAllValues().get(1));
 
+        if (SdkLevel.isAtLeastU()) {
+            ActivityOptions activityOptions = new ActivityOptions(bundleArgs.getAllValues().get(0));
+            int startMode = activityOptions.getPendingIntentCreatorBackgroundActivityStartMode();
+            assertEquals(ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED, startMode);
+            activityOptions = new ActivityOptions(bundleArgs.getAllValues().get(1));
+            startMode = activityOptions.getPendingIntentCreatorBackgroundActivityStartMode();
+            assertEquals(ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED, startMode);
+        }
+
         Field field = ((Class) WindowManagerGlobal.class).getDeclaredField("sWindowManagerService");
         field.setAccessible(true);
         field.set(null, null);
+
+        mMockedActivityManagerHelper.restoreAllServices();
+    }
+
+    private void setUpMockActivityManager() throws Exception {
+        ProviderInfo providerInfo = new ProviderInfo();
+        providerInfo.authority = "test";
+        providerInfo.applicationInfo = new ApplicationInfo();
+        providerInfo.applicationInfo.uid = 999;
+        ContentProviderHolder holder = new ContentProviderHolder(providerInfo);
+        doReturn(holder).when(mMockedActivityManager)
+                .getContentProvider(any(), any(), any(), anyInt(), anyBoolean());
+        holder.provider = mock(IContentProvider.class);
+
+        Singleton<IActivityManager> activityManagerSingleton = new Singleton<IActivityManager>() {
+            @Override
+            protected IActivityManager create() {
+                return mMockedActivityManager;
+            }
+        };
+        mMockedActivityManagerHelper = new MockedServiceManager();
+        mMockedActivityManagerHelper.replaceService("window", mWindowManagerService);
+        mMockedActivityManagerHelper.replaceInstance(ActivityManager.class,
+                "IActivityManagerSingleton", null, activityManagerSingleton);
     }
 
     public void testAddToNotificationWithDifferentConfiguration() throws Throwable {
@@ -495,6 +515,7 @@ public class CellBroadcastAlertDialogTest extends
         doReturn(pattern).when(mContext.getResources()).getIntArray(
                 eq(com.android.cellbroadcastreceiver.R.array.default_pulsation_pattern));
 
+        CellBroadcastChannelManager.clearAllCellBroadcastChannelRanges();
         CellBroadcastAlertDialog activity = startActivity();
         waitForMs(100);
         activity.mPulsationHandler.mLayout = mMockLinearLayout;

@@ -20,6 +20,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
 import android.app.Instrumentation;
+import android.app.UiAutomation;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import android.os.HandlerThread;
 import android.os.SystemProperties;
 import android.support.test.uiautomator.UiDevice;
 import android.telephony.ServiceState;
+import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyCallback;
 import android.telephony.TelephonyManager;
@@ -72,9 +74,7 @@ public class CellBroadcastBaseTest {
     protected static int sPreconditionError = 0;
     protected static final int ERROR_SDK_VERSION = 1;
     protected static final int ERROR_NO_TELEPHONY = 2;
-    protected static final int ERROR_MULTI_SIM = 3;
-    protected static final int ERROR_MOCK_MODEM_DISABLE = 4;
-    protected static final int ERROR_INVALID_SIM_SLOT_INDEX_ERROR = 5;
+    protected static final int ERROR_MOCK_MODEM_DISABLE = 3;
 
     protected static final String ALLOW_MOCK_MODEM_PROPERTY = "persist.radio.allow_mock_modem";
     protected static final boolean DEBUG = !"user".equals(Build.TYPE);
@@ -132,6 +132,7 @@ public class CellBroadcastBaseTest {
             if (sInputMccMnc != null && sInputMccMnc.equals(mccmnc)) {
                 sSetChannelIsDone.countDown();
                 logd("wait is released");
+                addSubIdToBeRemoved(SubscriptionManager.getDefaultSubscriptionId());
             }
         }
 
@@ -159,15 +160,6 @@ public class CellBroadcastBaseTest {
             return;
         }
 
-        TelephonyManager tm =
-                (TelephonyManager) getContext().getSystemService(Context.TELEPHONY_SERVICE);
-        boolean isMultiSim = tm != null && tm.getPhoneCount() > 1;
-        if (isMultiSim) {
-            Log.i(TAG, "Not support Multi-Sim");
-            sPreconditionError = ERROR_MULTI_SIM;
-            return;
-        }
-
         if (!isMockModemAllowed()) {
             Log.i(TAG, "Mock Modem is not allowed");
             sPreconditionError = ERROR_MOCK_MODEM_DISABLE;
@@ -190,6 +182,7 @@ public class CellBroadcastBaseTest {
                             if (sInputMccMnc != null && sInputMccMnc.equals(mccMncOfIntent)) {
                                 sSetChannelIsDone.countDown();
                                 logd("wait is released");
+                                addSubIdToBeRemoved(SubscriptionManager.getDefaultSubscriptionId());
                             }
                         }
                     }
@@ -238,6 +231,10 @@ public class CellBroadcastBaseTest {
     @AfterClass
     public static void afterAllTests() throws Exception {
         logd("CellBroadcastBaseTest#afterAllTests()");
+
+        if (sIccIdForDummySub != null) {
+            deleteDummySubscriptionIds();
+        }
 
         if (sReceiver != null) {
             getContext().unregisterReceiver(sReceiver);
@@ -361,15 +358,9 @@ public class CellBroadcastBaseTest {
             case ERROR_NO_TELEPHONY:
                 errorMessage = "Not have Telephony Feature";
                 break;
-            case ERROR_MULTI_SIM:
-                errorMessage = "Multi-sim is not supported in Mock Modem";
-                break;
             case ERROR_MOCK_MODEM_DISABLE:
                 errorMessage = "Please enable mock modem to run the test! The option can be "
                         + "updated in Settings -> System -> Developer options -> Allow Mock Modem";
-                break;
-            case ERROR_INVALID_SIM_SLOT_INDEX_ERROR:
-                errorMessage = "Error with invalid sim slot index";
                 break;
         }
         return errorMessage;
@@ -422,6 +413,56 @@ public class CellBroadcastBaseTest {
             sServiceStateLatch.await(SERVICE_STATE_MAX_WAIT, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             // do nothing
+        }
+    }
+
+    private static int sSubIdForDummySub;
+    private static String sIccIdForDummySub;
+    private static int sSubTypeForDummySub;
+
+    private static void addSubIdToBeRemoved(int subId) {
+        logd("addSubIdToBeRemoved, subId = " + subId
+                + " subIdToBeRemoved = " + sSubIdForDummySub);
+        deleteDummySubscriptionIds();
+        UiAutomation uiAutomation = sInstrumentation.getUiAutomation();
+        uiAutomation.adoptShellPermissionIdentity();
+        try {
+            SubscriptionManager subManager =
+                    getContext().getSystemService(SubscriptionManager.class);
+            SubscriptionInfo subInfo = subManager.getActiveSubscriptionInfo(subId);
+            sSubIdForDummySub = subId;
+            sIccIdForDummySub = subInfo.getIccId();
+            sSubTypeForDummySub = subInfo.getSubscriptionType();
+            logd("addSubIdToBeRemoved, subId = " + sSubIdForDummySub
+                    + " iccId=" + sIccIdForDummySub + " subType=" + sSubTypeForDummySub);
+        } catch (SecurityException e) {
+            logd("runWithShellPermissionIdentity exception = " + e);
+        } finally {
+            uiAutomation.dropShellPermissionIdentity();
+        }
+    }
+
+    private static void deleteDummySubscriptionIds() {
+        if (sIccIdForDummySub != null) {
+            UiAutomation uiAutomation = sInstrumentation.getUiAutomation();
+            uiAutomation.adoptShellPermissionIdentity();
+            try {
+                SubscriptionManager subManager =
+                        getContext().getSystemService(SubscriptionManager.class);
+                logd("deleteDummySubscriptionIds "
+                        + " subId =" + sSubIdForDummySub
+                        + " iccId=" + sIccIdForDummySub
+                        + " subType=" + sSubTypeForDummySub);
+                subManager.removeSubscriptionInfoRecord(sIccIdForDummySub, sSubTypeForDummySub);
+            } catch (SecurityException e) {
+                logd("runWithShellPermissionIdentity exception = " + e);
+            } catch (IllegalArgumentException e) {
+                logd("catch IllegalArgumentException during removing subscriptionId = " + e);
+            } catch (NullPointerException e) {
+                logd("catch NullPointerException during removing subscriptionId = " + e);
+            } finally {
+                uiAutomation.dropShellPermissionIdentity();
+            }
         }
     }
 }

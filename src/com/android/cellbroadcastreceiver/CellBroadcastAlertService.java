@@ -59,7 +59,6 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.os.SystemProperties;
 import android.os.UserHandle;
-import android.preference.PreferenceManager;
 import android.provider.Telephony;
 import android.service.notification.StatusBarNotification;
 import android.telephony.PhoneStateListener;
@@ -70,6 +69,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 
+import androidx.preference.PreferenceManager;
+
 import com.android.cellbroadcastreceiver.CellBroadcastChannelManager.CellBroadcastChannelRange;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.modules.utils.build.SdkLevel;
@@ -78,6 +79,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * This service manages the display and animation of broadcast messages.
@@ -385,10 +387,13 @@ public class CellBroadcastAlertService extends Service {
 
         if (message.getMessageFormat() == MESSAGE_FORMAT_3GPP) {
             CellBroadcastReceiverMetrics.getInstance().logMessageReported(mContext,
-                    RPT_GSM, SRC_CBR, message.getSerialNumber(), message.getServiceCategory());
+                    RPT_GSM, SRC_CBR, message.getSerialNumber(), message.getServiceCategory(),
+                    CellBroadcastReceiver.getRoamingOperatorSupported(mContext),
+                    message.getLanguageCode());
         } else if (message.getMessageFormat() == MESSAGE_FORMAT_3GPP2) {
             CellBroadcastReceiverMetrics.getInstance().logMessageReported(mContext,
-                    RPT_CDMA, SRC_CBR, message.getSerialNumber(), message.getServiceCategory());
+                    RPT_CDMA, SRC_CBR, message.getSerialNumber(), message.getServiceCategory(),
+                    "", "");
         }
 
         if (!shouldDisplayMessage(message)) {
@@ -1055,6 +1060,9 @@ public class CellBroadcastAlertService extends Service {
      */
     static Intent createMarkAsReadIntent(Context context, long deliveryTime, int notificationId) {
         Intent deleteIntent = new Intent(context, CellBroadcastInternalReceiver.class);
+        // The extras are used rather than the data payload. The data payload only needs to
+        // ensure uniqueness of the intent to prevent overwriting a previous notification intent.
+        deleteIntent.setData(Uri.parse("cbr://notification/" + UUID.randomUUID()));
         deleteIntent.setAction(CellBroadcastReceiver.ACTION_MARK_AS_READ);
         deleteIntent.putExtra(CellBroadcastReceiver.EXTRA_DELIVERY_TIME, deliveryTime);
         deleteIntent.putExtra(CellBroadcastReceiver.EXTRA_NOTIF_ID, notificationId);

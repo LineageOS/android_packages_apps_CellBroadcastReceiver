@@ -412,59 +412,67 @@
     }
   },
   "korea": {
-    "Emergency Alert": { //"긴급 재난문자": {
+    "긴급 재난문자": { //"Emergency Alert"
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Public Safety Alert": { // "안전 안내문자": {
+    "안전 안내문자": { // "Public Safety Alert"
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Amber Alert": { // "실종 안내문자": {
+    "실종 경보문자": { // "Amber Alert"
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Vibration": { //"진동": {
+    "진동": { //"Vibration"
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Speak alert message": { //"경보 메시지를 음성으로 알림": {
+    "경보 메시지를 음성으로 알림": { //"Speak alert message"
       "default_value": "false",
       "toggle_avail": "true"
     }
   },
   "korea_skt": {
-    "Emergency Alert": { //"긴급 재난문자": {
+    "긴급 재난문자": { //"Emergency Alert"
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Amber Alert": { // "실종 안내문자": {
+    "안전 안내문자": { // "Public Safety Alert"
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Vibration": { //"진동": {
+    "실종 경보문자": { // "Amber Alert"
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Speak alert message": { //"경보 메시지를 음성으로 알림": {
+    "진동": { //"Vibration"
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "경보 메시지를 음성으로 알림": { //"Speak alert message"
       "default_value": "false",
       "toggle_avail": "true"
     }
   },
   "korea_lgu": {
-    "Emergency Alert": { //"긴급 재난문자": {
+    "긴급 재난문자": { //"Emergency Alert"
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Amber Alert": { // "실종 안내문자": {
+    "안전 안내문자": { // "Public Safety Alert"
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Vibration": { //"진동": {
+    "실종 경보문자": { // "Amber Alert"
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Speak alert message": { //"경보 메시지를 음성으로 알림": {
+    "진동": { //"Vibration"
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "경보 메시지를 음성으로 알림": { //"Speak alert message"
       "default_value": "false",
       "toggle_avail": "true"
     }
@@ -514,28 +522,40 @@
     }
   },
   "bulgaria": {
-    "Extreme and Severe Threats": {
+    "Extreme and Severe Threats": { // Сериозни опасности
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Information": {
+    "Information": { // Информация
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Missing Person Alerts": {
+    "Missing Person Alerts": { // Сигнали за човек в неизвестност
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "Test Alerts": {
+    "Test Alerts": { // Тестови сигнали
       "default_value": "false",
       "toggle_avail": "true"
+    },
+    "Exercise Alerts": { // Сигнали за упражнения
+      "default_value": "false",
+      "toggle_avail": "false"
+    },
+    "EU-Reserved": { // EU-Reserved
+      "default_value": "false",
+      "toggle_avail": "false"
+    },
+    "Technical Test Alerts": { // Технически тестови сигнали
+      "default_value": "false",
+      "toggle_avail": "false"
     },
     "Vibration": {
       "default_value": "true",
       "toggle_avail": "true"
     },
     "Speak alert message": {
-      "default_value": "true",
+      "default_value": "false",
       "toggle_avail": "true"
     }
   },
@@ -1331,19 +1351,19 @@
     }
   },
   "Luxembourg": {
-    "Kidnapping Alert": {
+    "Kidnapping alert": {  // Entführungswarnung
       "default_value": "true",
       "toggle_avail": "true"
     },
-    "LU-Alert Test": {
+    "LU-Alert Test": {  // LU-Alert Test
       "default_value": "false",
       "toggle_avail": "true"
     },
-    "LU-Alert Exercise": {
+    "LU-Alert Exercise": { // LU-Alert Übung
       "default_value": "false",
       "toggle_avail": "true"
     },
-    "Vibration": {
+    "Vibration": {  // Vibration
       "default_value": "true",
       "toggle_avail": "true"
     }

@@ -21,10 +21,10 @@ package {
 java_defaults {
     name: "CellBroadcastTestCommon",
     libs: [
-        "android.test.runner",
+        "android.test.runner.stubs.system",
         "telephony-common",
-        "android.test.base",
-        "android.test.mock",
+        "android.test.base.stubs.system",
+        "android.test.mock.stubs.system",
     ],
     static_libs: [
         "androidx.test.rules",
@@ -32,6 +32,7 @@ java_defaults {
         "androidx.test.uiautomator_uiautomator",
         "mockito-target-minus-junit4",
         "truth",
+        "cellbroadcastreceiver_flags_lib",
     ],
     // Include all test java files.
     srcs: [":cellbroadcastreceiver-shared-srcs-test"],
@@ -68,6 +69,7 @@ android_test {
         "modules-utils-build_system",
         "cellbroadcast-java-proto-lite",
         "CellBroadcastCommon",
+        "cellbroadcastreceiver_flags_lib",
     ],
     min_sdk_version: "30",
 }
@@ -84,6 +86,7 @@ android_test {
     ],
     manifest: "AndroidManifest.xml",
     test_config: "AndroidTest.xml",
+    min_sdk_version: "30",
 }
 
 android_test {
