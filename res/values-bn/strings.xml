@@ -64,7 +64,7 @@
     <string name="notification_channel_settings_updates" msgid="6779759372516475085">"সিমের উপর ভিত্তি করে অটোমেটিক WEA সেটিংস পরিবর্তন হয়"</string>
     <string name="enable_alerts_master_toggle_title" msgid="1457904343636699446">"সতর্কতার অনুমতি দিন"</string>
     <string name="enable_alerts_master_toggle_summary" msgid="5583168548073938617">"ওয়্যারলেস জরুরি সতর্কতার বিজ্ঞপ্তি রিসিভ করুন"</string>
-    <string name="alert_reminder_interval_title" msgid="3283595202268218149">"সতর্কতা অনুস্মারক"</string>
+    <string name="alert_reminder_interval_title" msgid="3283595202268218149">"সতর্কতার রিমাইন্ডার"</string>
     <string name="enable_alert_speech_title" msgid="8052104771053526941">"সতর্কতা মেসেজ বলুন"</string>
     <string name="enable_alert_speech_summary" msgid="2855629032890937297">"জরুরি সতর্কতা মেসেজ বলতে টেক্সট-টু-স্পিচ ব্যবহার করুন"</string>
     <string name="alert_reminder_dialog_title" msgid="2299010977651377315">"নির্দিষ্ট সময় অন্তর রিমাইন্ডার শোনা যাবে"</string>
@@ -96,7 +96,7 @@
     <!-- no translation found for enable_operator_defined_test_alerts_title (7459219458579095832) -->
     <skip />
     <string name="enable_operator_defined_test_alerts_summary" msgid="7856514354348843433">"জরুরি সতর্কতা পান: অপারেটর সংক্রান্ত সতর্কতা"</string>
-    <string name="enable_alert_vibrate_title" msgid="5421032189422312508">"কম্পন"</string>
+    <string name="enable_alert_vibrate_title" msgid="5421032189422312508">"ভাইব্রেশন"</string>
     <string name="enable_alert_vibrate_summary" msgid="4733669825477146614"></string>
     <string name="override_dnd_title" msgid="5120805993144214421">"যেকোনও সময়ে বিজ্ঞপ্তি পেতে সম্পূর্ণ ভলিউম দিন"</string>
     <string name="override_dnd_summary" msgid="9026675822792800258">"বিরক্ত করবে না &amp; অন্য ভলিউম সেটিংস এড়িয়ে যান"</string>

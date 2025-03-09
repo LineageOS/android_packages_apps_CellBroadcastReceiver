@@ -30,7 +30,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -65,7 +64,6 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.lang.reflect.Field;
 import java.util.Locale;
 
 
@@ -104,6 +102,10 @@ public class CellBroadcastSettingsTest extends
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         MockitoAnnotations.initMocks(this);
         CellBroadcastSettings.resetResourcesCache();
+        SubscriptionManager mockSubManager = mock(SubscriptionManager.class);
+        injectSystemService(SubscriptionManager.class, mockSubManager);
+        SubscriptionInfo mockSubInfo = mock(SubscriptionInfo.class);
+        doReturn(mockSubInfo).when(mockSubManager).getActiveSubscriptionInfo(anyInt());
     }
 
     @After
@@ -371,7 +373,6 @@ public class CellBroadcastSettingsTest extends
         String topIntroRoamingText = "test";
         doReturn(topIntroRoamingText).when(mContext.getResources()).getString(
                 eq(R.string.top_intro_roaming_text));
-        setSubscriptionManager();
         setPreference(PREFERENCE_PUT_TYPE_STRING, ROAMING_OPERATOR_SUPPORTED, "XXX");
 
         CellBroadcastSettings settings = startActivity();
@@ -383,7 +384,6 @@ public class CellBroadcastSettingsTest extends
 
     @Test
     public void testDoNotShowTestCheckBox() throws Throwable {
-        setSubscriptionManager();
         setPreference(PREFERENCE_PUT_TYPE_BOOL, TESTING_MODE, "false");
         doReturn(false).when(mContext.getResources()).getBoolean(
                 eq(R.bool.show_separate_exercise_settings));
@@ -394,6 +394,7 @@ public class CellBroadcastSettingsTest extends
         doReturn(new String[]{"0x111E:rat=gsm, emergency=true"}).when(mContext.getResources())
                 .getStringArray(eq(R.array.operator_defined_alert_range_strings));
         CellBroadcastSettings settings = startActivity();
+        waitForMs(100);
 
         TwoStatePreference exerciseTestCheckBox =
                 settings.mCellBroadcastSettingsFragment.findPreference(
@@ -402,24 +403,12 @@ public class CellBroadcastSettingsTest extends
                 settings.mCellBroadcastSettingsFragment.findPreference(
                         CellBroadcastSettings.KEY_OPERATOR_DEFINED_ALERTS);
 
-        // received the ACTION_TESTING_MODE_CHANGED, do not show exerciseTestCheckBox &
-        // operatorDefinedCheckBox
-        Field fieldTestingModeChangedReceiver =
-                CellBroadcastSettings.CellBroadcastSettingsFragment.class.getDeclaredField(
-                        "mTestingModeChangedReceiver");
-        fieldTestingModeChangedReceiver.setAccessible(true);
-        BroadcastReceiver broadcastReceiver =
-                (BroadcastReceiver) fieldTestingModeChangedReceiver.get(
-                        settings.mCellBroadcastSettingsFragment);
-        broadcastReceiver.onReceive(mContext, new Intent().setAction(ACTION_TESTING_MODE_CHANGED));
-
         assertFalse(exerciseTestCheckBox.isVisible());
         assertFalse(operatorDefinedCheckBox.isVisible());
     }
 
     @Test
-    public void testShowTestCheckBox() throws Throwable {
-        setSubscriptionManager();
+    public void testShowTestCheckBoxWithTestingMode() throws Throwable {
         setPreference(PREFERENCE_PUT_TYPE_BOOL, TESTING_MODE, "true");
         doReturn(true).when(mContext.getResources()).getBoolean(
                 eq(R.bool.show_separate_exercise_settings));
@@ -430,6 +419,7 @@ public class CellBroadcastSettingsTest extends
         doReturn(new String[]{"0x111E:rat=gsm, emergency=true"}).when(mContext.getResources())
                 .getStringArray(eq(R.array.operator_defined_alert_range_strings));
         CellBroadcastSettings settings = startActivity();
+        waitForMs(100);
 
         TwoStatePreference exerciseTestCheckBox =
                 settings.mCellBroadcastSettingsFragment.findPreference(
@@ -438,28 +428,37 @@ public class CellBroadcastSettingsTest extends
                 settings.mCellBroadcastSettingsFragment.findPreference(
                         CellBroadcastSettings.KEY_OPERATOR_DEFINED_ALERTS);
 
-        // received the ACTION_TESTING_MODE_CHANGED, show exerciseTestCheckBox &
-        // operatorDefinedCheckBox
-        Field fieldTestingModeChangedReceiver =
-                CellBroadcastSettings.CellBroadcastSettingsFragment.class.getDeclaredField(
-                        "mTestingModeChangedReceiver");
-        fieldTestingModeChangedReceiver.setAccessible(true);
-        BroadcastReceiver broadcastReceiver =
-                (BroadcastReceiver) fieldTestingModeChangedReceiver.get(
-                        settings.mCellBroadcastSettingsFragment);
-        broadcastReceiver.onReceive(mContext, new Intent().setAction(ACTION_TESTING_MODE_CHANGED));
-
-        waitForChange(() -> exerciseTestCheckBox.isVisible(), TEST_TIMEOUT_MILLIS);
         assertTrue(exerciseTestCheckBox.isVisible());
-        waitForChange(() -> operatorDefinedCheckBox.isVisible(), TEST_TIMEOUT_MILLIS);
         assertTrue(operatorDefinedCheckBox.isVisible());
     }
 
-    private void setSubscriptionManager() {
-        SubscriptionManager mockSubManager = mock(SubscriptionManager.class);
-        injectSystemService(SubscriptionManager.class, mockSubManager);
-        SubscriptionInfo mockSubInfo = mock(SubscriptionInfo.class);
-        doReturn(mockSubInfo).when(mockSubManager).getActiveSubscriptionInfo(anyInt());
+    @Test
+    public void testShowTestCheckBox() throws Throwable {
+        setPreference(PREFERENCE_PUT_TYPE_BOOL, TESTING_MODE, "false");
+        doReturn(true).when(mContext.getResources()).getBoolean(
+                eq(R.bool.show_separate_exercise_settings));
+        doReturn(true).when(mContext.getResources()).getBoolean(
+                eq(R.bool.show_separate_operator_defined_settings));
+        doReturn(true).when(mContext.getResources()).getBoolean(
+                eq(R.bool.show_exercise_settings));
+        doReturn(true).when(mContext.getResources()).getBoolean(
+                eq(R.bool.show_operator_defined_settings));
+        doReturn(new String[]{"0x111D:rat=gsm, emergency=true"}).when(mContext.getResources())
+                .getStringArray(eq(R.array.exercise_alert_range_strings));
+        doReturn(new String[]{"0x111E:rat=gsm, emergency=true"}).when(mContext.getResources())
+                .getStringArray(eq(R.array.operator_defined_alert_range_strings));
+        CellBroadcastSettings settings = startActivity();
+        waitForMs(100);
+
+        TwoStatePreference exerciseTestCheckBox =
+                settings.mCellBroadcastSettingsFragment.findPreference(
+                        CellBroadcastSettings.KEY_ENABLE_EXERCISE_ALERTS);
+        TwoStatePreference operatorDefinedCheckBox =
+                settings.mCellBroadcastSettingsFragment.findPreference(
+                        CellBroadcastSettings.KEY_OPERATOR_DEFINED_ALERTS);
+
+        assertTrue(exerciseTestCheckBox.isVisible());
+        assertTrue(operatorDefinedCheckBox.isVisible());
     }
 
     private void setPreference(int putType, String key, String value) {

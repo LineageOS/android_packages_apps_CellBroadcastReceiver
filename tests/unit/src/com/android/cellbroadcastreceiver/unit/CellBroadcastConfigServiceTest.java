@@ -21,10 +21,13 @@ import static com.android.cellbroadcastreceiver.CellBroadcastConfigService.CbCon
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.eq;
@@ -46,6 +49,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.RemoteException;
 import android.telephony.CellBroadcastIdRange;
 import android.telephony.SmsCbMessage;
@@ -60,6 +64,7 @@ import androidx.test.filters.SmallTest;
 
 import com.android.cellbroadcastreceiver.CellBroadcastAlertService;
 import com.android.cellbroadcastreceiver.CellBroadcastConfigService;
+import com.android.cellbroadcastreceiver.CellBroadcastReceiver;
 import com.android.cellbroadcastreceiver.CellBroadcastSettings;
 import com.android.internal.telephony.ISms;
 import com.android.internal.telephony.cdma.sms.SmsEnvelope;
@@ -72,7 +77,10 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -758,6 +766,157 @@ public class CellBroadcastConfigServiceTest extends CellBroadcastTest {
 
         mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
         verifySetRanges(configs, 4, 2);
+    }
+
+    /**
+     * Test enabling channels for exercise test channels
+     */
+    @Test
+    @SmallTest
+    public void testEnablingExerciseTestChannels() throws Exception {
+        setPreference(CellBroadcastSettings.KEY_ENABLE_ALERTS_MASTER_TOGGLE, true);
+
+        // check enable when setting is shown and preference is true
+        setPreference(CellBroadcastSettings.KEY_ENABLE_EXERCISE_ALERTS, true);
+        putResources(com.android.cellbroadcastreceiver.R.bool
+                .show_separate_exercise_settings, true);
+        putResources(com.android.cellbroadcastreceiver.R.bool
+                .show_exercise_settings, true);
+        putResources(com.android.cellbroadcastreceiver.R.bool
+                .test_exercise_alerts_enabled_default, true);
+
+        CbConfig[] enableConfigs = new CbConfig[]{
+                new CbConfig(SmsCbConstants.MESSAGE_ID_CMAS_ALERT_EXERCISE,
+                        SmsCbConstants.MESSAGE_ID_CMAS_ALERT_EXERCISE,
+                        SmsCbMessage.MESSAGE_FORMAT_3GPP, true),
+        };
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(enableConfigs, 1, 1);
+
+        // check disable when preference is false
+        setPreference(CellBroadcastSettings.KEY_ENABLE_EXERCISE_ALERTS, false);
+
+        CbConfig[] disableConfigs = new CbConfig[]{
+                new CbConfig(SmsCbConstants.MESSAGE_ID_CMAS_ALERT_EXERCISE,
+                        SmsCbConstants.MESSAGE_ID_CMAS_ALERT_EXERCISE,
+                        SmsCbMessage.MESSAGE_FORMAT_3GPP, false),
+        };
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(disableConfigs, 2, 1);
+
+        // check disable when setting is not shown
+        putResources(com.android.cellbroadcastreceiver.R.bool.show_exercise_settings, false);
+
+        setPreference(CellBroadcastSettings.KEY_ENABLE_EXERCISE_ALERTS, true);
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(disableConfigs, 3, 2);
+
+        // check disable when setting is not shown and preference is off
+        setPreference(CellBroadcastSettings.KEY_ENABLE_EXERCISE_ALERTS, false);
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(disableConfigs, 4, 3);
+
+        // testingmode is on
+        // check disable when setting is shown and preference is off
+        setPreference(CellBroadcastReceiver.TESTING_MODE, true);
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(disableConfigs, 5, 4);
+
+        // check enable when setting is shown and preference is on
+        setPreference(CellBroadcastSettings.KEY_ENABLE_EXERCISE_ALERTS, true);
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(enableConfigs, 6, 2);
+
+        // roaming case
+        Context mockContext = mock(Context.class);
+        doReturn(mResources).when(mockContext).getResources();
+        doReturn(mockContext).when(mContext).createConfigurationContext(any());
+        doReturn("123").when(mMockedSharedPreferences).getString(anyString(), anyString());
+        doReturn(mResources).when(mConfigService).getResources(anyInt(), anyString());
+
+        setPreference(CellBroadcastSettings.KEY_ENABLE_EXERCISE_ALERTS, false);
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(enableConfigs, 7, 3);
+
+        setPreference(CellBroadcastReceiver.TESTING_MODE, false);
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(disableConfigs, 8, 5);
+    }
+
+    /**
+     * Test enabling channels for operator test channels
+     */
+    @Test
+    @SmallTest
+    public void testEnablingOperatorTestChannels() throws Exception {
+        setPreference(CellBroadcastSettings.KEY_ENABLE_ALERTS_MASTER_TOGGLE, true);
+
+        // check enable when setting is shown and preference is true
+        setPreference(CellBroadcastSettings.KEY_OPERATOR_DEFINED_ALERTS, true);
+        putResources(com.android.cellbroadcastreceiver.R.bool
+                .show_separate_operator_defined_settings, true);
+        putResources(com.android.cellbroadcastreceiver.R.bool
+                .show_operator_defined_settings, true);
+        putResources(com.android.cellbroadcastreceiver.R.bool
+                .test_operator_defined_alerts_enabled_default, true);
+
+        CbConfig[] enableConfigs = new CbConfig[]{
+                new CbConfig(SmsCbConstants.MESSAGE_ID_CMAS_ALERT_OPERATOR_DEFINED_USE,
+                        SmsCbConstants.MESSAGE_ID_CMAS_ALERT_OPERATOR_DEFINED_USE,
+                        SmsCbMessage.MESSAGE_FORMAT_3GPP, true),
+        };
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(enableConfigs, 1, 1);
+
+        // check disable when preference is false
+        setPreference(CellBroadcastSettings.KEY_OPERATOR_DEFINED_ALERTS, false);
+
+        CbConfig[] disableConfigs = new CbConfig[]{
+                new CbConfig(SmsCbConstants.MESSAGE_ID_CMAS_ALERT_OPERATOR_DEFINED_USE,
+                        SmsCbConstants.MESSAGE_ID_CMAS_ALERT_OPERATOR_DEFINED_USE,
+                        SmsCbMessage.MESSAGE_FORMAT_3GPP, false),
+        };
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(disableConfigs, 2, 1);
+
+        // check disable when setting is not shown
+        putResources(com.android.cellbroadcastreceiver.R.bool
+                .show_operator_defined_settings, false);
+
+        setPreference(CellBroadcastSettings.KEY_OPERATOR_DEFINED_ALERTS, true);
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(disableConfigs, 3, 2);
+
+        // check disable when setting is not shown and preference is off
+        setPreference(CellBroadcastSettings.KEY_OPERATOR_DEFINED_ALERTS, false);
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(disableConfigs, 4, 3);
+
+        // testingmode is on
+        // check disable when setting is shown and preference is off
+        setPreference(CellBroadcastReceiver.TESTING_MODE, true);
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(disableConfigs, 5, 4);
+
+        // check enable when setting is shown and preference is on
+        setPreference(CellBroadcastSettings.KEY_OPERATOR_DEFINED_ALERTS, true);
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(enableConfigs, 6, 2);
+
+        // roaming case
+        Context mockContext = mock(Context.class);
+        doReturn(mResources).when(mockContext).getResources();
+        doReturn(mockContext).when(mContext).createConfigurationContext(any());
+        doReturn("123").when(mMockedSharedPreferences).getString(anyString(), anyString());
+        doReturn(mResources).when(mConfigService).getResources(anyInt(), anyString());
+
+        setPreference(CellBroadcastSettings.KEY_OPERATOR_DEFINED_ALERTS, false);
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(enableConfigs, 7, 3);
+
+        setPreference(CellBroadcastReceiver.TESTING_MODE, false);
+        mConfigService.enableCellBroadcastChannels(SubscriptionManager.DEFAULT_SUBSCRIPTION_ID);
+        verifySetRanges(disableConfigs, 8, 5);
     }
 
     /**
@@ -1546,6 +1705,23 @@ public class CellBroadcastConfigServiceTest extends CellBroadcastTest {
             }
         };
         mMockedServiceManager.replaceService("window", mWindowManagerService);
+        Field fieldHandler = ActivityManager.class.getDeclaredField("IActivityManagerSingleton");
+        fieldHandler.setAccessible(true);
+        Singleton<IActivityManager> activityManager =
+                (Singleton<IActivityManager>) fieldHandler.get(null);
+        IActivityManager realInstance = activityManager.get();
+        doAnswer(new Answer() {
+            public Void answer(InvocationOnMock invocation) throws RemoteException {
+                if (realInstance != null) {
+                    realInstance.finishReceiver(invocation.getArgument(0),
+                            invocation.getArgument(1), invocation.getArgument(2),
+                            invocation.getArgument(3), invocation.getArgument(4),
+                            invocation.getArgument(5));
+                }
+                return null;
+            }
+        }).when(mMockedActivityManager).finishReceiver(nullable(IBinder.class), anyInt(),
+                nullable(String.class), nullable(Bundle.class), anyBoolean(), anyInt());
         mMockedServiceManager.replaceInstance(ActivityManager.class,
                 "IActivityManagerSingleton", null, activityManagerSingleton);
         doNothing().when(mConfigService).resetAllPreferences();
