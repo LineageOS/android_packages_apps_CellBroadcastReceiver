@@ -36,13 +36,16 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.icu.util.ULocale;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -77,6 +80,7 @@ import android.widget.Toast;
 import androidx.preference.PreferenceManager;
 
 import com.android.cellbroadcastreceiver.CellBroadcastChannelManager.CellBroadcastChannelRange;
+import com.android.cellbroadcastreceiver.flags.Flags;
 import com.android.internal.annotations.VisibleForTesting;
 
 import java.lang.annotation.Retention;
@@ -87,13 +91,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Custom alert dialog with optional flashing warning icon.
  * Alert audio and text-to-speech handled by {@link CellBroadcastAlertAudio}.
  */
-public class CellBroadcastAlertDialog extends Activity {
+public class CellBroadcastAlertDialog extends Activity implements
+        CellBroadcastAlertButtonManager.OnTranslateButtonClickListener ,
+        CellBroadcastTranslateManager.TranslateManagerCallback {
 
     private static final String TAG = "CellBroadcastAlertDialog";
 
@@ -170,6 +178,9 @@ public class CellBroadcastAlertDialog extends Activity {
     /** Length of time to keep the screen turned on. */
     private static final int KEEP_SCREEN_ON_DURATION_MSEC = 60000;
 
+    /** Key for storing the user's translation consent choice in SharedPreferences. */
+    private static final String KEY_TRANSLATE_CONSENT_ACCEPTED = "translate_consent_accepted";
+
     /** Animation handler for the flashing warning icon (emergency alerts only). */
     @VisibleForTesting
     public AnimationHandler mAnimationHandler = new AnimationHandler();
@@ -183,6 +194,23 @@ public class CellBroadcastAlertDialog extends Activity {
 
     // Show the opt-out dialog
     private AlertDialog mOptOutDialog;
+    @VisibleForTesting
+    public static Boolean sIsTranslateFeatureEnabledForTest = null;
+    @VisibleForTesting
+    public static Boolean sIsWatchForTest = null;
+    @VisibleForTesting
+    public static boolean sDisableDialogsForTest = false;
+    private CellBroadcastAlertButtonManager mButtonManager;
+    // for test
+    private CellBroadcastAlertButtonManager mMockButtonManager;
+    @VisibleForTesting
+    public static java.util.function.Function<String, String> sTranslationFunctionForTest = null;
+    private CellBroadcastTranslateManager mTranslateManager;
+    // for test
+    private CellBroadcastTranslateManager mMockTranslateManager;
+    private TextView mMessageView;
+    @VisibleForTesting
+    public static Boolean sIsMapFeatureEnabledForTest = null;
 
     /** BroadcastReceiver for screen off events. When screen was off, remove FLAG_TURN_SCREEN_ON to
      * start from a clean state. Otherwise, the window flags from the first alert will be
@@ -270,9 +298,9 @@ public class CellBroadcastAlertDialog extends Activity {
             if (mWarningIcon == null) {
                 try {
                     mWarningIcon = CellBroadcastSettings.getResourcesByOperator(
-                            getApplicationContext(), subId,
-                            CellBroadcastReceiver
-                                    .getRoamingOperatorSupported(getApplicationContext()))
+                                    getApplicationContext(), subId,
+                                    CellBroadcastReceiver
+                                            .getRoamingOperatorSupported(getApplicationContext()))
                             .getDrawable(R.drawable.ic_warning_googred);
                 } catch (Resources.NotFoundException e) {
                     CellBroadcastReceiverMetrics.getInstance().logModuleError(
@@ -534,6 +562,11 @@ public class CellBroadcastAlertDialog extends Activity {
         // Initialize the view.
         LayoutInflater inflater = LayoutInflater.from(this);
         setContentView(inflater.inflate(R.layout.cell_broadcast_alert, null));
+        TextView textView = findViewById(R.id.message);
+        if (isTranslateFeatureEnabled()) {
+            mButtonManager = new CellBroadcastAlertButtonManager(this, this);
+            mTranslateManager = new CellBroadcastTranslateManager(this, getMainExecutor(), this);
+        }
 
         findViewById(R.id.dismissButton).setOnClickListener(v -> dismiss());
 
@@ -585,7 +618,6 @@ public class CellBroadcastAlertDialog extends Activity {
                     message.getSubscriptionId(),
                     CellBroadcastReceiver.getRoamingOperatorSupported(getApplicationContext()));
             if (res.getBoolean(R.bool.enable_text_copy)) {
-                TextView textView = findViewById(R.id.message);
                 if (textView != null) {
                     textView.setOnLongClickListener(v -> copyMessageToClipboard(message,
                             getApplicationContext()));
@@ -628,6 +660,7 @@ public class CellBroadcastAlertDialog extends Activity {
                     && (range!= null && range.mDisplayIcon)) {
                 mAnimationHandler.startIconAnimation(subId);
             }
+            initTranslate(message);
         }
         // Some LATAM carriers mandate to disable navigation bars, quick settings etc when alert
         // dialog is showing. This is to make sure users to ack the alert before switching to
@@ -682,6 +715,326 @@ public class CellBroadcastAlertDialog extends Activity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setPictogramAreaLayout(newConfig.orientation);
+    }
+
+    /**
+     * Sets the CellBroadcastTranslateManager for testing purposes.
+     */
+    @VisibleForTesting
+    public void setTranslateManagerForTest(CellBroadcastTranslateManager translateManager) {
+        mMockTranslateManager = translateManager;
+    }
+
+    private CellBroadcastTranslateManager getTranslateManager() {
+        return mMockTranslateManager != null ? mMockTranslateManager : mTranslateManager;
+    }
+
+    /**
+     * Sets the CellBroadcastAlertButtonManager for testing purposes.
+     */
+    @VisibleForTesting
+    public void setButtonManagerForTest(CellBroadcastAlertButtonManager buttonManager) {
+        mMockButtonManager = buttonManager;
+    }
+
+    @VisibleForTesting
+    public CellBroadcastAlertButtonManager getButtonManager() {
+        return mMockButtonManager != null ? mMockButtonManager : mButtonManager;
+    }
+
+    /**
+     * This is the callback method from our button manager.
+     * It is triggered when the "Translate" button is clicked.
+     * It checks for user consent before proceeding with the translation.
+     */
+    @Override
+    public void onTranslateClick() {
+        if (getButtonManager() != null) {
+            getButtonManager().showTranslationInProgress(true);
+        }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // If the user has previously consented, proceed directly.
+        // If they previously said NO, we ask again, so we check for `false`.
+        if (prefs.getBoolean(KEY_TRANSLATE_CONSENT_ACCEPTED, false)) {
+            proceedWithTranslation();
+        } else {
+            showTranslationConsentDialog();
+        }
+    }
+
+    /**
+     * Displays a dialog to get the user's consent for translation.
+     * The user's choice is saved for future use.
+     */
+    private void showTranslationConsentDialog() {
+        if (sDisableDialogsForTest) {
+            return;
+        }
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.translation_consent_title)
+                .setMessage(R.string.translation_consent_message)
+                .setPositiveButton(R.string.translation_consent_positive_button,
+                        (dialog, which) -> {
+                            // User agreed. Save the choice and proceed with the translation.
+                            PreferenceManager.getDefaultSharedPreferences(this)
+                                    .edit()
+                                    .putBoolean(KEY_TRANSLATE_CONSENT_ACCEPTED, true)
+                                    .apply();
+                            proceedWithTranslation();
+                        })
+                .setNegativeButton(R.string.translation_consent_negative_button,
+                        (dialog, which) -> {
+                            // User declined. Save the choice and revert the UI to its original
+                            // state.
+                            PreferenceManager.getDefaultSharedPreferences(this)
+                                    .edit()
+                                    .putBoolean(KEY_TRANSLATE_CONSENT_ACCEPTED, false)
+                                    .apply();
+                            getButtonManager().showTranslationInProgress(false);
+                        })
+                .setOnCancelListener(dialog -> {
+                    // If the user dismisses the dialog (e.g., by tapping outside),
+                    // revert the UI.
+                    getButtonManager().showTranslationInProgress(false);
+                })
+                .show();
+    }
+
+    private void proceedWithTranslation() {
+        if (getTranslateManager() == null) {
+            Log.e(TAG, "proceedWithTranslation: mTranslateManager is null");
+            if (getButtonManager() != null) {
+                getButtonManager().showTranslationInProgress(false);
+            }
+            return;
+        }
+
+        Log.d(TAG, "proceedWithTranslation");
+        if (getTranslateManager().isTranslatorReady() && getLatestMessage() != null
+                && getLatestMessage().getMessageBody() != null) {
+            getTranslateManager().startOnDeviceTranslation(getLatestMessage().getMessageBody(),
+                    mMessageView.getAutofillId());
+        } else {
+            if (getButtonManager() != null) {
+                getButtonManager().showTranslationInProgress(false);
+            }
+            showDownloadLanguageDialog();
+        }
+    }
+
+    @Override
+    public void onLanguageDetectionCompleted(Optional<ULocale> detectedLocaleOptional) {
+        // Only call the translation offer logic if a detected language exists.
+        // If the Optional is empty, do nothing.
+        detectedLocaleOptional.ifPresent(this::offerTranslation);
+    }
+
+    /**
+     * Determines whether to offer translation based on the source language and sets up the UI.
+     *
+     * @param sourceLocale The ULocale of the source language to translate from.
+     */
+    private void offerTranslation(ULocale sourceLocale) {
+        if (sourceLocale == null) {
+            Log.e(TAG, "offerTranslation: Source Locale is null, cannot offer translation.");
+            return;
+        }
+
+        final String sourceLanguage = sourceLocale.getLanguage();
+        if (sourceLanguage == null || sourceLanguage.isEmpty()) {
+            Log.e(TAG, "offerTranslation: Source language is invalid or null, cannot offer "
+                            + "translation.");
+            return;
+        }
+        final String targetLanguage = Locale.getDefault().getLanguage();
+        final ULocale targetLocale = new ULocale(targetLanguage);
+
+        // Only offer translation if the source language and the target language are different.
+        boolean shouldOffer = !sourceLocale.getLanguage().equalsIgnoreCase(
+                targetLocale.getLanguage());
+
+        // Configure the visibility of the translation button.
+        if (getTranslateManager() != null && getTranslateManager().getSettingsIntent() == null) {
+            shouldOffer = false;
+        }
+        updateButtons(shouldOffer);
+
+        if (shouldOffer) {
+            Log.d(TAG, "Offering translation from '" + sourceLocale.toLanguageTag()
+                    + "' to '" + targetLocale.toLanguageTag() + "'");
+            // Request translator initialization.
+            getTranslateManager().initializeTranslator(sourceLocale, targetLocale);
+        } else {
+            Log.d(TAG, "No translation offered: source language is the same as target.");
+        }
+    }
+
+    @Override
+    public void onTranslatorCreated(boolean success) {
+        if (!success) {
+            Log.w(TAG, "Translator creation failed, likely needs language pack.");
+        }
+    }
+
+    @Override
+    public void onTranslationCompleted(CharSequence translatedText, boolean success) {
+        if (getButtonManager() != null) {
+            getButtonManager().showTranslationInProgress(false);
+        }
+
+        if (getLatestMessage() == null || getLatestMessage().getMessageBody() == null) {
+            Log.e(TAG, "onTranslationCompleted: Cannot retrieve the latest message.");
+            return;
+        }
+
+        final String originalText = getLatestMessage().getMessageBody();
+        Log.d(TAG, "onTranslationCompleted: originalMessageText:" + originalText);
+        Log.d(TAG, "onTranslationCompleted: translatedText:" + translatedText + " , success:"
+                + success);
+        if (success && !TextUtils.isEmpty(translatedText)) {
+            String finalText = originalText + "\n\n" + translatedText;
+            setTextAndApplyLinks(mMessageView, finalText, getLatestMessage());
+            if (getButtonManager() != null) {
+                getButtonManager().onTranslationCompleted();
+            }
+        } else {
+            Log.w(TAG, "onTranslationCompleted: Translation failed or result is empty.");
+            showTranslateFailedToast();
+        }
+    }
+
+    private void showTranslateFailedToast() {
+        Toast.makeText(getApplicationContext(),
+                R.string.translation_failed_toast, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Executes the logic for the Positive Button in the Download Language Dialog.
+     * This is split out to be directly testable.
+     */
+    @VisibleForTesting
+    public void handleDownloadLanguagePositiveClick(PendingIntent pendingIntent) {
+        try {
+            startIntentSenderForResult(
+                    pendingIntent.getIntentSender(), 0, null, 0, 0, 0,
+                    null);
+        } catch (IntentSender.SendIntentException | android.content.ActivityNotFoundException e) {
+            Log.e(TAG, "Failed to launch translation settings.", e);
+            showTranslateFailedToast();
+            updateButtons(false);
+        }
+    }
+
+    private void showDownloadLanguageDialog() {
+        if (sDisableDialogsForTest) return;
+        if (getTranslateManager() == null) return;
+        PendingIntent pendingIntent = getTranslateManager().getSettingsIntent();
+        if (pendingIntent != null) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.download_language_title)
+                    .setMessage(R.string.download_language_message)
+                    .setPositiveButton(R.string.download_language_positive_button,
+                            (dialog, which) -> {
+                                handleDownloadLanguagePositiveClick(pendingIntent);
+                            })
+                    .setNegativeButton(R.string.download_language_negative_button, null)
+                    .show();
+        } else {
+            Log.e(TAG, "Cannot get translation settings activity intent.");
+            showTranslateFailedToast();
+            updateButtons(false);
+        }
+    }
+
+    /**
+     * Updates the visibility and layout of the action buttons (Translate, Dismiss) based on
+     * the current message content and feature enablement.
+     */
+    private void updateButtons(boolean showTranslate) {
+        if (getButtonManager() == null) return;
+
+        getButtonManager().configureButtons(showTranslate);
+        Log.d(TAG, "updateButtons: showTranslate=" + showTranslate);
+    }
+
+    private boolean isTranslateFeatureEnabled() {
+        return isTranslateFlagEnabled() && isTranslateConfigurationEnabled() && !isWatch();
+    }
+
+    private boolean isTranslateFlagEnabled() {
+        // Allow tests to override the flag's value.
+        if (sIsTranslateFeatureEnabledForTest != null) {
+            return sIsTranslateFeatureEnabledForTest;
+        }
+        Log.d(TAG, "isTranslateFlagEnabled:" + Flags.enableCellbroadcastTranslation());
+        // In production, use the real flag.
+        return Flags.enableCellbroadcastTranslation();
+    }
+
+    private boolean isTranslateConfigurationEnabled() {
+        boolean isTranslateConfigEnabled = getResources().getBoolean(
+                R.bool.enable_alert_translation);
+        Log.d(TAG, "isTranslateConfigurationEnabled: " + isTranslateConfigEnabled);
+        return isTranslateConfigEnabled;
+    }
+
+    private boolean isWatch() {
+        // Allow tests to override the value.
+        if (sIsWatchForTest != null) {
+            return sIsWatchForTest;
+        }
+        boolean isWatch = getPackageManager().hasSystemFeature(PackageManager.FEATURE_WATCH);
+        Log.d(TAG, "isWatch:" + isWatch);
+        return isWatch;
+    }
+
+    /**
+     * Determines whether the Map Viewer feature is globally enabled, configured, and applicable to
+     * the message.
+     */
+    @VisibleForTesting
+    public boolean isMapFeatureEnabled(SmsCbMessage message) {
+        return isMapFlagEnabled() && isMapConfigEnabled() && isGeoInfo(message);
+    }
+
+    /**
+     * Checks the value of the global feature flag that controls the Map Viewer feature.
+     */
+    @VisibleForTesting
+    public boolean isMapFlagEnabled() {
+        // Allow tests to override the flag's value.
+        if (sIsMapFeatureEnabledForTest != null) {
+            return sIsMapFeatureEnabledForTest;
+        }
+        Log.d(TAG, "isMapFlagEnabled:" + Flags.enableCellbroadcastMapViewer());
+        return Flags.enableCellbroadcastMapViewer();
+    }
+
+    /**
+     * Checks the device configuration resource (R.bool.enable_map) to determine if the Map Viewer
+     * feature is enabled.
+     */
+    @VisibleForTesting
+    public boolean isMapConfigEnabled() {
+        boolean isMapConfigEnabled = getResources().getBoolean(R.bool.enable_map);
+        Log.d(TAG, "isMapConfigEnabled:" + isMapConfigEnabled);
+        return isMapConfigEnabled;
+    }
+
+    /**
+     * Checks if the given Cell Broadcast message contains non-null geographical information
+     * (geometries).
+     */
+    @VisibleForTesting
+    public boolean isGeoInfo(SmsCbMessage message) {
+        if (message == null) {
+            return false;
+        }
+        boolean isGeoInfoExist =
+                message.getGeometries() != null && !message.getGeometries().isEmpty();
+        Log.d(TAG, "isGeoInfoExist:" + isGeoInfoExist);
+        return isGeoInfoExist;
     }
 
     private void setWindowBottom() {
@@ -887,15 +1240,7 @@ public class CellBroadcastAlertDialog extends Activity {
 
         TextView textView = findViewById(R.id.message);
         String messageText = message.getMessageBody();
-        if (textView != null && messageText != null) {
-            int linkMethod = getLinkMethod(message.getSubscriptionId());
-            if (linkMethod != LINK_METHOD_NONE) {
-                addLinks(textView, messageText, linkMethod);
-            } else {
-                // Do not add any link to the message text.
-                textView.setText(messageText);
-            }
-        }
+        setTextAndApplyLinks(textView, messageText, message);
 
         String dismissButtonText = getString(R.string.button_dismiss);
 
@@ -910,6 +1255,84 @@ public class CellBroadcastAlertDialog extends Activity {
         if (this.hasWindowFocus()) {
             Configuration config = res.getConfiguration();
             setPictogramAreaLayout(config.orientation);
+        }
+
+        initTranslate(message);
+        mMessageView = textView;
+    }
+
+    /**
+     * Sets the text on a TextView and applies links (e.g., for URLs or phone numbers)
+     * based on the current subscription's configuration.
+     *
+     * @param textView The TextView to update.
+     * @param text     The text content to set.
+     * @param message  The SmsCbMessage, used to determine the linking method for the subscription.
+     */
+    private void setTextAndApplyLinks(TextView textView, String text, SmsCbMessage message) {
+        if (textView != null && text != null && message != null) {
+            int linkMethod = getLinkMethod(message.getSubscriptionId());
+            if (linkMethod != LINK_METHOD_NONE) {
+                addLinks(textView, text, linkMethod);
+            } else {
+                // Do not add any link to the message text.
+                textView.setText(text);
+            }
+        }
+    }
+
+    /**
+     * Initializes translation-related features based on the message content.
+     */
+    @VisibleForTesting
+    public void initTranslate(SmsCbMessage message) {
+        if (!isTranslateFeatureEnabled() || getTranslateManager() == null) {
+            updateButtons(false);
+            return;
+        }
+
+        boolean isTranslationManagerAvailable =
+                getTranslateManager().isTranslationManagerAvailable();
+        boolean canGetSettingsIntent = getTranslateManager().getSettingsIntent() != null;
+        boolean canTranslate = isTranslateFeatureEnabled()
+                && !TextUtils.isEmpty(message.getMessageBody())
+                && isTranslationManagerAvailable
+                && canGetSettingsIntent;
+        Log.d(TAG, "initTranslate:canTranslate=" + canTranslate + " isTranslateFeatureEnabled="
+                + isTranslateFeatureEnabled() + ", isTranslationManagerAvailable="
+                + isTranslationManagerAvailable + ", canGetSettingsIntent=" + canGetSettingsIntent);
+        if (!canTranslate) {
+            updateButtons(false);
+            Log.d(TAG, "initTranslate: Translation prerequisites not met. Hiding button.");
+            return;
+        }
+
+        final String targetLanguage = Locale.getDefault().getLanguage();
+        final String sourceLanguageCode = message.getLanguageCode();
+        Log.d(TAG, "initTranslate: targetLanguage=" + targetLanguage + ", sourceLanguageCode="
+                + sourceLanguageCode);
+        boolean isSourceLanguageValid = false;
+        if (!TextUtils.isEmpty(sourceLanguageCode)) {
+            try {
+                ULocale tempLocale = new ULocale(sourceLanguageCode);
+                if (!TextUtils.isEmpty(tempLocale.getISO3Language())) {
+                    isSourceLanguageValid = true;
+                } else {
+                    Log.w(TAG, "initTranslate: Invalid source language code received: "
+                            + sourceLanguageCode);
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "initTranslate: Error creating ULocale from source language code: "
+                        + sourceLanguageCode, e);
+                isSourceLanguageValid = false;
+            }
+        }
+
+        if (isSourceLanguageValid) {
+            offerTranslation(new ULocale(sourceLanguageCode));
+        } else {
+            Log.d(TAG, "Source language is invalid. Attempting language detection.");
+            getTranslateManager().detectLanguage(message.getMessageBody());
         }
     }
 
@@ -1028,6 +1451,9 @@ public class CellBroadcastAlertDialog extends Activity {
                 }
                 startPulsatingAsNeeded(channelManager
                         .getCellBroadcastChannelRangeFromMessage(message));
+                if (getTranslateManager() != null) {
+                    getTranslateManager().destroyTranslator();
+                }
             }
 
             hideOptOutDialog(); // Hide opt-out dialog when new alert coming
@@ -1178,6 +1604,10 @@ public class CellBroadcastAlertDialog extends Activity {
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Unregister Receiver fail", e);
         }
+        if (getTranslateManager() != null) {
+            Log.d(TAG, "onDestroy: Destroying translator.");
+            getTranslateManager().destroyTranslator();
+        }
         super.onDestroy();
     }
 
@@ -1186,8 +1616,8 @@ public class CellBroadcastAlertDialog extends Activity {
         Log.d(TAG, "onKeyDown: " + event);
         SmsCbMessage message = getLatestMessage();
         if (message != null && CellBroadcastSettings.getResourcesByOperator(getApplicationContext(),
-                message.getSubscriptionId(),
-                CellBroadcastReceiver.getRoamingOperatorSupported(getApplicationContext()))
+                        message.getSubscriptionId(),
+                        CellBroadcastReceiver.getRoamingOperatorSupported(getApplicationContext()))
                 .getBoolean(R.bool.mute_by_physical_button)) {
             switch (event.getKeyCode()) {
                 // Volume keys and camera keys mute the alert sound/vibration (except ETWS).
@@ -1256,8 +1686,8 @@ public class CellBroadcastAlertDialog extends Activity {
         cm.setPrimaryClip(ClipData.newPlainText("Alert Message", message.getMessageBody()));
 
         String msg = CellBroadcastSettings.getResourcesByOperator(context,
-                message.getSubscriptionId(),
-                CellBroadcastReceiver.getRoamingOperatorSupported(context))
+                        message.getSubscriptionId(),
+                        CellBroadcastReceiver.getRoamingOperatorSupported(context))
                 .getString(R.string.message_copied);
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         return true;
@@ -1281,10 +1711,10 @@ public class CellBroadcastAlertDialog extends Activity {
             Log.d(TAG, "removeReadMessageFromNotificationBar, update count to "
                     + unreadMessageList.size() );
             // do not alert if remove unread messages from the notification bar.
-           CellBroadcastAlertService.addToNotificationBar(
-                   CellBroadcastReceiverApp.getLatestMessage(),
-                   unreadMessageList, context, false, false, false,
-                   null);
+            CellBroadcastAlertService.addToNotificationBar(
+                    CellBroadcastReceiverApp.getLatestMessage(),
+                    unreadMessageList, context, false, false, false,
+                    null);
         }
     }
 
