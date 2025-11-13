@@ -27,6 +27,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
@@ -42,6 +43,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.modules.utils.build.SdkLevel;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -367,20 +369,28 @@ public class CellBroadcastContentProvider extends ContentProvider {
      * @param columnValue the ID or delivery time of the broadcast to mark read
      * @return true if the database was updated, false otherwise
      */
-    boolean markBroadcastRead(String columnName, long columnValue) {
-        SQLiteDatabase db = awaitInitAndGetWritableDatabase();
+    @VisibleForTesting
+    public boolean markBroadcastRead(String columnName, long columnValue) {
+        try {
+            SQLiteDatabase db = awaitInitAndGetWritableDatabase();
 
-        ContentValues cv = new ContentValues(1);
-        cv.put(Telephony.CellBroadcasts.MESSAGE_READ, 1);
+            ContentValues cv = new ContentValues(1);
+            cv.put(Telephony.CellBroadcasts.MESSAGE_READ, 1);
 
-        String whereClause = columnName + "=?";
-        String[] whereArgs = new String[]{Long.toString(columnValue)};
+            String whereClause = columnName + "=?";
+            String[] whereArgs = new String[]{Long.toString(columnValue)};
 
-        int rowCount = db.update(CellBroadcastDatabaseHelper.TABLE_NAME, cv, whereClause, whereArgs);
-        if (rowCount != 0) {
-            return true;
-        } else {
-            Log.e(TAG, "failed to mark broadcast read: " + columnName + " = " + columnValue);
+            int rowCount = db.update(CellBroadcastDatabaseHelper.TABLE_NAME, cv, whereClause,
+                    whereArgs);
+
+            if (rowCount != 0) {
+                return true;
+            } else {
+                Log.e(TAG, "failed to mark broadcast read: " + columnName + " = " + columnValue);
+                return false;
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "markBroadcastRead", e);
             return false;
         }
     }
@@ -397,21 +407,27 @@ public class CellBroadcastContentProvider extends ContentProvider {
     @VisibleForTesting
     public boolean markBroadcastSmsSyncPending(String columnName, long columnValue,
             boolean isSmsSyncPending) {
-        SQLiteDatabase db = awaitInitAndGetWritableDatabase();
+        try {
+            SQLiteDatabase db = awaitInitAndGetWritableDatabase();
 
-        ContentValues cv = new ContentValues(1);
-        cv.put(CellBroadcastDatabaseHelper.SMS_SYNC_PENDING, isSmsSyncPending ? 1 : 0);
+            ContentValues cv = new ContentValues(1);
+            cv.put(CellBroadcastDatabaseHelper.SMS_SYNC_PENDING, isSmsSyncPending ? 1 : 0);
 
-        String whereClause = columnName + "=?";
-        String[] whereArgs = new String[]{Long.toString(columnValue)};
+            String whereClause = columnName + "=?";
+            String[] whereArgs = new String[]{Long.toString(columnValue)};
 
-        int rowCount = db.update(CellBroadcastDatabaseHelper.TABLE_NAME, cv, whereClause,
-                whereArgs);
-        if (rowCount != 0) {
-            return true;
-        } else {
-            Log.e(TAG, "failed to mark broadcast pending for sms inbox sync:  " + isSmsSyncPending
-                    + " where: " + columnName + " = " + columnValue);
+            int rowCount = db.update(CellBroadcastDatabaseHelper.TABLE_NAME, cv, whereClause,
+                    whereArgs);
+            if (rowCount != 0) {
+                return true;
+            } else {
+                Log.e(TAG,
+                        "failed to mark broadcast pending for sms inbox sync:  " + isSmsSyncPending
+                                + " where: " + columnName + " = " + columnValue);
+                return false;
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "markBroadcastSmsSyncPending", e);
             return false;
         }
     }
@@ -456,9 +472,9 @@ public class CellBroadcastContentProvider extends ContentProvider {
     @VisibleForTesting
     public void writeMessageToSmsInbox(@NonNull SmsCbMessage message, @NonNull Context context) {
         UserManager userManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
-        if (!userManager.isSystemUser()) {
-            // SMS database is single-user mode, discard non-system users to avoid inserting twice.
-            Log.d(TAG, "ignoring writeMessageToSmsInbox due to non-system user");
+        if (!isPrimaryUser(context)) {
+            // SMS database is single-user mode, discard non-main users to avoid inserting twice.
+            Log.d(TAG, "ignoring writeMessageToSmsInbox due to non-main user");
             return;
         }
         // Note SMS database is not direct boot aware for privacy reasons, we should only interact
@@ -550,6 +566,15 @@ public class CellBroadcastContentProvider extends ContentProvider {
 
             mContentResolver = null;    // free reference to content resolver
             return null;
+        }
+    }
+
+    private boolean isPrimaryUser(Context context) {
+        UserManager userManager = context.getSystemService(UserManager.class);
+        if (SdkLevel.isAtLeastU()) {
+            return userManager.isMainUser();
+        } else {
+            return userManager.isSystemUser();
         }
     }
 }

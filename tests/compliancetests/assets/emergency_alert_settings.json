@@ -433,50 +433,6 @@
       "toggle_avail": "true"
     }
   },
-  "korea_skt": {
-    "긴급 재난문자": { //"Emergency Alert"
-      "default_value": "true",
-      "toggle_avail": "true"
-    },
-    "안전 안내문자": { // "Public Safety Alert"
-      "default_value": "true",
-      "toggle_avail": "true"
-    },
-    "실종 경보문자": { // "Amber Alert"
-      "default_value": "true",
-      "toggle_avail": "true"
-    },
-    "진동": { //"Vibration"
-      "default_value": "true",
-      "toggle_avail": "true"
-    },
-    "경보 메시지를 음성으로 알림": { //"Speak alert message"
-      "default_value": "false",
-      "toggle_avail": "true"
-    }
-  },
-  "korea_lgu": {
-    "긴급 재난문자": { //"Emergency Alert"
-      "default_value": "true",
-      "toggle_avail": "true"
-    },
-    "안전 안내문자": { // "Public Safety Alert"
-      "default_value": "true",
-      "toggle_avail": "true"
-    },
-    "실종 경보문자": { // "Amber Alert"
-      "default_value": "true",
-      "toggle_avail": "true"
-    },
-    "진동": { //"Vibration"
-      "default_value": "true",
-      "toggle_avail": "true"
-    },
-    "경보 메시지를 음성으로 알림": { //"Speak alert message"
-      "default_value": "false",
-      "toggle_avail": "true"
-    }
-  },
   "latvia": {
     "Extreme threats": {
       "default_value": "true",
@@ -672,6 +628,10 @@
       "default_value": "true",
       "toggle_avail": "true"
     },
+    "Public Safety Alert": {
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
     "Test alerts": {
       "default_value": "false",
       "toggle_avail": "true"
@@ -747,6 +707,10 @@
     },
     "Vibreur": { //"Vibration": {
       "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "Énoncer un message d'alerte": {
+      "default_value": "false",
       "toggle_avail": "true"
     }
   },
@@ -1364,6 +1328,24 @@
       "toggle_avail": "true"
     },
     "Vibration": {  // Vibration
+      "default_value": "true",
+      "toggle_avail": "true"
+    }
+  },
+  "Thailand": {
+    "การแจ้งเตือนภัยขั้นรุนแรง": { // Extreme Alert
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "การแจ้งเตือนเพื่อให้ข้อมูล": { // Informational Alert
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "การแจ้งเตือนการลักพาตัว": { // Amber Alert
+      "default_value": "true",
+      "toggle_avail": "true"
+    },
+    "การสั่น": { // Vibration
       "default_value": "true",
       "toggle_avail": "true"
     }

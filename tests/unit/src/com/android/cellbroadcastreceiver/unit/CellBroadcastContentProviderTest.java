@@ -15,9 +15,10 @@
  */
 package com.android.cellbroadcastreceiver.unit;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -28,6 +29,8 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.UserManager;
 import android.provider.Telephony.CellBroadcasts;
@@ -39,8 +42,12 @@ import android.telephony.SubscriptionManager;
 import android.test.mock.MockContentResolver;
 import android.test.mock.MockContext;
 import android.util.Log;
+
 import com.android.cellbroadcastreceiver.CellBroadcastDatabaseHelper;
+import com.android.modules.utils.build.SdkLevel;
+
 import junit.framework.TestCase;
+
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -200,7 +207,11 @@ public class CellBroadcastContentProviderTest extends TestCase {
     @InstrumentationTest
     public void testWriteSmsInboxBeforeUserUnlock() {
         doReturn(false).when(mUserManager).isUserUnlocked();
-        doReturn(true).when(mUserManager).isSystemUser();
+        if (SdkLevel.isAtLeastU()) {
+            doReturn(true).when(mUserManager).isMainUser();
+        } else {
+            doReturn(true).when(mUserManager).isSystemUser();
+        }
         SmsCbMessage msg = fakeSmsCbMessage();
         mCellBroadcastProviderTestable.insertNewBroadcast(msg);
         // verify does not write message to SMS db
@@ -269,6 +280,31 @@ public class CellBroadcastContentProviderTest extends TestCase {
                 .isEqualTo(CMAS_CERTAINTY);
     }
 
+    @Test
+    @InstrumentationTest
+    public void testDbUpdateOperationsWhenStorageFull() {
+        ExceptionThrowingDatabaseHelper exceptionHelper =
+                new ExceptionThrowingDatabaseHelper(mContext, new SQLException());
+        mCellBroadcastProviderTestable.mOpenHelper = exceptionHelper;
+
+        SmsCbMessage msg = fakeSmsCbMessage();
+        long deliveryTime = msg.getReceivedTime();
+
+        try {
+            mCellBroadcastProviderTestable.markBroadcastRead(CellBroadcasts.DELIVERY_TIME,
+                    deliveryTime);
+        } catch (SQLException e) {
+            fail("must handle the SQLException that occurs when the database is full.");
+        }
+
+        try {
+            mCellBroadcastProviderTestable.markBroadcastSmsSyncPending(CellBroadcasts.DELIVERY_TIME,
+                    deliveryTime, true);
+        } catch (SQLException e) {
+            fail("must handle the SQLException that occurs when the database is full.");
+        }
+    }
+
     /**
      * This is used to give the CellBroadcastContentProviderTest a mocked context which takes a
      * CellBroadcastProvider and attaches it to the ContentResolver.
@@ -315,6 +351,15 @@ public class CellBroadcastContentProviderTest extends TestCase {
         }
 
         @Override
+        public String getSystemServiceName(Class<?> serviceClass) {
+            if (UserManager.class.equals(serviceClass)) {
+                return Context.USER_SERVICE;
+            }
+            return super.getSystemServiceName(serviceClass);
+        }
+
+
+        @Override
         public int checkCallingOrSelfPermission(String permission) {
             return PackageManager.PERMISSION_GRANTED;
         }
@@ -328,5 +373,30 @@ public class CellBroadcastContentProviderTest extends TestCase {
                 new SmsCbCmasInfo(CMAS_MESSAGE_CLASS, CMAS_CATEGORY, CMAS_RESPONSE_TYPE,
                         CMAS_SEVERITY, CMAS_URGENCY, CMAS_CERTAINTY), 0, null,
                 System.currentTimeMillis(), 1, SubscriptionManager.INVALID_SUBSCRIPTION_ID);
+    }
+
+    static class ExceptionThrowingDatabaseHelper extends CellBroadcastDatabaseHelper {
+        private final SQLException mExceptionToThrow;
+
+        ExceptionThrowingDatabaseHelper(Context context, SQLException exception) {
+            super(context, false /* isTestMode */);
+            this.mExceptionToThrow = exception;
+        }
+
+        @Override
+        public SQLiteDatabase getWritableDatabase() {
+            if (mExceptionToThrow != null) {
+                throw mExceptionToThrow;
+            }
+            return super.getWritableDatabase();
+        }
+
+        @Override
+        public SQLiteDatabase getReadableDatabase() {
+            if (mExceptionToThrow != null) {
+                throw mExceptionToThrow;
+            }
+            return super.getReadableDatabase();
+        }
     }
  }

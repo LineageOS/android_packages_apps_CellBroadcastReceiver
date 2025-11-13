@@ -154,7 +154,7 @@ public class CellBroadcastBaseTest {
     @BeforeClass
     public static void beforeAllTests() throws Exception {
         logd("CellBroadcastBaseTest#beforeAllTests()");
-        if (!SdkLevel.isAtLeastT()) {
+        if (!SdkLevel.isAtLeastB()) {
             Log.i(TAG, "sdk level is below the latest platform");
             sPreconditionError = ERROR_SDK_VERSION;
             return;
@@ -164,6 +164,14 @@ public class CellBroadcastBaseTest {
         boolean hasTelephonyFeature = pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
         if (!hasTelephonyFeature) {
             Log.i(TAG, "Not have Telephony Feature");
+            sPreconditionError = ERROR_NO_TELEPHONY;
+            return;
+        }
+
+        boolean hasTelephonyCallingFeature =
+                pm.hasSystemFeature("android.hardware.telephony.calling");
+        if (!hasTelephonyCallingFeature) {
+            Log.i(TAG, "Voice Capable Off device");
             sPreconditionError = ERROR_NO_TELEPHONY;
             return;
         }
