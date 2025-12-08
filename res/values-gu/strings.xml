@@ -63,7 +63,7 @@
     <string name="notification_channel_broadcast_messages_in_voicecall" msgid="3291001780110813190">"વૉઇસ કૉલ દરમ્યાન ઇમર્જન્સી અલર્ટ"</string>
     <string name="notification_channel_settings_updates" msgid="6779759372516475085">"ઑટોમૅટિક WEAના સેટિંગ સિમના આધારે બદલાય છે"</string>
     <string name="enable_alerts_master_toggle_title" msgid="1457904343636699446">"અલર્ટને મંજૂરી આપો"</string>
-    <string name="enable_alerts_master_toggle_summary" msgid="5583168548073938617">"વાયરલેસ ઇમર્જન્સી અલર્ટના નોટિફિકેશન પ્રાપ્ત કરો"</string>
+    <string name="enable_alerts_master_toggle_summary" msgid="5583168548073938617">"વાયરલેસ ઇમર્જન્સી અલર્ટના નોટિફિકેશન મેળવો"</string>
     <string name="alert_reminder_interval_title" msgid="3283595202268218149">"અલર્ટ રિમાઇન્ડર"</string>
     <string name="enable_alert_speech_title" msgid="8052104771053526941">"ચેતવણી મેસેજ બોલો"</string>
     <string name="enable_alert_speech_summary" msgid="2855629032890937297">"વાયરલેસ ઇમર્જન્સી અલર્ટ મેસેજ બોલવા માટે ટેક્સ્ટ ટૂ સ્પીચનો ઉપયોગ કરો"</string>
@@ -75,7 +75,7 @@
     <string name="enable_cmas_extreme_threat_alerts_title" msgid="5416260219062637770">"ભારે જોખમો"</string>
     <string name="enable_cmas_extreme_threat_alerts_summary" msgid="5832146246627518123">"જીવન અને સંપત્તિને ભારે જોખમો"</string>
     <string name="enable_cmas_severe_threat_alerts_title" msgid="1066172973703410042">"ગંભીર જોખમો"</string>
-    <string name="enable_cmas_severe_threat_alerts_summary" msgid="5292443310309039223">"જીવન અને સંપત્તિના ગંભીર જોખમો"</string>
+    <string name="enable_cmas_severe_threat_alerts_summary" msgid="5292443310309039223">"જીવન અને સંપત્તિને ગંભીર જોખમો"</string>
     <string name="enable_cmas_amber_alerts_title" msgid="1475030503498979651">"AMBER અલર્ટ"</string>
     <string name="enable_cmas_amber_alerts_summary" msgid="4495233280416889667">"બાળ અપહરણની ઇમર્જન્સી બુલેટિન"</string>
     <string name="enable_alert_message_title" msgid="2939830587633599352">"અલર્ટ મેસેજ"</string>
@@ -89,7 +89,7 @@
     <string name="enable_emergency_alerts_message_title" msgid="661894007489847468">"કટોકટીની ચેતવણીઓ"</string>
     <string name="enable_emergency_alerts_message_summary" msgid="7574617515441602546">"જીવલેણ ઘટનાઓ વિશે ચેતવો"</string>
     <string name="enable_cmas_test_alerts_title" msgid="7194966927004755266">"પરીક્ષણના અલર્ટ"</string>
-    <string name="enable_cmas_test_alerts_summary" msgid="2083089933271720217">"સલામતી અલર્ટ સિસ્ટમમાંથી કૅરિઅરના પરીક્ષણો અને માસિક પરીક્ષણો મેળવો"</string>
+    <string name="enable_cmas_test_alerts_summary" msgid="2083089933271720217">"સલામતી અલર્ટ સિસ્ટમમાંથી મોબાઇલ ઑપરેટરના પરીક્ષણો અને માસિક પરીક્ષણો મેળવો"</string>
     <!-- no translation found for enable_exercise_test_alerts_title (6030780598569873865) -->
     <skip />
     <string name="enable_exercise_test_alerts_summary" msgid="4276766794979567304">"ઇમર્જન્સી માટે અલર્ટ મેળવો: અભ્યાસ/તાલીમ સંબંધિત મેસેજ"</string>
@@ -99,7 +99,7 @@
     <string name="enable_alert_vibrate_title" msgid="5421032189422312508">"વાઇબ્રેશન"</string>
     <string name="enable_alert_vibrate_summary" msgid="4733669825477146614"></string>
     <string name="override_dnd_title" msgid="5120805993144214421">"અલર્ટ હંમેશા સંપૂર્ણ વૉલ્યૂમમાં મોકલો"</string>
-    <string name="override_dnd_summary" msgid="9026675822792800258">"ખલેલ પાડશો નહીં મોડ અને વૉલ્યૂમના અન્ય સેટિંગ અવગણો"</string>
+    <string name="override_dnd_summary" msgid="8760249766972256385">"ખલેલ પાડશો નહીં અને વૉલ્યૂમના અન્ય સેટિંગ અવગણો. તે બંધ કરો, તો પણ સૌથી ગંભીર અલર્ટનો સાઉન્ડ સંપૂર્ણ વૉલ્યૂમમાં સંભળાઈ શકે છે."</string>
     <string name="enable_area_update_info_alerts_title" msgid="3442042268424617226">"વિસ્તારના અપડેટ વિશેના બ્રૉડકાસ્ટ"</string>
     <string name="enable_area_update_info_alerts_summary" msgid="6437816607144264910">"અપડેટ વિશેની માહિતી SIMની સ્થિતિમાં બતાવો"</string>
     <string name="cmas_category_heading" msgid="3923503130776640717">"ચેતવણીની કૅટેગરી:"</string>

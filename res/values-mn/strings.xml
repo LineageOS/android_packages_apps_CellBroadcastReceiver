@@ -63,7 +63,7 @@
     <string name="notification_channel_broadcast_messages_in_voicecall" msgid="3291001780110813190">"Дуут дуудлагын үеэр ирэх гамшгийн аюулын дохио"</string>
     <string name="notification_channel_settings_updates" msgid="6779759372516475085">"WEA автомат тохиргоо SIM дээр үндэслэн өөрчлөгддөг"</string>
     <string name="enable_alerts_master_toggle_title" msgid="1457904343636699446">"Сэрэмжлүүлгийг зөвшөөрөх"</string>
-    <string name="enable_alerts_master_toggle_summary" msgid="5583168548073938617">"Утасгүй сүлжээгээр гамшгийн аюулын дохионы мэдэгдэл авах"</string>
+    <string name="enable_alerts_master_toggle_summary" msgid="5583168548073938617">"Утасгүй яаралтай тусламжийн сэрэмжлүүлгийн мэдэгдэл авах"</string>
     <string name="alert_reminder_interval_title" msgid="3283595202268218149">"Сэрэмжлүүлгийн сануулагч"</string>
     <string name="enable_alert_speech_title" msgid="8052104771053526941">"Сэрэмжлүүлгийн мессежийг унших"</string>
     <string name="enable_alert_speech_summary" msgid="2855629032890937297">"Утасгүй гамшгийн аюулын дохионы мессежийг чангаар уншихын тулд бичвэрийг-ярианд-хувиргахыг ашиглана уу"</string>
@@ -99,7 +99,7 @@
     <string name="enable_alert_vibrate_title" msgid="5421032189422312508">"Чичиргээ"</string>
     <string name="enable_alert_vibrate_summary" msgid="4733669825477146614"></string>
     <string name="override_dnd_title" msgid="5120805993144214421">"Сэрэмжлүүлгийг үргэлж хамгийн чанга дээр тоглуулах"</string>
-    <string name="override_dnd_summary" msgid="9026675822792800258">"Бүү саад бол горимыг үл хэрэгсэх болон дууны түвшний бусад тохиргоо"</string>
+    <string name="override_dnd_summary" msgid="8760249766972256385">"Бүү саад бол онцлог, дууны түвшний бусад тохиргоог үл хэрэгс. Унтраасан үед хамгийн ноцтой сэрэмжлүүлгийг чанга дуугаргана."</string>
     <string name="enable_area_update_info_alerts_title" msgid="3442042268424617226">"Газрын шинэчлэлтийн дамжуулалт"</string>
     <string name="enable_area_update_info_alerts_summary" msgid="6437816607144264910">"Шинэчлэлтийн мэдээллийг SIM-н төлөвт харуулах"</string>
     <string name="cmas_category_heading" msgid="3923503130776640717">"Сэрэмжлүүлгийн Ангилал:"</string>

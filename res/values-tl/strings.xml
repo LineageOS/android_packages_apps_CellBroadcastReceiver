@@ -69,7 +69,7 @@
     <string name="enable_alert_speech_summary" msgid="2855629032890937297">"Gamitin ang text-to-speech para magsabi ng mga mensahe ng wireless na alerto sa emergency"</string>
     <string name="alert_reminder_dialog_title" msgid="2299010977651377315">"May magpe-play na tunog ng paalala sa regular na volume"</string>
     <string name="emergency_alert_history_title" msgid="8310173569237268431">"History ng alertong pang-emergency"</string>
-    <string name="alert_preferences_title" msgid="6001469026393248468">"Mga kagustuhan sa alerto"</string>
+    <string name="alert_preferences_title" msgid="6001469026393248468">"Mga preference sa alerto"</string>
     <string name="enable_etws_test_alerts_title" msgid="3593533226735441539">"Pansubok na broadcast ng ETWS"</string>
     <string name="enable_etws_test_alerts_summary" msgid="8746155402612927306">"Mga pansubok na broadcast ng Earthquake Tsunami Warning System"</string>
     <string name="enable_cmas_extreme_threat_alerts_title" msgid="5416260219062637770">"Pinakamatitinding banta"</string>
@@ -99,7 +99,7 @@
     <string name="enable_alert_vibrate_title" msgid="5421032189422312508">"Pag-vibrate"</string>
     <string name="enable_alert_vibrate_summary" msgid="4733669825477146614"></string>
     <string name="override_dnd_title" msgid="5120805993144214421">"Palaging alerto sa pinakamalakas na volume"</string>
-    <string name="override_dnd_summary" msgid="9026675822792800258">"Balewalain, Huwag Istorbohin at iba pang setting ng volume"</string>
+    <string name="override_dnd_summary" msgid="8760249766972256385">"Balewalain: Huwag Istorbohin at ibang volume settings. Kapag in-off, puwede pa ring tumunog ang mga pinakakritikal na alerto."</string>
     <string name="enable_area_update_info_alerts_title" msgid="3442042268424617226">"Mga broadcast sa pag-update sa lugar"</string>
     <string name="enable_area_update_info_alerts_summary" msgid="6437816607144264910">"Ipakita ang impormasyon ng pag-update sa status ng SIM"</string>
     <string name="cmas_category_heading" msgid="3923503130776640717">"Kategorya ng Alerto:"</string>
