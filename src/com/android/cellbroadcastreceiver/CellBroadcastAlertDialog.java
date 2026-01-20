@@ -82,6 +82,7 @@ import androidx.preference.PreferenceManager;
 
 import com.android.cellbroadcastreceiver.CellBroadcastChannelManager.CellBroadcastChannelRange;
 import com.android.cellbroadcastreceiver.flags.Flags;
+import com.android.cellbroadcastservice.CellBroadcastMetrics;
 import com.android.internal.annotations.VisibleForTesting;
 
 import java.lang.annotation.Retention;
@@ -215,6 +216,9 @@ public class CellBroadcastAlertDialog extends Activity implements
     @VisibleForTesting
     public static Boolean sIsMapFeatureEnabledForTest = null;
     private boolean mShouldOfferTranslation = false;
+    private boolean mTranslateDone = false;
+    private Boolean mLastLoggedShowTranslate = null;
+    private Boolean mLastLoggedShowMap = null;
 
     /** BroadcastReceiver for screen off events. When screen was off, remove FLAG_TURN_SCREEN_ON to
      * start from a clean state. Otherwise, the window flags from the first alert will be
@@ -835,7 +839,9 @@ public class CellBroadcastAlertDialog extends Activity implements
     public void onLanguageDetectionCompleted(Optional<ULocale> detectedLocaleOptional) {
         // Only call the translation offer logic if a detected language exists.
         // If the Optional is empty, do nothing.
-        detectedLocaleOptional.ifPresent(this::offerTranslation);
+        detectedLocaleOptional.ifPresent(sourceLocale -> {
+            offerTranslation(sourceLocale);
+        });
     }
 
     /**
@@ -855,10 +861,24 @@ public class CellBroadcastAlertDialog extends Activity implements
                             + "translation.");
             return;
         }
-        final String targetLanguage = Locale.getDefault().getLanguage();
-        final ULocale targetLocale = new ULocale(targetLanguage);
+        final Locale defaultLocale = Locale.getDefault();
+        if (getTranslateManager() != null) {
+            getTranslateManager().resolveTargetLanguage(defaultLocale, targetLocale -> {
+                if (isFinishing() || isDestroyed()) {
+                    Log.w(TAG, "Activity destroyed before resolveTargetLanguage finished.");
+                    return;
+                }
+                processOfferTranslation(sourceLocale, ULocale.forLocale(targetLocale));
+            });
+        } else {
+            processOfferTranslation(sourceLocale, new ULocale(defaultLocale.getLanguage()));
+        }
+    }
 
-        // Only offer translation if the source language and the target language are different.
+    /**
+     * Helper method to handle logic after target language resolution
+     */
+    private void processOfferTranslation(ULocale sourceLocale, ULocale targetLocale) {
         boolean shouldOffer = !sourceLocale.getLanguage().equalsIgnoreCase(
                 targetLocale.getLanguage());
 
@@ -868,6 +888,7 @@ public class CellBroadcastAlertDialog extends Activity implements
         }
         mShouldOfferTranslation = shouldOffer;
 
+        SmsCbMessage message = getLatestMessage();
         if (shouldOffer) {
             Log.d(TAG, "Offering translation from '" + sourceLocale.toLanguageTag()
                     + "' to '" + targetLocale.toLanguageTag() + "'");
@@ -876,6 +897,8 @@ public class CellBroadcastAlertDialog extends Activity implements
         } else {
             Log.d(TAG, "No translation offered: source language is the same as target.");
         }
+
+        updateButtons(message);
     }
 
     @Override
@@ -891,24 +914,42 @@ public class CellBroadcastAlertDialog extends Activity implements
             getButtonManager().showTranslationInProgress(false);
         }
 
-        if (getLatestMessage() == null || getLatestMessage().getMessageBody() == null) {
+        SmsCbMessage message = getLatestMessage();
+        if (message == null || message.getMessageBody() == null) {
             Log.e(TAG, "onTranslationCompleted: Cannot retrieve the latest message.");
             return;
         }
 
-        final String originalText = getLatestMessage().getMessageBody();
+        final String originalText = message.getMessageBody();
         Log.d(TAG, "onTranslationCompleted: originalMessageText:" + originalText);
         Log.d(TAG, "onTranslationCompleted: translatedText:" + translatedText + " , success:"
                 + success);
         if (success && !TextUtils.isEmpty(translatedText)) {
             String finalText = originalText + "\n\n" + translatedText;
             setTextAndApplyLinks(mMessageView, finalText, getLatestMessage());
+            mTranslateDone = true;
             if (getButtonManager() != null) {
                 getButtonManager().onTranslationCompleted();
             }
+            CellBroadcastReceiverMetrics.getInstance()
+                    .logUxReported(message.getServiceCategory(), true,
+                            true, CellBroadcastMetrics.ERRTYPE_TRANSLATION_NONE,
+                            isMapFeatureEnabled(message),
+                            false,
+                            CellBroadcastMapLauncher.getGeoDataType(message),
+                            CellBroadcastMetrics.ERRTYPE_MAP_UNKNOWN);
         } else {
             Log.w(TAG, "onTranslationCompleted: Translation failed or result is empty.");
             showTranslateFailedToast();
+            mTranslateDone = false;
+
+            CellBroadcastReceiverMetrics.getInstance()
+                    .logUxReported(message.getServiceCategory(), true,
+                            true, CellBroadcastMetrics.ERRTYPE_TRANSLATION_UNKNOWN,
+                            isMapFeatureEnabled(message),
+                            false,
+                            CellBroadcastMapLauncher.getGeoDataType(message),
+                            CellBroadcastMetrics.ERRTYPE_MAP_UNKNOWN);
         }
     }
 
@@ -967,8 +1008,45 @@ public class CellBroadcastAlertDialog extends Activity implements
 
         boolean showTranslate = mShouldOfferTranslation;
         boolean showMap = isMapFeatureEnabled(message);
+
+        Log.d(TAG, "updateButtons: mTranslateDone=" + mTranslateDone);
+        if (mTranslateDone) {
+            Log.d(TAG, "updateButtons: Translate already done");
+            showTranslate = false;
+        }
+
         getButtonManager().configureButtons(showTranslate, showMap);
         Log.d(TAG, "updateButtons: showTranslate=" + showTranslate + ",showMap=" + showMap);
+        if (message != null) {
+            boolean needToLog = (mLastLoggedShowTranslate == null)
+                    || (mLastLoggedShowMap == null)
+                    || (mLastLoggedShowTranslate != showTranslate)
+                    || (mLastLoggedShowMap != showMap);
+            if (needToLog) {
+                logUxMetric(message, showTranslate, showMap);
+                mLastLoggedShowTranslate = showTranslate;
+                mLastLoggedShowMap = showMap;
+            }
+        }
+    }
+
+    /**
+     * Helper method to log UX metrics.
+     * Ensures Map metrics are logged even if translation is not offered.
+     */
+    private void logUxMetric(SmsCbMessage message, boolean showTranslate, boolean showMap) {
+        if (message != null) {
+            int mapGeoDataType = CellBroadcastMapLauncher.getGeoDataType(message);
+            CellBroadcastReceiverMetrics.getInstance().logUxReported(
+                    message.getServiceCategory(),
+                    showTranslate,
+                    false,
+                    CellBroadcastMetrics.ERRTYPE_TRANSLATION_NOT_APPLICABLE,
+                    showMap,
+                    false,
+                    mapGeoDataType,
+                    CellBroadcastMetrics.ERRTYPE_MAP_UNKNOWN);
+        }
     }
 
     private boolean isTranslateFeatureEnabled() {
@@ -1293,6 +1371,7 @@ public class CellBroadcastAlertDialog extends Activity implements
 
         initTranslate(message);
         mMessageView = textView;
+        mTranslateDone = false;
     }
 
     /**
@@ -1340,11 +1419,30 @@ public class CellBroadcastAlertDialog extends Activity implements
             Log.d(TAG, "initTranslate: Translation prerequisites not met. Hiding button.");
             return;
         }
+        getTranslateManager().checkOnDeviceTranslationCapability(isSupported -> {
+            if (isFinishing() || isDestroyed()) {
+                Log.w(TAG, "Activity destroyed before checkOnDeviceTranslationCapability done.");
+                return;
+            }
+            Log.d(TAG, "initTranslate:isSupported=" + isSupported);
+            if (!isSupported) {
+                Log.d(TAG, "initTranslate: Translation prerequisites not met. Hiding button.");
+                mShouldOfferTranslation = false;
+                updateButtons(message);
+                return;
+            }
+            continueInitTranslate(message);
+        });
+    }
 
+    /**
+     * Helper method to continue initialization after capability check passes.
+     */
+    private void continueInitTranslate(SmsCbMessage message) {
         final String targetLanguage = Locale.getDefault().getLanguage();
         final String sourceLanguageCode = message.getLanguageCode();
-        Log.d(TAG, "initTranslate: targetLanguage=" + targetLanguage + ", sourceLanguageCode="
-                + sourceLanguageCode);
+        Log.d(TAG, "continueInitTranslate: targetLanguage=" + targetLanguage
+                + ", sourceLanguageCode=" + sourceLanguageCode);
         boolean isSourceLanguageValid = false;
         if (!TextUtils.isEmpty(sourceLanguageCode)) {
             try {
@@ -1352,13 +1450,11 @@ public class CellBroadcastAlertDialog extends Activity implements
                 if (!TextUtils.isEmpty(tempLocale.getISO3Language())) {
                     isSourceLanguageValid = true;
                 } else {
-                    Log.w(TAG, "initTranslate: Invalid source language code received: "
+                    Log.w(TAG, "continueInitTranslate: Invalid source language code received: "
                             + sourceLanguageCode);
                 }
             } catch (Exception e) {
-                Log.e(TAG, "initTranslate: Error creating ULocale from source language code: "
-                        + sourceLanguageCode, e);
-                isSourceLanguageValid = false;
+                Log.e(TAG, "continueInitTranslate: Error creating ULocale", e);
             }
         }
 
@@ -1368,6 +1464,8 @@ public class CellBroadcastAlertDialog extends Activity implements
             Log.d(TAG, "Source language is invalid. Attempting language detection.");
             getTranslateManager().detectLanguage(message.getMessageBody());
         }
+
+        updateButtons(message);
     }
 
     /**

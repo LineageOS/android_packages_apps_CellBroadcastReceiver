@@ -579,4 +579,31 @@ public class CellBroadcastReceiverMetrics {
         CellBroadcastModuleStatsLog.write(CellBroadcastModuleStatsLog.CB_MODULE_ERROR_REPORTED,
                 source, errorType);
     }
+
+    /**
+     * Create a new log logUxReported
+     *
+     * @param messageId : service_category of message
+     * @param isTranslationButtonShown : true if the translation button was shown to the user
+     * @param isTranslationTriggered : true if translation is triggered
+     * @param translationErrorType : type of error for translation
+     * @param isMapButtonShown : true if the map button was shown to the user
+     * @param isMapTriggered : true if map is triggered
+     * @param mapGeoDataType : type of geographic information passed to the map activity
+     * @param mapErrorType : type of error for map
+     */
+    void logUxReported(int messageId, boolean isTranslationButtonShown,
+            boolean isTranslationTriggered, int translationErrorType, boolean isMapButtonShown,
+            boolean isMapTriggered, int mapGeoDataType, int mapErrorType) {
+        if (VDBG) {
+            Log.d(TAG, "[STUBBED] logUxReported : " + messageId + " " + isTranslationButtonShown
+                    + " " + isTranslationTriggered + " " + translationErrorType + " "
+                    + isMapButtonShown + " " + isMapTriggered + " " + mapGeoDataType + " "
+                    + mapErrorType);
+        }
+        // Stubbed for 25Q2 Wear backport:
+        //CellBroadcastModuleStatsLog.write(CellBroadcastModuleStatsLog.CELLBROADCAST_UX_REPORTED,
+        //        messageId, isTranslationButtonShown, isTranslationTriggered, translationErrorType,
+        //        isMapButtonShown, isMapTriggered, mapGeoDataType, mapErrorType);
+    }
 }

@@ -21,8 +21,10 @@ import android.content.Context;
 import android.icu.util.ULocale;
 import android.view.autofill.AutofillId;
 
+import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.Executor;
+import java.util.function.Consumer;
 
 /**
  * Stub implementation of CellBroadcastTranslateManager for 25Q2 Wear OS backport.
@@ -42,6 +44,20 @@ public class CellBroadcastTranslateManager {
     public CellBroadcastTranslateManager(Context context, Executor executor,
             TranslateManagerCallback callback) {
         // No-op constructor
+    }
+
+    public void resolveTargetLanguage(Locale defaultLocale, Consumer<Locale> callback) {
+        // Stub: immediately pass back null or defaultLocale
+        if (callback != null) {
+            callback.accept(defaultLocale);
+        }
+    }
+
+    public void checkOnDeviceTranslationCapability(Consumer<Boolean> callback) {
+        // Stub: return false (not supported on 25Q2 Wear)
+        if (callback != null) {
+            callback.accept(false);
+        }
     }
 
     public boolean isTranslationManagerAvailable() {
