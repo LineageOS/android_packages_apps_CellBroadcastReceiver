@@ -82,6 +82,7 @@ public class CellBroadcastSettingsTest extends
     private static final String TAG = "CellBroadcastSettingsTest";
 
     private UiDevice mDevice;
+    private boolean mIsWatch;
     private static final long DEVICE_WAIT_TIME = 1000L;
     private static final String ROAMING_OPERATOR_SUPPORTED = "roaming_operator_supported";
     private static final String ACTION_TESTING_MODE_CHANGED =
@@ -124,6 +125,9 @@ public class CellBroadcastSettingsTest extends
         mBackupActivityManagerProxy = CellBroadcastReceiver.sActivityManagerProxy;
         mTestActivityManagerProxy = mock(CellBroadcastReceiver.ActivityManagerProxy.class);
         CellBroadcastReceiver.sActivityManagerProxy = mTestActivityManagerProxy;
+
+        mIsWatch = mContext.getPackageManager()
+                .hasSystemFeature(PackageManager.FEATURE_WATCH);
     }
 
     @After
@@ -140,6 +144,10 @@ public class CellBroadcastSettingsTest extends
     @FlakyTest
     @Test
     public void testRotateAlertReminderDialogOpen() throws InterruptedException {
+        if (mIsWatch) {
+            return;
+        }
+
         try {
             mDevice.wakeUp();
             mDevice.pressMenu();
@@ -418,6 +426,9 @@ public class CellBroadcastSettingsTest extends
 
     @Test
     public void testTopIntroductionForRoamingSupport() throws Throwable {
+        if (mIsWatch) {
+            return;
+        }
         String topIntroRoamingText = "test";
         doReturn(topIntroRoamingText).when(mContext.getResources()).getString(
                 eq(R.string.top_intro_roaming_text));
