@@ -77,10 +77,14 @@ public class CellBroadcastListActivity extends CollapsingToolbarBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         boolean isWatch = getPackageManager().hasSystemFeature(PackageManager.FEATURE_WATCH);
+        int contentFrameId = com.android.settingslib.collapsingtoolbar.R.id.content_frame;
         // for backward compatibility on R devices or wearable devices due to small screen device.
         mHideToolbar = !SdkLevel.isAtLeastS() || isWatch;
         if (mHideToolbar) {
-            setCustomizeContentView(R.layout.cell_broadcast_list_collapsing_no_toobar);
+            setCustomizeContentView(R.layout.cell_broadcast_list_collapsing_no_toolbar);
+        }
+        if (isWatch) {
+            contentFrameId = R.id.content_frame;
         }
         super.onCreate(savedInstanceState);
         if (mHideToolbar) {
@@ -106,12 +110,10 @@ public class CellBroadcastListActivity extends CollapsingToolbarBaseActivity {
         FragmentManager fm = getFragmentManager();
 
         // Create the list fragment and add it as our sole content.
-        if (fm.findFragmentById(com.android.settingslib.collapsingtoolbar.R.id.content_frame)
-                == null) {
+        if (fm.findFragmentById(contentFrameId) == null) {
             mListFragment = new CursorLoaderListFragment();
             mListFragment.setActivity(this);
-            fm.beginTransaction().add(com.android.settingslib.collapsingtoolbar.R.id.content_frame,
-                    mListFragment).commit();
+            fm.beginTransaction().add(contentFrameId, mListFragment).commit();
         }
 
         if (CellBroadcastSettings.getResourcesForDefaultSubId(getApplicationContext()).getBoolean(
