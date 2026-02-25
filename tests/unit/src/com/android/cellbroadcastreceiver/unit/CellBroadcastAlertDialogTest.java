@@ -21,7 +21,10 @@ import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -76,6 +79,7 @@ import com.android.cellbroadcastreceiver.CellBroadcastAlertButtonManager;
 import com.android.cellbroadcastreceiver.CellBroadcastAlertDialog;
 import com.android.cellbroadcastreceiver.CellBroadcastAlertService;
 import com.android.cellbroadcastreceiver.CellBroadcastChannelManager;
+import com.android.cellbroadcastreceiver.CellBroadcastMapLauncher;
 import com.android.cellbroadcastreceiver.CellBroadcastReceiverApp;
 import com.android.cellbroadcastreceiver.CellBroadcastSettings;
 import com.android.cellbroadcastreceiver.CellBroadcastTranslateManager;
@@ -98,6 +102,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class CellBroadcastAlertDialogTest extends
         CellBroadcastActivityTestCase<CellBroadcastAlertDialog> {
@@ -180,15 +185,28 @@ public class CellBroadcastAlertDialogTest extends
         String[] values = new String[]{"0x1112-0x1112:rat=gsm, always_on=true"};
         doReturn(values).when(mContext.getResources()).getStringArray(
                 eq(com.android.cellbroadcastreceiver.R.array
-                .cmas_presidential_alerts_channels_range_strings));
+                        .cmas_presidential_alerts_channels_range_strings));
         mSmsCbMessageWithGeo = createSmsCbMessage(true);
         mSmsCbMessageWithoutGeo = createSmsCbMessage(false);
+        doAnswer(invocation -> {
+            Consumer<Boolean> callback = invocation.getArgument(0);
+            callback.accept(true);
+            return null;
+        }).when(mMockCBTranslateManager).checkOnDeviceTranslationCapability(any());
+        doAnswer(invocation -> {
+            Consumer<ULocale> callback = invocation.getArgument(1);
+            callback.accept(new ULocale(Locale.ENGLISH.getLanguage()));
+            return null;
+        }).when(mMockCBTranslateManager).resolveTargetLanguage(any(), any());
+        doReturn("legacy_linkify").when(mContext.getResources()).getString(R.string.link_method);
+        CellBroadcastAlertDialog.sIsTranslateFeatureEnabledForTest = false;
     }
 
     @After
     public void tearDown() throws Exception {
         CellBroadcastAlertDialog.sIsTranslateFeatureEnabledForTest = null;
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = null;
+        CellBroadcastMapLauncher.sIsMapActivityAvailableForTest = null;
         CellBroadcastSettings.resetResourcesCache();
         CellBroadcastChannelManager.clearAllCellBroadcastChannelRanges();
         super.tearDown();
@@ -788,12 +806,15 @@ public class CellBroadcastAlertDialogTest extends
     }
 
     private SharedPreferences setTranslation() {
+        doReturn(true).when(mContext.getResources()).getBoolean(
+                eq(R.bool.enable_alert_translation));
         SharedPreferences mockSharedPreferences = mock(SharedPreferences.class);
         SharedPreferences.Editor mMockEditor = mock(SharedPreferences.Editor.class);
         mContext.injectSharedPreferences(mockSharedPreferences);
         doReturn(mMockEditor).when(mockSharedPreferences).edit();
         doReturn(mMockEditor).when(mMockEditor).putBoolean(anyString(), anyBoolean());
         doReturn(true).when(mMockCBTranslateManager).isTranslationManagerAvailable();
+        CellBroadcastAlertDialog.sIsTranslateFeatureEnabledForTest = true;
         return mockSharedPreferences;
     }
 
@@ -823,12 +844,24 @@ public class CellBroadcastAlertDialogTest extends
         doReturn(consentAccepted).when(mockSharedPreferences).getBoolean(
                 KEY_TRANSLATE_CONSENT_ACCEPTED, false);
         doReturn(translatorReady).when(mMockCBTranslateManager).isTranslatorReady();
+        doAnswer(invocation -> {
+            Consumer<ULocale> callback = invocation.getArgument(1);
+            callback.accept(new ULocale("en"));
+            return null;
+        }).when(mMockCBTranslateManager).resolveTargetLanguage(any(), any());
         setPendingIntentForTranslation();
 
         CellBroadcastAlertDialog.sDisableDialogsForTest = disableDialogs;
+        CellBroadcastAlertDialog.sIsTranslateFeatureEnabledForTest = false;
+        doAnswer(invocation -> {
+            Consumer<Boolean> callback = invocation.getArgument(0);
+            callback.accept(translatorReady);
+            return null;
+        }).when(mMockCBTranslateManager).checkOnDeviceTranslationCapability(any());
 
         Intent intent = createIntentWithMessage(message);
         CellBroadcastAlertDialog dialog = startActivitySetMock(intent);
+        CellBroadcastAlertDialog.sIsTranslateFeatureEnabledForTest = true;
         waitForMs(100);
 
         return new TranslationTestSetupResult(dialog, mockSharedPreferences);
@@ -836,6 +869,10 @@ public class CellBroadcastAlertDialogTest extends
 
     private String getDifferentLanguage(String systemLanguage) {
         return systemLanguage.equals("en") ? "es" : "en";
+    }
+
+    private String getTestMessageBody(String systemLanguage) {
+        return "en".equals(systemLanguage) ? "Mensaje de prueba" : "Test Message";
     }
 
     /**
@@ -906,11 +943,21 @@ public class CellBroadcastAlertDialogTest extends
      * Tests that the translation button is not shown if the source and target languages are the
      * same.
      */
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
     public void testInitTranslateWithSameLanguageHidesTranslateButton() {
         String systemLanguage = Locale.getDefault().getLanguage();
-        SmsCbMessage message = createMessage("A message in the system language", systemLanguage);
+        final String detectedLanguage = getDifferentLanguage(systemLanguage);
+        final ULocale detectedULocale = new ULocale(detectedLanguage);
+        SmsCbMessage message = createMessage(getTestMessageBody(detectedLanguage),
+                detectedLanguage);
         TranslationTestSetupResult result = setupActivityForTranslationTest(message,
                 true, true, true);
+        doAnswer(invocation -> {
+            Consumer<ULocale> callback = invocation.getArgument(1);
+            callback.accept(detectedULocale);
+            return null;
+        }).when(mMockCBTranslateManager).resolveTargetLanguage(any(), any());
         CellBroadcastAlertDialog activity = result.dialog;
         activity.setButtonManagerForTest(mMockCBButtonManager);
 
@@ -919,7 +966,7 @@ public class CellBroadcastAlertDialogTest extends
             activity.updateButtons(message);
         });
 
-        verify(mMockCBButtonManager).configureButtons(eq(false), anyBoolean());
+        verify(mMockCBButtonManager, atLeastOnce()).configureButtons(eq(false), anyBoolean());
     }
 
     /**
@@ -931,7 +978,6 @@ public class CellBroadcastAlertDialogTest extends
     @Suppress
     public void testOnLanguageDetectionCompletedWithDetectedLanguageOffersTranslation() {
         SmsCbMessage message = createMessage("A message to be detected", null);
-
         setPendingIntentForTranslation();
         final String systemLanguage = Locale.getDefault().getLanguage();
         final String detectedLanguage = getDifferentLanguage(systemLanguage);
@@ -941,15 +987,24 @@ public class CellBroadcastAlertDialogTest extends
                 true, true, true);
         CellBroadcastAlertDialog activity = result.dialog;
 
+        doAnswer(invocation -> {
+            Consumer<ULocale> callback = invocation.getArgument(1);
+            callback.accept(systemULocale);
+            return null;
+        }).when(mMockCBTranslateManager).resolveTargetLanguage(any(), any());
+
         getInstrumentation().runOnMainSync(
                 () -> activity.onLanguageDetectionCompleted(Optional.of(detectedULocale)));
-        verify(mMockCBTranslateManager, times(1)).initializeTranslator(eq(detectedULocale),
+
+        verify(mMockCBTranslateManager, atLeastOnce()).initializeTranslator(eq(detectedULocale),
                 eq(systemULocale));
     }
 
     /**
      * Tests that onNewIntent() calls destroyTranslator() to clean up resources.
      */
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
     public void testOnNewIntentCallsDestroyTranslator() {
         SmsCbMessage message = createMessage("First message", "en");
         TranslationTestSetupResult result = setupActivityForTranslationTest(message,
@@ -1040,32 +1095,6 @@ public class CellBroadcastAlertDialogTest extends
         }
     }
 
-    public void testOfferTranslationSettingsIntentIsNullHidesButton() {
-        String systemLang = Locale.getDefault().getLanguage();
-        SmsCbMessage message = createMessage("Test Message", getDifferentLanguage(systemLang));
-        TranslationTestSetupResult result = setupActivityForTranslationTest(message,
-                true, true, true);
-        CellBroadcastAlertDialog activity = result.dialog;
-        mockSettingsIntentNotFound();
-
-        getInstrumentation().runOnMainSync(() -> activity.initTranslate(message));
-
-        assertFalse(getShouldOfferTranslation(activity));
-    }
-
-    public void testInitTranslateSettingsIntentIsNullHidesButton() {
-        String systemLang = Locale.getDefault().getLanguage();
-        SmsCbMessage message = createMessage("Test Message", getDifferentLanguage(systemLang));
-        TranslationTestSetupResult result = setupActivityForTranslationTest(message,
-                true, true, true);
-        CellBroadcastAlertDialog activity = result.dialog;
-        mockSettingsIntentNotFound();
-
-        getInstrumentation().runOnMainSync(() -> activity.initTranslate(message));
-
-        assertFalse(getShouldOfferTranslation(activity));
-    }
-
     public void testHandleDownloadLanguagePositiveClickHandlesActivityNotFoundMockOnly()
             throws IntentSender.SendIntentException {
         String systemLang = Locale.getDefault().getLanguage();
@@ -1119,6 +1148,37 @@ public class CellBroadcastAlertDialogTest extends
         verify(mMockCBButtonManager).configureButtons(eq(false), anyBoolean());
     }
 
+    /**
+     * Tests that onLanguageDetectionCompleted triggers button update to show the translate button.
+     * This verifies the fix for the button not appearing after asynchronous language detection.
+     */
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
+    public void testOnLanguageDetectionCompletedTriggersButtonUpdate() {
+        String systemLang = Locale.getDefault().getLanguage();
+        final String detectedLanguage = getDifferentLanguage(systemLang);
+        final ULocale detectedULocale = new ULocale(detectedLanguage);
+
+        SmsCbMessage message = createMessage("A message to be detected", null);
+        TranslationTestSetupResult result = setupActivityForTranslationTest(message,
+                true, true, true);
+        CellBroadcastAlertDialog activity = result.dialog;
+
+        doAnswer(invocation -> {
+            Consumer<ULocale> callback = invocation.getArgument(1);
+            callback.accept(new ULocale(systemLang));
+            return null;
+        }).when(mMockCBTranslateManager).resolveTargetLanguage(any(), any());
+
+        getInstrumentation().runOnMainSync(
+                () -> activity.onLanguageDetectionCompleted(Optional.of(detectedULocale)));
+
+        verify(mMockCBTranslateManager, atLeastOnce()).initializeTranslator(eq(detectedULocale),
+                any());
+        verify(mMockCBButtonManager, atLeast(1)).configureButtons(anyBoolean(), anyBoolean());
+        verify(mMockCBButtonManager, atLeast(1)).configureButtons(eq(true), anyBoolean());
+    }
+
     // Helper method to create a real SmsCbMessage instance
     private SmsCbMessage createSmsCbMessage(boolean withGeometries) {
         int messageFormat = 1; // MESSAGE_FORMAT_3GPP
@@ -1166,6 +1226,7 @@ public class CellBroadcastAlertDialogTest extends
 
     public void testIsMapConfigEnabledReturnsTrue() throws Throwable {
         setMapConfigEnabled(true);
+        setMapActivityAvailable(true);
         CellBroadcastAlertDialog activity = startActivity();
         assertTrue("enable_map should be true when mocked to true", activity.isMapConfigEnabled());
         stopActivity();
@@ -1208,6 +1269,7 @@ public class CellBroadcastAlertDialogTest extends
     public void testIsMapFeatureEnabledAllConditionsMetReturnsTrue() throws Throwable {
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         setMapConfigEnabled(true);
+        setMapActivityAvailable(true);
         CellBroadcastAlertDialog activity = startActivity();
         assertTrue(activity.isMapFeatureEnabled(mSmsCbMessageWithGeo));
         stopActivity();
@@ -1216,6 +1278,7 @@ public class CellBroadcastAlertDialogTest extends
     public void testIsMapFeatureEnabledFlagOffReturnsFalse() throws Throwable {
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = false;
         setMapConfigEnabled(true);
+        setMapActivityAvailable(true);
         CellBroadcastAlertDialog activity = startActivity();
         assertFalse(activity.isMapFeatureEnabled(mSmsCbMessageWithGeo));
         stopActivity();
@@ -1232,6 +1295,7 @@ public class CellBroadcastAlertDialogTest extends
     public void testIsMapFeatureEnabledNoGeoInfoReturnsFalse() throws Throwable {
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         setMapConfigEnabled(true);
+        setMapActivityAvailable(true);
         CellBroadcastAlertDialog activity = startActivity();
         assertFalse(activity.isMapFeatureEnabled(mSmsCbMessageWithoutGeo));
         stopActivity();
@@ -1253,6 +1317,7 @@ public class CellBroadcastAlertDialogTest extends
 
     public void testUpdateButtonsTranslateTrueMapTrue() throws Throwable {
         setMapConfigEnabled(true);
+        setMapActivityAvailable(true);
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         SmsCbMessage message = createSmsCbMessage(true);
 
@@ -1284,6 +1349,7 @@ public class CellBroadcastAlertDialogTest extends
 
     public void testUpdateButtonsTranslateFalseMapTrue() throws Throwable {
         setMapConfigEnabled(true);
+        setMapActivityAvailable(true);
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         SmsCbMessage message = createSmsCbMessage(true);
 
@@ -1329,6 +1395,7 @@ public class CellBroadcastAlertDialogTest extends
 
     public void testMapButtonVisibilityFeatureFlagDisabled() throws Throwable {
         setMapConfigEnabled(true);
+        setMapActivityAvailable(true);
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = false;
         SmsCbMessage message = createSmsCbMessage(true);
         Intent intent = createIntentWithMessage(message);
@@ -1342,6 +1409,7 @@ public class CellBroadcastAlertDialogTest extends
 
     public void testMapButtonVisibilityNoGeoInfo() throws Throwable {
         setMapConfigEnabled(true);
+        setMapActivityAvailable(true);
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         SmsCbMessage message = createSmsCbMessage(false);
         Intent intent = createIntentWithMessage(message);
@@ -1355,6 +1423,7 @@ public class CellBroadcastAlertDialogTest extends
 
     public void testMapButtonVisibilityWithGeoInfo() throws Throwable {
         setMapConfigEnabled(true);
+        setMapActivityAvailable(true);
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         SmsCbMessage message = createSmsCbMessage(true);
         Intent intent = createIntentWithMessage(message);
@@ -1368,6 +1437,7 @@ public class CellBroadcastAlertDialogTest extends
 
     public void testOnMapClickWithGeometries() throws Throwable {
         setMapConfigEnabled(true);
+        setMapActivityAvailable(true);
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         mMessageList = new ArrayList<>();
         mMessageList.add(createSmsCbMessage(true));
@@ -1408,6 +1478,7 @@ public class CellBroadcastAlertDialogTest extends
 
     public void testOnMapClickNullMessage() throws Throwable {
         setMapConfigEnabled(true);
+        setMapActivityAvailable(true);
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         mMessageList = new ArrayList<>();
         Intent intent = createActivityIntent();
@@ -1425,5 +1496,274 @@ public class CellBroadcastAlertDialogTest extends
             activity.finish();
             getInstrumentation().waitForIdleSync();
         }
+    }
+
+    /**
+     * Tests that the translate button is hidden after translation is completed.
+     */
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
+    public void testTranslateButtonHiddenAfterTranslation() {
+        String systemLang = Locale.getDefault().getLanguage();
+        SmsCbMessage message = createMessage(getTestMessageBody(systemLang),
+                getDifferentLanguage(systemLang));
+        TranslationTestSetupResult setup = setupActivityForTranslationTest(message, true, true,
+                true);
+
+        // Simulate translation completion
+        getInstrumentation().runOnMainSync(() -> {
+            setup.dialog.onTranslationCompleted("Translated Text", true);
+        });
+
+        // Verify mTranslateDone is true
+        assertTrue("mTranslateDone should be true after translation",
+                getTranslateDone(setup.dialog));
+    }
+
+    /**
+     * Helper method to access the private mTranslateDone field via reflection.
+     */
+    private boolean getTranslateDone(CellBroadcastAlertDialog activity) {
+        try {
+            java.lang.reflect.Field field = CellBroadcastAlertDialog.class.getDeclaredField(
+                    "mTranslateDone");
+            field.setAccessible(true);
+            return field.getBoolean(activity);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            fail("Reflection error accessing mTranslateDone: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Tests that the translate button remains hidden after screen off/on (onResume)
+     * if translation was already completed.
+     */
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
+    public void testTranslateButtonRemainsHiddenAfterScreenOffOn() {
+        String systemLang = Locale.getDefault().getLanguage();
+        SmsCbMessage message = createMessage(getTestMessageBody(systemLang),
+                getDifferentLanguage(systemLang));
+        TranslationTestSetupResult setup = setupActivityForTranslationTest(message, true, true,
+                true);
+
+        getInstrumentation().runOnMainSync(() -> {
+            setup.dialog.onTranslationCompleted("Translated Text", true);
+        });
+
+        clearInvocations(mMockCBButtonManager);
+
+        getInstrumentation().runOnMainSync(() -> {
+            setup.dialog.onResume();
+        });
+
+        assertTrue("mTranslateDone should remain true after onResume",
+                getTranslateDone(setup.dialog));
+        verify(mMockCBButtonManager, atLeastOnce()).configureButtons(eq(false), anyBoolean());
+    }
+
+    /**
+     * Tests that the translation state is reset when a new message arrives,
+     * allowing the translate button to be shown again.
+     */
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
+    public void testTranslateButtonResetOnNewMessage() {
+        String systemLang = Locale.getDefault().getLanguage();
+        SmsCbMessage message = createMessage(getTestMessageBody(systemLang),
+                getDifferentLanguage(systemLang));
+        TranslationTestSetupResult setup = setupActivityForTranslationTest(message, true, true,
+                true);
+
+        // 1. Complete translation for the first message
+        getInstrumentation().runOnMainSync(() -> {
+            setup.dialog.onTranslationCompleted("Translated Text 1", true);
+        });
+
+        assertTrue(getTranslateDone(setup.dialog));
+
+        // 2. Arrive new message
+        SmsCbMessage newMessage = createMessage(getTestMessageBody(systemLang) + " 2",
+                getDifferentLanguage(systemLang));
+        Intent newIntent = createIntentWithMessage(newMessage);
+
+        // Reset mock to clear previous interactions
+        clearInvocations(mMockCBButtonManager);
+
+        // Simulate new intent arrival
+        getInstrumentation().runOnMainSync(() -> {
+            setup.dialog.onNewIntent(newIntent);
+        });
+
+        assertFalse("mTranslateDone should be reset to false for new message",
+                getTranslateDone(setup.dialog));
+    }
+
+    /**
+     * Tests that when the system language is Traditional Chinese (Taiwan),
+     * initTranslate requests translation to "zh_Hant".
+     */
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
+    public void testInitTranslateTargetZhTwRequestsZhHant() {
+        Locale originalLocale = Locale.getDefault();
+        try {
+            Locale.setDefault(Locale.TAIWAN);
+            SmsCbMessage message = createMessage("Test Message", "en");
+            TranslationTestSetupResult result = setupActivityForTranslationTest(message,
+                    true, true, true);
+            doAnswer(invocation -> {
+                Consumer<ULocale> callback = invocation.getArgument(1);
+                callback.accept(new ULocale("zh_Hant"));
+                return null;
+            }).when(mMockCBTranslateManager).resolveTargetLanguage(any(), any());
+
+            getInstrumentation().runOnMainSync(() -> {
+                result.dialog.initTranslate(message);
+            });
+
+            verify(mMockCBTranslateManager, atLeastOnce()).initializeTranslator(any(ULocale.class),
+                    eq(new ULocale("zh_Hant")));
+        } finally {
+            Locale.setDefault(originalLocale);
+        }
+    }
+
+    /**
+     * Tests that when the system language is Simplified Chinese (China),
+     * initTranslate requests translation to "zh" (default behavior).
+     */
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
+    public void testInitTranslateTargetZhCnRequestsZh() {
+        Locale originalLocale = Locale.getDefault();
+        try {
+            Locale.setDefault(Locale.CHINA);
+            SmsCbMessage message = createMessage("Test Message", "en");
+            TranslationTestSetupResult result = setupActivityForTranslationTest(message,
+                    true, true, true);
+            doAnswer(invocation -> {
+                Consumer<ULocale> callback = invocation.getArgument(1);
+                callback.accept(new ULocale("zh"));
+                return null;
+            }).when(mMockCBTranslateManager).resolveTargetLanguage(any(), any());
+
+            getInstrumentation().runOnMainSync(() -> {
+                result.dialog.initTranslate(message);
+            });
+
+            verify(mMockCBTranslateManager, atLeastOnce()).initializeTranslator(any(ULocale.class),
+                    eq(new ULocale("zh")));
+        } finally {
+            Locale.setDefault(originalLocale);
+        }
+    }
+
+    public void testInitTranslateOnDeviceTranslationNotSupportedHidesButton() {
+        String systemLang = Locale.getDefault().getLanguage();
+        SmsCbMessage message = createMessage("Test Message", getDifferentLanguage(systemLang));
+        TranslationTestSetupResult result = setupActivityForTranslationTest(message, true, true,
+                true);
+        CellBroadcastAlertDialog activity = result.dialog;
+
+        doAnswer(invocation -> {
+            Consumer<Boolean> callback = invocation.getArgument(0);
+            callback.accept(false);
+            return null;
+        }).when(mMockCBTranslateManager).checkOnDeviceTranslationCapability(any());
+
+        getInstrumentation().runOnMainSync(() -> activity.initTranslate(message));
+
+        assertFalse("Should not offer translation", getShouldOfferTranslation(activity));
+    }
+
+    public void testInitTranslateTranslationManagerNotAvailableShouldNotOffer() {
+        SmsCbMessage message = createMessage("Test Message", "en");
+        TranslationTestSetupResult result = setupActivityForTranslationTest(message, true, true,
+                true);
+        CellBroadcastAlertDialog activity = result.dialog;
+
+        doReturn(false).when(mMockCBTranslateManager).isTranslationManagerAvailable();
+
+        getInstrumentation().runOnMainSync(() -> activity.initTranslate(message));
+
+        assertFalse("Should not offer translation if TranslationManager is not available",
+                getShouldOfferTranslation(activity));
+        verify(mMockCBTranslateManager, never()).checkOnDeviceTranslationCapability(any());
+    }
+
+    public void testInitTranslateNoSettingsIntentShouldNotOffer() {
+        SmsCbMessage message = createMessage("Test Message", "en");
+        TranslationTestSetupResult result = setupActivityForTranslationTest(message, true, true,
+                true);
+        CellBroadcastAlertDialog activity = result.dialog;
+        doReturn(null).when(mMockCBTranslateManager).getSettingsIntent();
+
+        getInstrumentation().runOnMainSync(() -> activity.initTranslate(message));
+
+        assertFalse("Should not offer translation if SettingsIntent is null",
+                getShouldOfferTranslation(activity));
+        verify(mMockCBTranslateManager, never()).checkOnDeviceTranslationCapability(any());
+    }
+
+    public void testInitTranslateEmptyMessageBodyShouldNotOffer() {
+        SmsCbMessage message = createMessage("", "en");
+        TranslationTestSetupResult result = setupActivityForTranslationTest(message, true, true,
+                true);
+        CellBroadcastAlertDialog activity = result.dialog;
+
+        getInstrumentation().runOnMainSync(() -> activity.initTranslate(message));
+
+        assertFalse("Should not offer translation if message body is empty",
+                getShouldOfferTranslation(activity));
+        verify(mMockCBTranslateManager, never()).checkOnDeviceTranslationCapability(any());
+    }
+
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
+    public void testInitTranslateInvalidSourceLanguageTriggersDetection() {
+        SmsCbMessage message = createMessage("Message with invalid lang", "invalid_code");
+        TranslationTestSetupResult result = setupActivityForTranslationTest(message, true, true,
+                true);
+        doAnswer(invocation -> {
+            Consumer<Boolean> callback = invocation.getArgument(0);
+            callback.accept(true);
+            return null;
+        }).when(mMockCBTranslateManager).checkOnDeviceTranslationCapability(any());
+
+        getInstrumentation().runOnMainSync(() -> {
+            result.dialog.initTranslate(message);
+        });
+
+        verify(mMockCBTranslateManager).detectLanguage(eq("Message with invalid lang"));
+        verify(mMockCBTranslateManager, never()).initializeTranslator(any(), any());
+    }
+
+
+    public void testIsMapFeatureEnabledWhenActivityAvailableReturnsTrue() throws Throwable {
+        setMapConfigEnabled(true);
+        setMapActivityAvailable(true);
+        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
+
+        CellBroadcastAlertDialog activity = startActivity();
+        assertTrue("Map feature should be enabled if activity is available",
+                activity.isMapFeatureEnabled(mSmsCbMessageWithGeo));
+        stopActivity();
+    }
+
+    public void testIsMapFeatureEnabledWhenActivityNotAvailableReturnsFalse() throws Throwable {
+        setMapConfigEnabled(true);
+        setMapActivityAvailable(false);
+        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
+
+        CellBroadcastAlertDialog activity = startActivity();
+        assertFalse("Map feature should be disabled if no activity can handle the intent",
+                activity.isMapFeatureEnabled(mSmsCbMessageWithGeo));
+        stopActivity();
+    }
+
+    private void setMapActivityAvailable(boolean available) {
+        CellBroadcastMapLauncher.sIsMapActivityAvailableForTest = available;
     }
 }
