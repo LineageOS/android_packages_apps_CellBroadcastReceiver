@@ -1379,17 +1379,14 @@ public class CellBroadcastAlertDialogTest extends
     public void testIsMapConfigEnabledReturnsTrue() throws Throwable {
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
-        CellBroadcastAlertDialog activity = startActivity();
-        assertTrue("enable_map should be true when mocked to true", activity.isMapConfigEnabled());
-        stopActivity();
+        assertTrue("enable_map should be true when mocked to true",
+                CellBroadcastAlertDialog.isMapConfigEnabled(mContext));
     }
 
     public void testIsMapConfigEnabledReturnsFalse() throws Throwable {
         setMapConfigEnabled(false);
-        CellBroadcastAlertDialog activity = startActivity();
         assertFalse("enable_map should be false when mocked to false",
-                activity.isMapConfigEnabled());
-        stopActivity();
+                CellBroadcastAlertDialog.isMapConfigEnabled(mContext));
     }
 
     public void testIsMapFlagEnabledWhenTestFlagTrueReturnsTrue() throws Throwable {
@@ -1422,35 +1419,28 @@ public class CellBroadcastAlertDialogTest extends
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
-        CellBroadcastAlertDialog activity = startActivity();
-        assertTrue(activity.isMapFeatureEnabled(mSmsCbMessageWithGeo));
-        stopActivity();
+        assertTrue(CellBroadcastAlertDialog.isMapFeatureEnabled(mContext, mSmsCbMessageWithGeo));
     }
 
     public void testIsMapFeatureEnabledFlagOffReturnsFalse() throws Throwable {
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = false;
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
-        CellBroadcastAlertDialog activity = startActivity();
-        assertFalse(activity.isMapFeatureEnabled(mSmsCbMessageWithGeo));
-        stopActivity();
+        assertFalse(CellBroadcastAlertDialog.isMapFeatureEnabled(mContext, mSmsCbMessageWithGeo));
     }
 
     public void testIsMapFeatureEnabledConfigFalseReturnsFalse() throws Throwable {
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         setMapConfigEnabled(false);
-        CellBroadcastAlertDialog activity = startActivity();
-        assertFalse(activity.isMapFeatureEnabled(mSmsCbMessageWithGeo));
-        stopActivity();
+        assertFalse(CellBroadcastAlertDialog.isMapFeatureEnabled(mContext, mSmsCbMessageWithGeo));
     }
 
     public void testIsMapFeatureEnabledNoGeoInfoReturnsFalse() throws Throwable {
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
-        CellBroadcastAlertDialog activity = startActivity();
-        assertFalse(activity.isMapFeatureEnabled(mSmsCbMessageWithoutGeo));
-        stopActivity();
+        assertFalse(CellBroadcastAlertDialog.isMapFeatureEnabled(
+                mContext, mSmsCbMessageWithoutGeo));
     }
 
     /**
@@ -1968,10 +1958,8 @@ public class CellBroadcastAlertDialogTest extends
         setMapActivityAvailable(true);
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
 
-        CellBroadcastAlertDialog activity = startActivity();
         assertTrue("Map feature should be enabled if activity is available",
-                activity.isMapFeatureEnabled(mSmsCbMessageWithGeo));
-        stopActivity();
+                CellBroadcastAlertDialog.isMapFeatureEnabled(mContext, mSmsCbMessageWithGeo));
     }
 
     public void testIsMapFeatureEnabledWhenActivityNotAvailableReturnsFalse() throws Throwable {
@@ -1984,10 +1972,8 @@ public class CellBroadcastAlertDialogTest extends
         setMapActivityAvailable(false);
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
 
-        CellBroadcastAlertDialog activity = startActivity();
         assertFalse("Map feature should be disabled if no activity can handle the intent",
-                activity.isMapFeatureEnabled(mSmsCbMessageWithGeo));
-        stopActivity();
+                CellBroadcastAlertDialog.isMapFeatureEnabled(mContext, mSmsCbMessageWithGeo));
     }
 
     private void setMapActivityAvailable(boolean available) {

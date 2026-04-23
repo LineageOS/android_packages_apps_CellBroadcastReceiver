@@ -21,6 +21,8 @@ import static com.android.cellbroadcastreceiver.CellBroadcastMapLauncher.PERMISS
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,6 +32,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -107,7 +110,7 @@ public class CellBroadcastMapLauncherTest {
     }
 
     @Test
-    public void testLaunchMapSuccessPreC() throws Exception {
+    public void testGetMapIntentSuccessPreC() throws Exception {
         assumeTrue(Build.VERSION.SDK_INT <= Build.VERSION_CODES.BAKLAVA);
 
         List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
@@ -118,20 +121,16 @@ public class CellBroadcastMapLauncherTest {
         doReturn(Collections.singletonList(mockResolveInfo)).when(mMockPackageManager)
                 .queryIntentActivities(any(Intent.class), eq(PackageManager.MATCH_SYSTEM_ONLY));
 
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
+        Intent resultIntent = CellBroadcastMapLauncher.getMapIntent(mMockContext, message);
 
-        ArgumentCaptor<Intent> intentCaptor = ArgumentCaptor.forClass(Intent.class);
-        verify(mMockContext).startActivity(intentCaptor.capture());
-        Intent capturedIntent = intentCaptor.getValue();
-
-        assertEquals(Intent.ACTION_VIEW, capturedIntent.getAction());
+        assertEquals(Intent.ACTION_VIEW, resultIntent.getAction());
         assertEquals(Uri.parse(buildExpectedGeoUri("circle|37.4000000,-122.1000000|1000.0")),
-                capturedIntent.getData());
-        assertEquals(GMS_PACKAGE, capturedIntent.getComponent().getPackageName());
+                resultIntent.getData());
+        assertEquals(GMS_PACKAGE, resultIntent.getComponent().getPackageName());
     }
 
     @Test
-    public void testLaunchMapSuccessCWithPermission() throws Exception {
+    public void testGetMapIntentSuccessCWithPermission() throws Exception {
         assumeTrue(Build.VERSION.SDK_INT > Build.VERSION_CODES.BAKLAVA);
 
         List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
@@ -145,21 +144,17 @@ public class CellBroadcastMapLauncherTest {
         doReturn(PackageManager.PERMISSION_GRANTED).when(mMockPackageManager)
                 .checkPermission(PERMISSION_ACCESS_CELL_BROADCAST, GMS_PACKAGE);
 
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
+        Intent resultIntent = CellBroadcastMapLauncher.getMapIntent(mMockContext, message);
 
-        ArgumentCaptor<Intent> intentCaptor = ArgumentCaptor.forClass(Intent.class);
-        verify(mMockContext).startActivity(intentCaptor.capture());
-        Intent capturedIntent = intentCaptor.getValue();
-
-        assertEquals(Intent.ACTION_VIEW, capturedIntent.getAction());
+        assertEquals(Intent.ACTION_VIEW, resultIntent.getAction());
         assertEquals(Uri.parse(buildExpectedGeoUri(
                         "polygon|1.0000000,1.0000000|2.0000000,2.0000000|1.0000000,2.0000000")),
-                capturedIntent.getData());
-        assertEquals(GMS_PACKAGE, capturedIntent.getComponent().getPackageName());
+                resultIntent.getData());
+        assertEquals(GMS_PACKAGE, resultIntent.getComponent().getPackageName());
     }
 
     @Test
-    public void testLaunchMapFailCNoHandlerFound() {
+    public void testGetMapIntentFailCNoHandlerFound() {
         assumeTrue(Build.VERSION.SDK_INT > Build.VERSION_CODES.BAKLAVA);
 
         List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
@@ -169,12 +164,11 @@ public class CellBroadcastMapLauncherTest {
         doReturn(Collections.emptyList()).when(mMockPackageManager)
                 .queryIntentActivities(any(Intent.class), eq(PackageManager.MATCH_SYSTEM_ONLY));
 
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
-        verify(mMockContext, never()).startActivity(any(Intent.class));
+        assertNull(CellBroadcastMapLauncher.getMapIntent(mMockContext, message));
     }
 
     @Test
-    public void testLaunchMapFailPreCMultipleActivities() {
+    public void testGetMapIntentFailPreCMultipleActivities() {
         assumeTrue(Build.VERSION.SDK_INT <= Build.VERSION_CODES.BAKLAVA);
 
         List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
@@ -186,15 +180,13 @@ public class CellBroadcastMapLauncherTest {
                 .when(mMockPackageManager).queryIntentActivities(any(Intent.class),
                         eq(PackageManager.MATCH_SYSTEM_ONLY));
 
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
-        verify(mMockContext, never()).startActivity(any(Intent.class));
+        assertNull(CellBroadcastMapLauncher.getMapIntent(mMockContext, message));
     }
 
     @Test
-    public void testLaunchMapNoGeometry() {
+    public void testGetMapIntentNoGeometry() {
         SmsCbMessage message = createSmsCbMessage(null);
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
-        verify(mMockContext, never()).startActivity(any(Intent.class));
+        assertNull(CellBroadcastMapLauncher.getMapIntent(mMockContext, message));
     }
 
     @Test
@@ -230,7 +222,7 @@ public class CellBroadcastMapLauncherTest {
     }
 
     @Test
-    public void testLaunchMapSuccessCNoPermissionFallbackUnique() throws Exception {
+    public void testGetMapIntentSuccessCNoPermissionFallbackUnique() throws Exception {
         assumeTrue(Build.VERSION.SDK_INT > Build.VERSION_CODES.BAKLAVA);
 
         List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
@@ -245,12 +237,13 @@ public class CellBroadcastMapLauncherTest {
 
         mockPackageInfoRequestedPermissions(GMS_PACKAGE, new String[]{});
 
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
-        verify(mMockContext).startActivity(any(Intent.class));
+        Intent resultIntent = CellBroadcastMapLauncher.getMapIntent(mMockContext, message);
+        assertNotNull("Intent should be generated via unique fallback", resultIntent);
+        assertEquals(GMS_PACKAGE, resultIntent.getComponent().getPackageName());
     }
 
     @Test
-    public void testLaunchMapFailCNoPermissionRequestedByPreload() throws Exception {
+    public void testGetMapIntentFailCNoPermissionRequestedByPreload() throws Exception {
         assumeTrue(Build.VERSION.SDK_INT > Build.VERSION_CODES.BAKLAVA);
 
         List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
@@ -266,12 +259,13 @@ public class CellBroadcastMapLauncherTest {
         mockPackageInfoRequestedPermissions(GMS_PACKAGE,
                 new String[]{PERMISSION_ACCESS_CELL_BROADCAST});
 
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
-        verify(mMockContext, never()).startActivity(any(Intent.class));
+        Intent resultIntent = CellBroadcastMapLauncher.getMapIntent(mMockContext, message);
+        assertNull("Intent should be null when permission is requested by preload but denied",
+                resultIntent);
     }
 
     @Test
-    public void testLaunchMapFailCNoPermissionFallbackMultiple() throws Exception {
+    public void testGetMapIntentFailCNoPermissionFallbackMultiple() throws Exception {
         assumeTrue(Build.VERSION.SDK_INT > Build.VERSION_CODES.BAKLAVA);
 
         List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
@@ -288,12 +282,13 @@ public class CellBroadcastMapLauncherTest {
         mockPackageInfoRequestedPermissions(GMS_PACKAGE, new String[]{});
         mockPackageInfoRequestedPermissions(OTHER_PACKAGE, new String[]{});
 
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
-        verify(mMockContext, never()).startActivity(any(Intent.class));
+        Intent resultIntent = CellBroadcastMapLauncher.getMapIntent(mMockContext, message);
+        assertNull("Intent should be null when multiple fallback candidates are found",
+                resultIntent);
     }
 
     @Test
-    public void testLaunchMapFailCNoPermissionNullRequestedPermissions() throws Exception {
+    public void testGetMapIntentFailCNoPermissionNullRequestedPermissions() throws Exception {
         assumeTrue(Build.VERSION.SDK_INT > Build.VERSION_CODES.BAKLAVA);
 
         List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
@@ -313,12 +308,13 @@ public class CellBroadcastMapLauncherTest {
                 .getPackageInfo(eq(GMS_PACKAGE),
                         eq(PackageManager.GET_PERMISSIONS | PackageManager.MATCH_FACTORY_ONLY));
 
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
-        verify(mMockContext).startActivity(any(Intent.class));
+        Intent result = CellBroadcastMapLauncher.getMapIntent(mMockContext, message);
+        assertNotNull(result);
+        assertEquals(GMS_PACKAGE, result.getComponent().getPackageName());
     }
 
     @Test
-    public void testLaunchMapFailCNameNotFoundException() throws Exception {
+    public void testGetMapIntentFailCNameNotFoundException() throws Exception {
         assumeTrue(Build.VERSION.SDK_INT > Build.VERSION_CODES.BAKLAVA);
 
         List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
@@ -335,12 +331,13 @@ public class CellBroadcastMapLauncherTest {
                 .getPackageInfo(eq(GMS_PACKAGE),
                         eq(PackageManager.GET_PERMISSIONS | PackageManager.MATCH_FACTORY_ONLY));
 
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
-        verify(mMockContext).startActivity(any(Intent.class));
+        Intent result = CellBroadcastMapLauncher.getMapIntent(mMockContext, message);
+        assertNotNull(result);
+        assertEquals(GMS_PACKAGE, result.getComponent().getPackageName());
     }
 
     @Test
-    public void testLaunchMapFailActivityInfoNull() {
+    public void testGetMapIntentFailActivityInfoNull() {
         assumeTrue(Build.VERSION.SDK_INT > Build.VERSION_CODES.BAKLAVA);
 
         List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
@@ -353,13 +350,12 @@ public class CellBroadcastMapLauncherTest {
         doReturn(Collections.singletonList(badResolveInfo)).when(mMockPackageManager)
                 .queryIntentActivities(any(Intent.class), eq(PackageManager.MATCH_SYSTEM_ONLY));
 
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
-
-        verify(mMockContext, never()).startActivity(any(Intent.class));
+        Intent resultIntent = CellBroadcastMapLauncher.getMapIntent(mMockContext, message);
+        assertNull(resultIntent);
     }
 
     @Test
-    public void testLaunchMapSuccessCMultipleAppsSecondAppHasPermission() throws Exception {
+    public void testGetMapIntentSuccessCMultipleAppsSecondAppHasPermission() throws Exception {
         assumeTrue(Build.VERSION.SDK_INT > Build.VERSION_CODES.BAKLAVA);
 
         List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
@@ -377,15 +373,13 @@ public class CellBroadcastMapLauncherTest {
         doReturn(PackageManager.PERMISSION_GRANTED).when(mMockPackageManager)
                 .checkPermission(PERMISSION_ACCESS_CELL_BROADCAST, GMS_PACKAGE);
 
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
-
-        ArgumentCaptor<Intent> intentCaptor = ArgumentCaptor.forClass(Intent.class);
-        verify(mMockContext).startActivity(intentCaptor.capture());
-        assertEquals(GMS_PACKAGE, intentCaptor.getValue().getComponent().getPackageName());
+        Intent resultIntent = CellBroadcastMapLauncher.getMapIntent(mMockContext, message);
+        assertNotNull(resultIntent);
+        assertEquals(GMS_PACKAGE, resultIntent.getComponent().getPackageName());
     }
 
     @Test
-    public void testLaunchMapSkipCCheckPermissionThrowsException()
+    public void testGetMapIntentSkipCCheckPermissionThrowsException()
             throws Exception {
         assumeTrue(Build.VERSION.SDK_INT > Build.VERSION_CODES.BAKLAVA);
 
@@ -400,13 +394,12 @@ public class CellBroadcastMapLauncherTest {
                 .checkPermission(PERMISSION_ACCESS_CELL_BROADCAST, GMS_PACKAGE);
         mockPackageInfoRequestedPermissions(GMS_PACKAGE, new String[]{});
 
-        CellBroadcastMapLauncher.launchMap(mMockContext, message);
-
-        verify(mMockContext, never()).startActivity(any(Intent.class));
+        Intent resultIntent = CellBroadcastMapLauncher.getMapIntent(mMockContext, message);
+        assertNull(resultIntent);
     }
 
     @Test
-    public void testLaunchMapFailCMultipleAppsOneRequestedOneNotNoPermission() throws Exception {
+    public void testGetMapIntentFailCMultipleAppsOneRequestedOneNotNoPermission() throws Exception {
         assumeTrue(Build.VERSION.SDK_INT > Build.VERSION_CODES.BAKLAVA);
 
         List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
@@ -425,8 +418,44 @@ public class CellBroadcastMapLauncherTest {
                 new String[]{PERMISSION_ACCESS_CELL_BROADCAST});
         mockPackageInfoRequestedPermissions(OTHER_PACKAGE, new String[]{});
 
+        Intent resultIntent = CellBroadcastMapLauncher.getMapIntent(mMockContext, message);
+
+        assertNull(resultIntent);
+    }
+
+    @Test
+    public void testLaunchMap_ExecutesStartActivity() throws Exception {
+        List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
+                new Circle(new CbGeoUtils.LatLng(37.4, -122.1), 1000.0));
+        SmsCbMessage message = createSmsCbMessage(geometries);
+        ResolveInfo mockResolveInfo = createMockResolveInfo(GMS_PACKAGE);
+
+        doReturn(Collections.singletonList(mockResolveInfo)).when(mMockPackageManager)
+                .queryIntentActivities(any(Intent.class), eq(PackageManager.MATCH_SYSTEM_ONLY));
+        doReturn(PackageManager.PERMISSION_GRANTED).when(mMockPackageManager)
+                .checkPermission(eq(PERMISSION_ACCESS_CELL_BROADCAST), any());
+
+        CellBroadcastMapLauncher.launchMap(mMockContext, message);
+        verify(mMockContext).startActivity(any(Intent.class));
+    }
+
+    @Test
+    public void testLaunchMap_CatchesActivityNotFoundException() throws Exception {
+        List<CbGeoUtils.Geometry> geometries = Collections.singletonList(
+                new Circle(new CbGeoUtils.LatLng(37.4, -122.1), 1000.0));
+        SmsCbMessage message = createSmsCbMessage(geometries);
+        ResolveInfo mockResolveInfo = createMockResolveInfo(GMS_PACKAGE);
+
+        doReturn(Collections.singletonList(mockResolveInfo)).when(mMockPackageManager)
+                .queryIntentActivities(any(Intent.class), eq(PackageManager.MATCH_SYSTEM_ONLY));
+        doReturn(PackageManager.PERMISSION_GRANTED).when(mMockPackageManager)
+                .checkPermission(eq(PERMISSION_ACCESS_CELL_BROADCAST), any());
+
+        doThrow(new ActivityNotFoundException())
+                .when(mMockContext).startActivity(any(Intent.class));
+
         CellBroadcastMapLauncher.launchMap(mMockContext, message);
 
-        verify(mMockContext, never()).startActivity(any(Intent.class));
+        verify(mMockContext).startActivity(any(Intent.class));
     }
 }

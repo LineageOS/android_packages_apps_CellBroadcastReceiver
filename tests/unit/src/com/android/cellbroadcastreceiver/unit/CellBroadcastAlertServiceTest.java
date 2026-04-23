@@ -46,7 +46,10 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -59,6 +62,9 @@ import android.os.SystemProperties;
 import android.provider.Telephony;
 import android.service.notification.StatusBarNotification;
 import android.telephony.AccessNetworkConstants;
+import android.telephony.CbGeoUtils.Circle;
+import android.telephony.CbGeoUtils.Geometry;
+import android.telephony.CbGeoUtils.LatLng;
 import android.telephony.NetworkRegistrationInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
@@ -70,6 +76,7 @@ import android.telephony.TelephonyManager;
 import android.view.Display;
 
 import com.android.cellbroadcastreceiver.CellBroadcastAlertAudio;
+import com.android.cellbroadcastreceiver.CellBroadcastAlertDialog;
 import com.android.cellbroadcastreceiver.CellBroadcastAlertService;
 import com.android.cellbroadcastreceiver.CellBroadcastChannelManager;
 import com.android.cellbroadcastreceiver.CellBroadcastReceiver;
@@ -84,6 +91,8 @@ import org.mockito.Mock;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -102,6 +111,9 @@ public class CellBroadcastAlertServiceTest extends
     Locale mDefaultLocale;
     private boolean mIsWatch;
 
+    private static final String GMS_PACKAGE = "com.google.android.gms";
+    private static final String TEST_ACTIVITY_NAME = "MapsActivity";
+
     public CellBroadcastAlertServiceTest() {
         super(CellBroadcastAlertService.class);
     }
@@ -118,6 +130,19 @@ public class CellBroadcastAlertServiceTest extends
                 SmsCbMessage.MESSAGE_PRIORITY_EMERGENCY, null,
                 new SmsCbCmasInfo(cmasMessageClass, 2, 3, 4, 5, 6),
                 0, 1);
+    }
+    static SmsCbMessage createMessageWithGeometry(int serialNumber) {
+        List<Geometry> geometries = new ArrayList<>();
+        geometries.add(new Circle(new LatLng(37.42, -122.08), 1000.0));
+        return new SmsCbMessage(1, 2, serialNumber, new SmsCbLocation(), 0x1113,
+                "language", 0, "body",
+                SmsCbMessage.MESSAGE_PRIORITY_EMERGENCY, null,
+                new SmsCbCmasInfo(0x1113, 2, 3, 4, 5, 6),
+                0,
+                geometries,
+                System.currentTimeMillis(),
+                0,
+                1);
     }
 
     static SmsCbMessage createCmasMessageWithLanguage(int serialNumber, int serviceCategory,
@@ -1391,8 +1416,58 @@ public class CellBroadcastAlertServiceTest extends
         return m;
     }
 
+    public void testAddToNotificationBarForWatch_WithMap() throws RemoteException {
+        if (!SdkLevel.isAtLeastS()) {
+            return;
+        }
 
-    public void testAddToNotificationBarForWatch() throws RemoteException {
+        setWatchFeatureEnabled(true);
+
+        // TODO: anranl - Remove this once the bug is fixed.
+        doReturn(true).when(mResources).getBoolean(
+                com.android.cellbroadcastreceiver.R.bool.enable_map);
+        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
+
+        doReturn("Map").when(mResources).
+                getString(com.android.cellbroadcastreceiver.R.string.button_map);
+        doReturn("text").when(mResources).getText(anyInt());
+
+        SmsCbMessage message = createMessageWithGeometry(0x1112);
+
+        List<ResolveInfo> resolveInfoList = Collections.
+                singletonList(createMockResolveInfo(GMS_PACKAGE));
+        doReturn(resolveInfoList).
+                when(mContext.getPackageManager()).queryIntentActivities(any(), anyInt());
+
+        Intent intent = new Intent(mContext, CellBroadcastAlertService.class);
+        intent.setAction(SHOW_NEW_ALERT_ACTION);
+        intent.putExtra("message", message);
+        startService(intent);
+
+        waitForServiceIntent();
+
+        ArgumentCaptor<Notification> notificationCaptor =
+                ArgumentCaptor.forClass(Notification.class);
+        verify(mMockedNotificationManager).notify(anyInt(), notificationCaptor.capture());
+
+        Notification notificationPosted = notificationCaptor.getValue();
+
+        assertEquals("Watch notification with geo data should have 2 actions (OK + Map)",
+                2, notificationPosted.actions.length);
+
+        boolean hasMapAction = false;
+        for (Notification.Action action : notificationPosted.actions) {
+            if (action.title != null &&
+                (action.title.toString().contains("Map") || action.title.equals("text"))) {
+                hasMapAction = true;
+                break;
+            }
+        }
+        assertTrue("Notification should contain a map action", hasMapAction);
+    }
+
+
+    public void testAddToNotificationBarForWatch_WithoutMap() throws RemoteException {
         if (!SdkLevel.isAtLeastS()) {
             return;
         }
@@ -1547,5 +1622,15 @@ public class CellBroadcastAlertServiceTest extends
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException("failed to inject mock actiivty manager into service");
         }
+    }
+
+    private ResolveInfo createMockResolveInfo(String packageName) {
+        ResolveInfo resolveInfo = new ResolveInfo();
+        resolveInfo.activityInfo = new ActivityInfo();
+        resolveInfo.activityInfo.packageName = packageName;
+        resolveInfo.activityInfo.name = TEST_ACTIVITY_NAME;
+        resolveInfo.activityInfo.applicationInfo = new ApplicationInfo();
+        resolveInfo.activityInfo.applicationInfo.packageName = packageName;
+        return resolveInfo;
     }
 }

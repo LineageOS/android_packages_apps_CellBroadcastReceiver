@@ -182,35 +182,15 @@ public class CellBroadcastMapLauncher {
             logMapMetric(null, CellBroadcastMetrics.ERRTYPE_MAP_NO_MESSAGE);
             return;
         }
-
-        String geoUriString = buildGeoUriString(message);
-        if (geoUriString == null) {
-            Log.e(TAG, "Could not build geo URI from message.");
-            if (message.getGeometries() == null || message.getGeometries().isEmpty()) {
-                logMapMetric(message, CellBroadcastMetrics.ERRTYPE_MAP_NO_GEOMETRY_DATA);
-            } else {
-                logMapMetric(message, CellBroadcastMetrics.ERRTYPE_MAP_URI_ENCODING_FAILED);
-            }
-            return;
-        }
-        Log.d(TAG, "launchMap: geoUri=" + geoUriString);
-
-        ResolveInfo targetActivityInfo = getMapTargetActivity(context);
-        if (targetActivityInfo != null && targetActivityInfo.activityInfo != null) {
-            Intent explicitIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUriString));
-            explicitIntent.setClassName(targetActivityInfo.activityInfo.packageName,
-                    targetActivityInfo.activityInfo.name);
-            explicitIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent = getMapIntent(context, message);
+        if (intent != null) {
             try {
-                context.startActivity(explicitIntent);
+                context.startActivity(intent);
                 logMapMetric(message, CellBroadcastMetrics.ERRTYPE_MAP_NONE);
             } catch (ActivityNotFoundException e) {
                 Log.e(TAG, "Target system activity not found: " + e);
                 logMapMetric(message, CellBroadcastMetrics.ERRTYPE_MAP_CORE_ACTIVITY_START_FAILED);
             }
-        } else {
-            Log.e(TAG, "No secure and unique system activity found.");
-            logMapMetric(message, CellBroadcastMetrics.ERRTYPE_MAP_CORE_ACTIVITY_NOT_FOUND);
         }
     }
 
@@ -318,5 +298,42 @@ public class CellBroadcastMapLauncher {
             return CellBroadcastMetrics.GEO_DATA_TYPE_POLYGON;
         }
         return CellBroadcastMetrics.GEO_DATA_TYPE_UNKNOWN;
+    }
+
+    /**
+     * Resolves the geographic information from the given SmsCbMessage and creates a secure,
+     * explicit map intent.
+     *
+     * @param context The context used to query the PackageManager.
+     * @param message The SmsCbMessage containing the geographic information.
+     * @return An explicit Intent to launch the secure map activity, or null if no valid
+     * geo data is found or security checks fail.
+     */
+    public static Intent getMapIntent(Context context, SmsCbMessage message) {
+        String geoUriString = buildGeoUriString(message);
+        if (geoUriString == null) {
+            Log.e(TAG, "Could not build geo URI from message.");
+            if (message.getGeometries() == null || message.getGeometries().isEmpty()) {
+                logMapMetric(message, CellBroadcastMetrics.ERRTYPE_MAP_NO_GEOMETRY_DATA);
+            } else {
+                logMapMetric(message, CellBroadcastMetrics.ERRTYPE_MAP_URI_ENCODING_FAILED);
+            }
+            return null;
+        }
+        Log.d(TAG, "getMapIntent: geoUri=" + geoUriString);
+
+        ResolveInfo targetActivityInfo = getMapTargetActivity(context);
+
+        if (targetActivityInfo != null && targetActivityInfo.activityInfo != null) {
+            Intent explicitIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUriString));
+            explicitIntent.setClassName(targetActivityInfo.activityInfo.packageName,
+                    targetActivityInfo.activityInfo.name);
+            explicitIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            return explicitIntent;
+        } else {
+            Log.e(TAG, "No secure and unique system activity found.");
+            logMapMetric(message, CellBroadcastMetrics.ERRTYPE_MAP_CORE_ACTIVITY_NOT_FOUND);
+        }
+        return null;
     }
 }

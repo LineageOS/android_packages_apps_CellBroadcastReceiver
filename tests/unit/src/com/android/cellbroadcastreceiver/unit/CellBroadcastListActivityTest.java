@@ -302,7 +302,6 @@ public class CellBroadcastListActivityTest extends
         if (!mIsWatch) {
             return;
         }
-
         CellBroadcastListActivity activity = startActivity();
         assertNotNull(activity.mListFragment);
 

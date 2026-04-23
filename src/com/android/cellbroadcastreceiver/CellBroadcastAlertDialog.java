@@ -571,7 +571,7 @@ public class CellBroadcastAlertDialog extends Activity implements
         LayoutInflater inflater = LayoutInflater.from(this);
         setContentView(inflater.inflate(R.layout.cell_broadcast_alert, null));
         TextView textView = findViewById(R.id.message);
-        if (isTranslateFeatureEnabled() || isMapConfigEnabled()) {
+        if (isTranslateFeatureEnabled() || isMapConfigEnabled(this)) {
             mButtonManager = new CellBroadcastAlertButtonManager(this, this, this);
         }
         if (isTranslateFeatureEnabled()) {
@@ -931,25 +931,10 @@ public class CellBroadcastAlertDialog extends Activity implements
             if (getButtonManager() != null) {
                 getButtonManager().onTranslationCompleted();
             }
-            CellBroadcastReceiverMetrics.getInstance()
-                    .logUxReported(message.getServiceCategory(), true,
-                            true, CellBroadcastMetrics.ERRTYPE_TRANSLATION_NONE,
-                            isMapFeatureEnabled(message),
-                            false,
-                            CellBroadcastMapLauncher.getGeoDataType(message),
-                            CellBroadcastMetrics.ERRTYPE_MAP_UNKNOWN);
         } else {
             Log.w(TAG, "onTranslationCompleted: Translation failed or result is empty.");
             showTranslateFailedToast();
             mTranslateDone = false;
-
-            CellBroadcastReceiverMetrics.getInstance()
-                    .logUxReported(message.getServiceCategory(), true,
-                            true, CellBroadcastMetrics.ERRTYPE_TRANSLATION_UNKNOWN,
-                            isMapFeatureEnabled(message),
-                            false,
-                            CellBroadcastMapLauncher.getGeoDataType(message),
-                            CellBroadcastMetrics.ERRTYPE_MAP_UNKNOWN);
         }
     }
 
@@ -1007,7 +992,7 @@ public class CellBroadcastAlertDialog extends Activity implements
         if (getButtonManager() == null) return;
 
         boolean showTranslate = mShouldOfferTranslation;
-        boolean showMap = isMapFeatureEnabled(message);
+        boolean showMap = isMapFeatureEnabled(this, message);
 
         Log.d(TAG, "updateButtons: mTranslateDone=" + mTranslateDone);
         if (mTranslateDone) {
@@ -1106,16 +1091,16 @@ public class CellBroadcastAlertDialog extends Activity implements
      * the message.
      */
     @VisibleForTesting
-    public boolean isMapFeatureEnabled(SmsCbMessage message) {
-        return isMapFlagEnabled() && isMapConfigEnabled() && isGeoInfo(message)
-                && CellBroadcastMapLauncher.isMapActivityAvailable(this);
+    public static boolean isMapFeatureEnabled(Context context, SmsCbMessage message) {
+        return isMapFlagEnabled() && isMapConfigEnabled(context) && isGeoInfo(message)
+                && CellBroadcastMapLauncher.isMapActivityAvailable(context);
     }
 
     /**
      * Checks the value of the global feature flag that controls the Map Viewer feature.
      */
     @VisibleForTesting
-    public boolean isMapFlagEnabled() {
+    public static boolean isMapFlagEnabled() {
         // Allow tests to override the flag's value.
         if (sIsMapFeatureEnabledForTest != null) {
             return sIsMapFeatureEnabledForTest;
@@ -1129,8 +1114,8 @@ public class CellBroadcastAlertDialog extends Activity implements
      * feature is enabled.
      */
     @VisibleForTesting
-    public boolean isMapConfigEnabled() {
-        boolean isMapConfigEnabled = getResources().getBoolean(R.bool.enable_map);
+    public static boolean isMapConfigEnabled(Context context) {
+        boolean isMapConfigEnabled = context.getResources().getBoolean(R.bool.enable_map);
         Log.d(TAG, "isMapConfigEnabled:" + isMapConfigEnabled);
         return isMapConfigEnabled;
     }
@@ -1140,7 +1125,7 @@ public class CellBroadcastAlertDialog extends Activity implements
      * (geometries).
      */
     @VisibleForTesting
-    public boolean isGeoInfo(SmsCbMessage message) {
+    public static boolean isGeoInfo(SmsCbMessage message) {
         if (message == null) {
             return false;
         }

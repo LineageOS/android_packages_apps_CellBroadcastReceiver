@@ -63,6 +63,7 @@ import android.provider.Telephony;
 import android.service.notification.StatusBarNotification;
 import android.telephony.PhoneStateListener;
 import android.telephony.SmsCbEtwsInfo;
+import android.telephony.CbGeoUtils;
 import android.telephony.SmsCbMessage;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -102,11 +103,12 @@ public class CellBroadcastAlertService extends Service {
     public static final String DISMISS_DIALOG = "com.android.cellbroadcastreceiver.DIMISS_DIALOG";
 
     /**
-     * Use different request code to create distinct pendingIntent for notification deleteIntent
-     * and contentIntent.
+     * Use different request code to create distinct pendingIntent for notification deleteIntent,
+     * contentIntent, and mapIntent.
      */
     private static final int REQUEST_CODE_CONTENT_INTENT = 1;
     private static final int REQUEST_CODE_DELETE_INTENT = 2;
+    private static final int REQUEST_CODE_MAP_INTENT = 3;
 
     /** Use the same notification ID for non-emergency alerts. */
     public static final int NOTIFICATION_ID = 1;
@@ -879,7 +881,7 @@ public class CellBroadcastAlertService extends Service {
         // Create intent to show the new messages when user selects the notification.
         Intent intent;
         if (isWatch) {
-            // For FEATURE_WATCH we want to mark as read
+            // For FEATURE_WATCH we want to mark as read and use a unique notification id
             intent = createMarkAsReadIntent(context, message.getReceivedTime(), notificationId);
         } else {
             // For anything else we handle it normally
@@ -923,7 +925,6 @@ public class CellBroadcastAlertService extends Service {
         } else {
             channelId = NOTIFICATION_CHANNEL_HIGH_PRIORITY_EMERGENCY_ALERTS;
         }
-
         boolean nonSwipeableNotification = message.isEmergencyMessage()
                 && CellBroadcastSettings.getResources(context, message.getSubscriptionId())
                 .getBoolean(R.bool.non_swipeable_notification) || sRemindAfterCallFinish;
@@ -942,6 +943,14 @@ public class CellBroadcastAlertService extends Service {
                         .setOnlyAlertOnce(!shouldAlert);
 
         if (isWatch) {
+            if (CellBroadcastAlertDialog.isMapFeatureEnabled(context, message)) {
+                Log.d(TAG, "Geometry data found in message; adding map action.");
+                addMapActionIfGeoInformationPresent(builder, context, message);
+            } else {
+                Log.d(TAG, "Map action not added: isMapFeatureEnabled returned false.");
+            }
+
+            // Add a dismiss button to the notification
             builder.setDeleteIntent(pi);
             builder.addAction(new Action(android.R.drawable.ic_delete,
                     context.getString(android.R.string.ok), pi));
@@ -1026,7 +1035,6 @@ public class CellBroadcastAlertService extends Service {
                 context.startService(audioIntent);
             }
         }
-
     }
 
     /**
@@ -1240,5 +1248,44 @@ public class CellBroadcastAlertService extends Service {
             return (message.getServiceCategory() << 16) | message.getSerialNumber();
         }
         return NOTIFICATION_ID;
+    }
+
+    /**
+     * Add map action to the notification builder.
+     * The caller must ensure the message contains geo information before calling this.
+     *
+     * @param builder the notification builder
+     * @param context the context
+     * @param message the original broadcast message object
+     */
+    private static void addMapActionIfGeoInformationPresent(Notification.Builder builder,
+            Context context, SmsCbMessage message) {
+
+        Intent mapIntent = CellBroadcastMapLauncher.getMapIntent(context, message);
+
+        if (mapIntent != null) {
+            Log.d(TAG, "addMapActionIfGeoInformationPresent: Map intent created.");
+            int flags = PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE;
+            ActivityOptions options = ActivityOptions.makeBasic();
+            if (SdkLevel.isAtLeastU()) {
+                options.setPendingIntentCreatorBackgroundActivityStartMode(
+                        ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED);
+            }
+            PendingIntent pi = PendingIntent.getActivity(
+                context,
+                REQUEST_CODE_MAP_INTENT,
+                mapIntent,
+                flags,
+                options.toBundle());
+
+            builder.addAction(new Action.Builder(
+                    android.R.drawable.ic_dialog_map,
+                    context.getString(R.string.button_map),
+                    pi).build());
+
+            Log.d(TAG, "Map action successfully added to notification builder.");
+        } else {
+            Log.d(TAG, "No secure map handler found; skipping.");
+        }
     }
 }
