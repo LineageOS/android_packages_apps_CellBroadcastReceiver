@@ -278,7 +278,7 @@ public class CellBroadcastListActivityTest extends
 
         activity.mListFragment.onLoadFinished(null, makeTestCursor());
 
-        View emptyView = activity.findViewById(R.id.empty);
+        View emptyView = activity.findViewById(android.R.id.empty);
         assertNotNull(emptyView);
         assertEquals("On watch, empty view should be Invisible when data exists",
                 View.INVISIBLE, emptyView.getVisibility());
@@ -309,8 +309,8 @@ public class CellBroadcastListActivityTest extends
                     CellBroadcastListActivity.CursorLoaderListFragment.QUERY_COLUMNS);
         activity.mListFragment.onLoadFinished(null, data);
 
-        View emptyView = activity.findViewById(R.id.empty);
-        assertNotNull("Watch layout must have R.id.empty", emptyView);
+        View emptyView = activity.findViewById(android.R.id.empty);
+        assertNotNull("Watch layout must have android.R.id.empty", emptyView);
         assertEquals("Empty text should be visible on watch",
                 View.VISIBLE, emptyView.getVisibility());
         assertFalse(activity.findViewById(android.R.id.list).isLongClickable());
@@ -349,7 +349,7 @@ public class CellBroadcastListActivityTest extends
 
         assertFalse(activity.findViewById(android.R.id.list).isLongClickable());
         activity.mListFragment.onLoadFinished(null, makeTestCursor());
-        assertEquals(View.GONE, emptyView.getVisibility());
+        assertEquals(View.INVISIBLE, emptyView.getVisibility());
         assertTrue(activity.findViewById(android.R.id.list).isLongClickable());
     }
 

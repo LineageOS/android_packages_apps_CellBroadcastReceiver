@@ -470,9 +470,11 @@ public class CellBroadcastListActivity extends CollapsingToolbarBaseActivity {
         }
 
         private void updateNoAlertTextVisibility() {
-            TextView noAlertsTextView = getActivity().findViewById(R.id.empty);
-            if (noAlertsTextView != null) {
-                noAlertsTextView.setVisibility(!hasAlertsInHistory()
+            View emptyView = mIsWatch
+                    ? getActivity().findViewById(android.R.id.empty)
+                    : getActivity().findViewById(R.id.empty);
+            if (emptyView != null) {
+                emptyView.setVisibility(!hasAlertsInHistory()
                         ? View.VISIBLE : View.INVISIBLE);
                 getListView().setLongClickable(hasAlertsInHistory());
                 if (!hasAlertsInHistory()) {
