@@ -777,7 +777,7 @@ public class CellBroadcastAlertService extends Service {
         Resources res = CellBroadcastSettings.getResources(mContext, message.getSubscriptionId());
         boolean isWatch = getPackageManager().hasSystemFeature(PackageManager.FEATURE_WATCH);
         boolean isOverallEnabledOverrideDnD =
-                isWatch || (res.getBoolean(R.bool.show_override_dnd_settings)
+                (res.getBoolean(R.bool.show_override_dnd_settings)
                 && prefs.getBoolean(CellBroadcastSettings.KEY_OVERRIDE_DND, false))
                 || res.getBoolean(R.bool.override_dnd);
         if (isOverallEnabledOverrideDnD || (range != null && range.mOverrideDnd)) {

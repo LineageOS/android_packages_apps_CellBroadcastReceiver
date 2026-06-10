@@ -1423,7 +1423,6 @@ public class CellBroadcastAlertServiceTest extends
 
         setWatchFeatureEnabled(true);
 
-        // TODO: anranl - Remove this once the bug is fixed.
         doReturn(true).when(mResources).getBoolean(
                 com.android.cellbroadcastreceiver.R.bool.enable_map);
         CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
@@ -1466,8 +1465,8 @@ public class CellBroadcastAlertServiceTest extends
         assertTrue("Notification should contain a map action", hasMapAction);
     }
 
-
-    public void testAddToNotificationBarForWatch_WithoutMap() throws RemoteException {
+    public void testAddToNotificationBarForWatch_WithoutMap_WithOverrideDndEnabled()
+            throws RemoteException {
         if (!SdkLevel.isAtLeastS()) {
             return;
         }
@@ -1479,6 +1478,8 @@ public class CellBroadcastAlertServiceTest extends
         doReturn("alert dialog title").when(mResources).getText(anyInt());
         doReturn(true).when(mResources).getBoolean(
                 com.android.cellbroadcastreceiver.R.bool.show_alert_dialog_with_notification);
+        doReturn(true).when(mResources).getBoolean(
+                com.android.cellbroadcastreceiver.R.bool.override_dnd);
 
         Intent intent = new Intent(mContext, CellBroadcastAlertService.class);
         intent.setAction(SHOW_NEW_ALERT_ACTION);
@@ -1496,6 +1497,78 @@ public class CellBroadcastAlertServiceTest extends
                         CellBroadcastAlertAudio.ALERT_AUDIO_MESSAGE_BODY));
         assertTrue(mServiceIntentToVerify.getBooleanExtra(
                 CellBroadcastAlertAudio.ALERT_AUDIO_OVERRIDE_DND_EXTRA, false));
+        ArgumentCaptor<NotificationChannel> notificationChannelCaptor =
+                ArgumentCaptor.forClass(NotificationChannel.class);
+        verify(mMockedNotificationManager, times(5))
+                .createNotificationChannel(notificationChannelCaptor.capture());
+        Map<String, NotificationChannel> notificationChannelCreated =
+                mapNotificationChannelCaptor(notificationChannelCaptor);
+        assertTrue(notificationChannelCreated.get("broadcastMessagesHighPriority")
+                .shouldVibrate());
+        assertTrue(notificationChannelCreated.get("broadcastMessages").shouldVibrate());
+        assertTrue(notificationChannelCreated.get("broadcastMessagesNonEmergency").shouldVibrate());
+        assertTrue(notificationChannelCreated.get("broadcastMessagesInVoiceCall").shouldVibrate());
+        assertEquals(NotificationManager.IMPORTANCE_MAX,
+                notificationChannelCreated.get("broadcastMessagesHighPriority")
+                .getImportance());
+        assertTrue(notificationChannelCreated.get("broadcastMessagesHighPriority")
+                .canBypassDnd());
+        assertEquals(NotificationManager.IMPORTANCE_HIGH,
+                notificationChannelCreated.get("broadcastMessages")
+                .getImportance());
+        assertTrue(notificationChannelCreated.get("broadcastMessages")
+                .canBypassDnd());
+        assertEquals(NotificationManager.IMPORTANCE_HIGH,
+                notificationChannelCreated.get("broadcastMessagesNonEmergency")
+                .getImportance());
+        assertEquals(NotificationManager.IMPORTANCE_HIGH,
+                notificationChannelCreated.get("broadcastMessagesInVoiceCall")
+                .getImportance());
+        ArgumentCaptor<Notification> notificationCaptor =
+                ArgumentCaptor.forClass(Notification.class);
+        verify(mMockedNotificationManager, times(1))
+            .notify(eq(0x1112bbaa), notificationCaptor.capture());
+        Notification notificationPosted = notificationCaptor.getValue();
+        assertEquals(Notification.VISIBILITY_PUBLIC, notificationPosted.visibility);
+        assertTrue(notificationPosted.deleteIntent.isBroadcast());
+        assertEquals(1, notificationPosted.actions.length);
+        assertSame(notificationPosted.deleteIntent, notificationPosted.actions[0].actionIntent);
+        assertNull("Watch should NEVER start the alert dialog activity", mActivityIntentToVerify);
+    }
+
+    public void testAddToNotificationBarForWatch_WithOverrideDndDisabled() throws RemoteException {
+        if (!SdkLevel.isAtLeastS()) {
+            return;
+        }
+
+        setWatchFeatureEnabled(true);
+        Handler handler = new Handler(Looper.getMainLooper());
+        IPowerManager mockedPowerService = mock(IPowerManager.class);
+        mMockedPowerManager = new PowerManager(mContext, mockedPowerService, null, handler);
+        doReturn("alert dialog title").when(mResources).getText(anyInt());
+        doReturn(true).when(mResources).getBoolean(
+                com.android.cellbroadcastreceiver.R.bool.show_alert_dialog_with_notification);
+
+        putResources(com.android.cellbroadcastreceiver.R.bool.show_override_dnd_settings, false);
+        putResources(com.android.cellbroadcastreceiver.R.bool.override_dnd, false);
+
+        Intent intent = new Intent(mContext, CellBroadcastAlertService.class);
+        intent.setAction(SHOW_NEW_ALERT_ACTION);
+        SmsCbMessage message = createMessageForCmasMessageClass(0xbbaa, 0x1112, 0);
+        intent.putExtra("message", message);
+        startService(intent);
+
+        waitForServiceIntent();
+        assertEquals(CellBroadcastAlertAudio.ACTION_START_ALERT_AUDIO,
+                mServiceIntentToVerify.getAction());
+        assertEquals(CellBroadcastAlertService.AlertType.DEFAULT,
+                mServiceIntentToVerify.getSerializableExtra(ALERT_AUDIO_TONE_TYPE));
+        assertEquals(message.getMessageBody(),
+                mServiceIntentToVerify.getStringExtra(
+                        CellBroadcastAlertAudio.ALERT_AUDIO_MESSAGE_BODY));
+        assertFalse(mServiceIntentToVerify.getBooleanExtra(
+                CellBroadcastAlertAudio.ALERT_AUDIO_OVERRIDE_DND_EXTRA, false));
+
         ArgumentCaptor<NotificationChannel> notificationChannelCaptor =
                 ArgumentCaptor.forClass(NotificationChannel.class);
         verify(mMockedNotificationManager, times(5))
