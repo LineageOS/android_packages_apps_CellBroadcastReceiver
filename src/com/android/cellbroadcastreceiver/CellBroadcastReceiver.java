@@ -584,7 +584,12 @@ public class CellBroadcastReceiver extends BroadcastReceiver {
 
             if (!sharedPrefsHaveDefaultValues()) {
                 // Sets the default values of the shared preference if there isn't any.
-                PreferenceManager.setDefaultValues(mContext, R.xml.preferences, false);
+                if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WATCH)) {
+                    PreferenceManager.setDefaultValues(mContext, R.xml.watch_preferences, false);
+                } else {
+
+                    PreferenceManager.setDefaultValues(mContext, R.xml.preferences, false);
+                }
 
                 sp.edit().putBoolean(CellBroadcastSettings.KEY_OVERRIDE_DND_SETTINGS_CHANGED,
                         false).apply();

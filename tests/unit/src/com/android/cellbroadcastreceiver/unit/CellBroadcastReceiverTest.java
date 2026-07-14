@@ -251,6 +251,52 @@ public class CellBroadcastReceiverTest extends CellBroadcastTest {
         verify(mIntent).getParcelableArrayListExtra(anyString());
     }
 
+    private void setupInitializeSharedPreferenceDefaultValues(boolean isWatch) throws Exception {
+        doReturn("An invalid action").when(mIntent).getAction();
+        doReturn(false).when(mCellBroadcastReceiver).sharedPrefsHaveDefaultValues();
+        doNothing().when(mCellBroadcastReceiver).adjustReminderInterval();
+        doNothing().when(mCellBroadcastReceiver).migrateSharedPreferenceFromLegacy();
+        mockTelephonyManager();
+        mockDefaultSubId(1);
+        doReturn(1).when(mMockTelephonyManager).getSimCarrierId();
+
+        doReturn(mResources).when(mContext).getResources();
+        doReturn(mPackageManager).when(mContext).getPackageManager();
+        doReturn(isWatch).when(mPackageManager).hasSystemFeature(PackageManager.FEATURE_WATCH);
+    }
+
+    @Test
+    public void testInitializeSharedPreference_defaultValues_watch() throws Exception {
+        setupInitializeSharedPreferenceDefaultValues(true);
+
+        // Throw an exception to verify that the correct resource ID is passed to PreferenceManager
+        doThrow(new IllegalStateException("watch_preferences"))
+                .when(mResources).getXml(R.xml.watch_preferences);
+
+        try {
+            mCellBroadcastReceiver.initializeSharedPreference(mContext, 1);
+            Assert.fail("Expected IllegalStateException");
+        } catch (IllegalStateException e) {
+            assertThat(e.getMessage()).isEqualTo("watch_preferences");
+        }
+    }
+
+    @Test
+    public void testInitializeSharedPreference_defaultValues_notWatch() throws Exception {
+        setupInitializeSharedPreferenceDefaultValues(false);
+
+        // Throw an exception to verify that the correct resource ID is passed to PreferenceManager
+        doThrow(new IllegalStateException("preferences"))
+                .when(mResources).getXml(R.xml.preferences);
+
+        try {
+            mCellBroadcastReceiver.initializeSharedPreference(mContext, 1);
+            Assert.fail("Expected IllegalStateException");
+        } catch (IllegalStateException e) {
+            assertThat(e.getMessage()).isEqualTo("preferences");
+        }
+    }
+
     @Test
     public void testInitializeSharedPreference_ifSystemUser_invalidSub() throws RemoteException {
         doReturn("An invalid action").when(mIntent).getAction();
