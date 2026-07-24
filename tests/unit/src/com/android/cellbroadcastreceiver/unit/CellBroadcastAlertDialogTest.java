@@ -67,6 +67,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.Suppress;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.Until;
@@ -86,6 +87,7 @@ import com.android.modules.utils.build.SdkLevel;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -925,6 +927,8 @@ public class CellBroadcastAlertDialogTest extends
      * This test dynamically selects a language different from the system default to ensure
      * the translation offer logic is always triggered.
      */
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
     public void testOnLanguageDetectionCompletedWithDetectedLanguageOffersTranslation() {
         SmsCbMessage message = createMessage("A message to be detected", null);
 
@@ -959,6 +963,8 @@ public class CellBroadcastAlertDialogTest extends
     /**
      * Tests that the progress bar is shown when translation starts and hidden when it finishes.
      */
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
     public void testProgressBarVisibilityDuringTranslation() {
         String systemLang = Locale.getDefault().getLanguage();
         SmsCbMessage message = createMessage("Test message", getDifferentLanguage(systemLang));
@@ -979,6 +985,8 @@ public class CellBroadcastAlertDialogTest extends
      * Tests that linkified text (e.g., URLs) is preserved after translation.
      * This verifies the functionality of setTextAndApplyLinks.
      */
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
     public void testLinkificationIsPreservedAfterTranslation() {
         doReturn("legacy_linkify").when(mContext.getResources()).getString(R.string.link_method);
 

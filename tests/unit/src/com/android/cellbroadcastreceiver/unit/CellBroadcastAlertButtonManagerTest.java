@@ -32,6 +32,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import androidx.test.filters.Suppress;
+
 import com.android.cellbroadcastreceiver.CellBroadcastAlertButtonManager;
 import com.android.cellbroadcastreceiver.CellBroadcastAlertDialog;
 import com.android.cellbroadcastreceiver.CellBroadcastAlertService;
@@ -40,6 +42,7 @@ import com.android.cellbroadcastreceiver.R;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -314,6 +317,8 @@ public class CellBroadcastAlertButtonManagerTest
         stopActivity();
     }
 
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
     public void testOnTranslationCompletedOnlyTranslateWasShown() throws Throwable {
         startActivity();
         setupButtonManager();
@@ -330,6 +335,8 @@ public class CellBroadcastAlertButtonManagerTest
         stopActivity();
     }
 
+    @Ignore("Translation feature not supported on 25Q2 Wear backport")
+    @Suppress
     public void testOnTranslationCompletedMapAndTranslateWereShown() throws Throwable {
         startActivity();
         setupButtonManager();
