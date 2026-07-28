@@ -85,7 +85,6 @@ import com.android.cellbroadcastreceiver.CellBroadcastReceiverApp;
 import com.android.cellbroadcastreceiver.CellBroadcastSettings;
 import com.android.cellbroadcastreceiver.CellBroadcastTranslateManager;
 import com.android.cellbroadcastreceiver.R;
-import com.android.cellbroadcastreceiver.flags.Flags;
 import com.android.internal.telephony.CellBroadcastUtils;
 import com.android.internal.telephony.gsm.SmsCbConstants;
 import com.android.modules.utils.build.SdkLevel;
@@ -206,13 +205,10 @@ public class CellBroadcastAlertDialogTest extends
             return null;
         }).when(mMockCBTranslateManager).resolveTargetLanguage(any(), any());
         doReturn("legacy_linkify").when(mContext.getResources()).getString(R.string.link_method);
-        CellBroadcastAlertDialog.sIsTranslateFeatureEnabledForTest = false;
     }
 
     @After
     public void tearDown() throws Exception {
-        CellBroadcastAlertDialog.sIsTranslateFeatureEnabledForTest = null;
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = null;
         CellBroadcastMapLauncher.sIsMapActivityAvailableForTest = null;
         CellBroadcastSettings.resetResourcesCache();
         CellBroadcastChannelManager.clearAllCellBroadcastChannelRanges();
@@ -912,7 +908,6 @@ public class CellBroadcastAlertDialogTest extends
         doReturn(mMockEditor).when(mockSharedPreferences).edit();
         doReturn(mMockEditor).when(mMockEditor).putBoolean(anyString(), anyBoolean());
         doReturn(true).when(mMockCBTranslateManager).isTranslationManagerAvailable();
-        CellBroadcastAlertDialog.sIsTranslateFeatureEnabledForTest = true;
         return mockSharedPreferences;
     }
 
@@ -950,7 +945,6 @@ public class CellBroadcastAlertDialogTest extends
         setPendingIntentForTranslation();
 
         CellBroadcastAlertDialog.sDisableDialogsForTest = disableDialogs;
-        CellBroadcastAlertDialog.sIsTranslateFeatureEnabledForTest = false;
         doAnswer(invocation -> {
             Consumer<Boolean> callback = invocation.getArgument(0);
             callback.accept(translatorReady);
@@ -959,7 +953,6 @@ public class CellBroadcastAlertDialogTest extends
 
         Intent intent = createIntentWithMessage(message);
         CellBroadcastAlertDialog dialog = startActivitySetMock(intent);
-        CellBroadcastAlertDialog.sIsTranslateFeatureEnabledForTest = true;
         waitForMs(100);
 
         return new TranslationTestSetupResult(dialog, mockSharedPreferences);
@@ -1389,54 +1382,18 @@ public class CellBroadcastAlertDialogTest extends
                 CellBroadcastAlertDialog.isMapConfigEnabled(mContext));
     }
 
-    public void testIsMapFlagEnabledWhenTestFlagTrueReturnsTrue() throws Throwable {
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
-        CellBroadcastAlertDialog activity = startActivity();
-        assertTrue(activity.isMapFlagEnabled());
-        stopActivity();
-    }
-
-    public void testIsMapFlagEnabledWhenTestFlagFalseReturnsFalse() throws Throwable {
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = false;
-        CellBroadcastAlertDialog activity = startActivity();
-        assertFalse(activity.isMapFlagEnabled());
-        stopActivity();
-    }
-
-    public void testIsMapFlagEnabledWhenTestFlagNull() throws Throwable {
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = null;
-        SmsCbMessage message = createSmsCbMessage(true);
-        Intent intent = createIntentWithMessage(message);
-        CellBroadcastAlertDialog activity = startActivitySetMock(intent);
-        if (Flags.enableCellbroadcastMapViewer()) {
-            assertTrue(activity.isMapFlagEnabled());
-        } else {
-            assertFalse(activity.isMapFlagEnabled());
-        }
-    }
-
     public void testIsMapFeatureEnabledAllConditionsMetReturnsTrue() throws Throwable {
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
         assertTrue(CellBroadcastAlertDialog.isMapFeatureEnabled(mContext, mSmsCbMessageWithGeo));
     }
 
-    public void testIsMapFeatureEnabledFlagOffReturnsFalse() throws Throwable {
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = false;
-        setMapConfigEnabled(true);
-        setMapActivityAvailable(true);
-        assertFalse(CellBroadcastAlertDialog.isMapFeatureEnabled(mContext, mSmsCbMessageWithGeo));
-    }
-
     public void testIsMapFeatureEnabledConfigFalseReturnsFalse() throws Throwable {
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         setMapConfigEnabled(false);
         assertFalse(CellBroadcastAlertDialog.isMapFeatureEnabled(mContext, mSmsCbMessageWithGeo));
     }
 
     public void testIsMapFeatureEnabledNoGeoInfoReturnsFalse() throws Throwable {
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
         assertFalse(CellBroadcastAlertDialog.isMapFeatureEnabled(
@@ -1466,7 +1423,6 @@ public class CellBroadcastAlertDialogTest extends
 
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         SmsCbMessage message = createSmsCbMessage(true);
 
         Intent intent = createIntentWithMessage(message);
@@ -1504,7 +1460,6 @@ public class CellBroadcastAlertDialogTest extends
     public void testUpdateButtonsTranslateFalseMapTrue() throws Throwable {
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         SmsCbMessage message = createSmsCbMessage(true);
 
         Intent intent = createIntentWithMessage(message);
@@ -1536,21 +1491,6 @@ public class CellBroadcastAlertDialogTest extends
     public void testMapButtonVisibilityConfigDisabled() throws Throwable {
         setMapConfigEnabled(false);
         CellBroadcastAlertDialog.sDisableDialogsForTest = false;
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
-        SmsCbMessage message = createSmsCbMessage(true);
-        Intent intent = createIntentWithMessage(message);
-        CellBroadcastAlertDialog activity = startActivitySetMock(intent);
-        getInstrumentation().runOnMainSync(() -> activity.onResume());
-        getInstrumentation().waitForIdleSync();
-
-        verify(mMockCBButtonManager, times(1)).configureButtons(anyBoolean(),
-                eq(false));
-    }
-
-    public void testMapButtonVisibilityFeatureFlagDisabled() throws Throwable {
-        setMapConfigEnabled(true);
-        setMapActivityAvailable(true);
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = false;
         SmsCbMessage message = createSmsCbMessage(true);
         Intent intent = createIntentWithMessage(message);
         CellBroadcastAlertDialog activity = startActivitySetMock(intent);
@@ -1564,7 +1504,6 @@ public class CellBroadcastAlertDialogTest extends
     public void testMapButtonVisibilityNoGeoInfo() throws Throwable {
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         SmsCbMessage message = createSmsCbMessage(false);
         Intent intent = createIntentWithMessage(message);
         CellBroadcastAlertDialog activity = startActivitySetMock(intent);
@@ -1578,7 +1517,6 @@ public class CellBroadcastAlertDialogTest extends
     public void testMapButtonVisibilityWithGeoInfo() throws Throwable {
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         SmsCbMessage message = createSmsCbMessage(true);
         Intent intent = createIntentWithMessage(message);
         CellBroadcastAlertDialog activity = startActivitySetMock(intent);
@@ -1592,7 +1530,6 @@ public class CellBroadcastAlertDialogTest extends
     public void testOnMapClickWithGeometries() throws Throwable {
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         mMessageList = new ArrayList<>();
         mMessageList.add(createSmsCbMessage(true));
         Intent intent = createActivityIntent();
@@ -1612,7 +1549,6 @@ public class CellBroadcastAlertDialogTest extends
 
     public void testOnMapClickWithoutGeometries() throws Throwable {
         setMapConfigEnabled(true);
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         mMessageList = new ArrayList<>();
         mMessageList.add(createSmsCbMessage(false));
         Intent intent = createActivityIntent();
@@ -1633,7 +1569,6 @@ public class CellBroadcastAlertDialogTest extends
     public void testOnMapClickNullMessage() throws Throwable {
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
         mMessageList = new ArrayList<>();
         Intent intent = createActivityIntent();
         intent.putParcelableArrayListExtra(CellBroadcastAlertService.SMS_CB_MESSAGE_EXTRA,
@@ -1956,7 +1891,6 @@ public class CellBroadcastAlertDialogTest extends
         }
         setMapConfigEnabled(true);
         setMapActivityAvailable(true);
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
 
         assertTrue("Map feature should be enabled if activity is available",
                 CellBroadcastAlertDialog.isMapFeatureEnabled(mContext, mSmsCbMessageWithGeo));
@@ -1970,7 +1904,6 @@ public class CellBroadcastAlertDialogTest extends
         }
         setMapConfigEnabled(true);
         setMapActivityAvailable(false);
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
 
         assertFalse("Map feature should be disabled if no activity can handle the intent",
                 CellBroadcastAlertDialog.isMapFeatureEnabled(mContext, mSmsCbMessageWithGeo));

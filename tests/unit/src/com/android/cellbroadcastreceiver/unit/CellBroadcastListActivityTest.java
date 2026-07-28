@@ -676,9 +676,13 @@ public class CellBroadcastListActivityTest extends
         activity.mListFragment.getMultiChoiceModeListener().onActionItemClicked(mode, mockMenuItem);
 
         verify(mode, times(2)).finish();
+        if (mIsWatch) {
+            // On watch, isHideToolbar() is true and the old builder is injected.
+            verify(mockAlertDialogBuilderOld, never()).show();
+            return;
+        }
         if (isHideToolbal) {
             verify(mockAlertDialogBuilderOld).show();
-
         } else {
             verify(mockAlertDialogBuilder).show();
         }

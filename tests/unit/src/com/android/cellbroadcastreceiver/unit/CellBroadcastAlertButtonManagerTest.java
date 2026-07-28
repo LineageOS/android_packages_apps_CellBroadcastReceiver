@@ -88,7 +88,6 @@ public class CellBroadcastAlertButtonManagerTest
     public void setUp() throws Exception {
         super.setUp();
         MockitoAnnotations.initMocks(this);
-        CellBroadcastAlertDialog.sIsTranslateFeatureEnabledForTest = true;
         CellBroadcastAlertDialog.sIsWatchForTest = false;
         doReturn(true).when(mContext.getResources()).getBoolean(R.bool.enable_alert_translation);
         doReturn(true).when(mContext.getResources()).getBoolean(R.bool.enable_map);
@@ -106,7 +105,6 @@ public class CellBroadcastAlertButtonManagerTest
 
     @After
     public void tearDown() throws Exception {
-        CellBroadcastAlertDialog.sIsTranslateFeatureEnabledForTest = null;
         super.tearDown();
     }
 

@@ -1425,7 +1425,6 @@ public class CellBroadcastAlertServiceTest extends
 
         doReturn(true).when(mResources).getBoolean(
                 com.android.cellbroadcastreceiver.R.bool.enable_map);
-        CellBroadcastAlertDialog.sIsMapFeatureEnabledForTest = true;
 
         doReturn("Map").when(mResources).
                 getString(com.android.cellbroadcastreceiver.R.string.button_map);

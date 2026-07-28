@@ -81,7 +81,6 @@ import android.widget.Toast;
 import androidx.preference.PreferenceManager;
 
 import com.android.cellbroadcastreceiver.CellBroadcastChannelManager.CellBroadcastChannelRange;
-import com.android.cellbroadcastreceiver.flags.Flags;
 import com.android.cellbroadcastservice.CellBroadcastMetrics;
 import com.android.internal.annotations.VisibleForTesting;
 
@@ -199,8 +198,6 @@ public class CellBroadcastAlertDialog extends Activity implements
     // Show the opt-out dialog
     private AlertDialog mOptOutDialog;
     @VisibleForTesting
-    public static Boolean sIsTranslateFeatureEnabledForTest = null;
-    @VisibleForTesting
     public static Boolean sIsWatchForTest = null;
     @VisibleForTesting
     public static boolean sDisableDialogsForTest = false;
@@ -213,8 +210,6 @@ public class CellBroadcastAlertDialog extends Activity implements
     // for test
     private CellBroadcastTranslateManager mMockTranslateManager;
     private TextView mMessageView;
-    @VisibleForTesting
-    public static Boolean sIsMapFeatureEnabledForTest = null;
     private boolean mShouldOfferTranslation = false;
     private boolean mTranslateDone = false;
     private Boolean mLastLoggedShowTranslate = null;
@@ -1035,17 +1030,7 @@ public class CellBroadcastAlertDialog extends Activity implements
     }
 
     private boolean isTranslateFeatureEnabled() {
-        return isTranslateFlagEnabled() && isTranslateConfigurationEnabled() && !isWatch();
-    }
-
-    private boolean isTranslateFlagEnabled() {
-        // Allow tests to override the flag's value.
-        if (sIsTranslateFeatureEnabledForTest != null) {
-            return sIsTranslateFeatureEnabledForTest;
-        }
-        Log.d(TAG, "isTranslateFlagEnabled:" + Flags.enableCellbroadcastTranslation());
-        // In production, use the real flag.
-        return Flags.enableCellbroadcastTranslation();
+        return isTranslateConfigurationEnabled() && !isWatch();
     }
 
     private boolean isTranslateConfigurationEnabled() {
@@ -1092,21 +1077,8 @@ public class CellBroadcastAlertDialog extends Activity implements
      */
     @VisibleForTesting
     public static boolean isMapFeatureEnabled(Context context, SmsCbMessage message) {
-        return isMapFlagEnabled() && isMapConfigEnabled(context) && isGeoInfo(message)
+        return isMapConfigEnabled(context) && isGeoInfo(message)
                 && CellBroadcastMapLauncher.isMapActivityAvailable(context);
-    }
-
-    /**
-     * Checks the value of the global feature flag that controls the Map Viewer feature.
-     */
-    @VisibleForTesting
-    public static boolean isMapFlagEnabled() {
-        // Allow tests to override the flag's value.
-        if (sIsMapFeatureEnabledForTest != null) {
-            return sIsMapFeatureEnabledForTest;
-        }
-        Log.d(TAG, "isMapFlagEnabled:" + Flags.enableCellbroadcastMapViewer());
-        return Flags.enableCellbroadcastMapViewer();
     }
 
     /**

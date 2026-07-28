@@ -234,7 +234,7 @@ public class TranslationMapTestActivity extends Activity {
                 try {
                     geometries.addAll(
                             CbGeoUtils.parseGeometriesFromString(SendTestMessages.GEO_DATA_6));
-                    Log.d(TAG, "Including SAMPE Circle Geometry (GEO_DATA_6)");
+                    Log.d(TAG, "Including SAMPLE Circle Geometry (GEO_DATA_6)");
                 } catch (Exception e) {
                     Log.e(TAG, "Failed to parse sample circle geometries", e);
                 }

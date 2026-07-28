@@ -74,7 +74,7 @@ public class CellBroadcastMapLauncher {
     private static ResolveInfo getMapTargetActivity(Context context) {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GEO_URI_SCHEME));
         PackageManager pm = context.getPackageManager();
-        if (pm == null){
+        if (pm == null) {
             Log.e(TAG, "getMapTargetActivity: PackageManager is null");
             return null;
         }
